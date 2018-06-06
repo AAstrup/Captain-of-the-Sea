@@ -18,9 +18,12 @@ public class WaterMoveComponent : MonoBehaviour {
     }
 	
 	void Update () {
-        frame++;
-        if (frame % checkTickRate == 0)
-            CheckForMovement();
+        if(cachedPlayerReference)
+        { 
+            frame++;
+            if (frame % checkTickRate == 0)
+                CheckForMovement();
+        }
     }
 
     private void CheckForMovement()

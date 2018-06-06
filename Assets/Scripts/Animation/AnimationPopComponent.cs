@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Component used to create a animation with a larger size decrementing to normal size
 /// </summary>
-public class AnimationPopComponent : MonoBehaviour {
+public class AnimationPopComponent : MonoBehaviour, IAnimationObject {
 
     private float timeSincePress;
     private Vector3 normalScale;
@@ -13,6 +13,7 @@ public class AnimationPopComponent : MonoBehaviour {
 
     private void Awake()
     {
+        timeSincePress = sizeIncrement.length;
         normalScale = transform.localScale;
     }
 
@@ -22,6 +23,8 @@ public class AnimationPopComponent : MonoBehaviour {
     }
 
 	void Update () {
+        //if (timeSincePress > sizeIncrement.length)
+        //    return;
         transform.localScale = normalScale * (1f + sizeIncrement.Evaluate(timeSincePress));
         timeSincePress += Time.deltaTime * TimeScalesComponent.instance.gamePlayTimeScale;
     }

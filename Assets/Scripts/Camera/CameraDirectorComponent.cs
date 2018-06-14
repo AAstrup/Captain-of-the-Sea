@@ -15,6 +15,7 @@ public class CameraDirectorComponent : MonoBehaviour {
     private Vector3? targetPosition = null;
     [HideInInspector]
     public Vector3 playerDistanceToCameraCenter;
+    private PlayerIdentifierComponent playerIdentifierComponent;
 
     void Awake () {
         cameraPosition = transform.position;
@@ -22,8 +23,14 @@ public class CameraDirectorComponent : MonoBehaviour {
 
     private void Start()
     {
-        playerDistanceToCameraCenter = transform.position - PlayerIdentifierComponent.playerGameObject.transform.position;
-        SingleComponentInstanceLocator.instance.aISpawnComponent.newWaveEvent += NewWave;
+        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+    }
+
+    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    {
+        playerIdentifierComponent = locator.componentReferences.playerIdentifierComponent;
+        playerDistanceToCameraCenter = transform.position - playerIdentifierComponent.playerGameObject.transform.position;
+        locator.componentReferences.aISpawnComponent.newWaveEvent += NewWave;
     }
 
     private void Update()
@@ -34,7 +41,7 @@ public class CameraDirectorComponent : MonoBehaviour {
 
     private void NewWave(int difficulty)
     {
-        SetCameraTargetPosition(PlayerIdentifierComponent.playerGameObject.transform.position);
+        SetCameraTargetPosition(playerIdentifierComponent.playerGameObject.transform.position);
     }
 
     void SetCameraTargetPosition(Vector3 position)

@@ -12,15 +12,22 @@ public class ShipMovementComponent : MonoBehaviour
 {
     Vector2 velocity = Vector2.zero;
     private ShipConfigurationComponent shipConfiguration;
+    private TimeScalesComponent timeScalesComponent;
 
     public void Awake()
     {
+        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
         shipConfiguration = GetComponent<ShipConfigurationComponent>();
+    }
+
+    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    {
+        timeScalesComponent = locator.componentReferences.timeScalesComponent;
     }
 
     public void ApplyMovementInDirection(Vector2 direction)
     {
-        velocity += direction.normalized * Time.deltaTime * SingleComponentInstanceLocator.instance.timeScalesComponent.gamePlayTimeScale * shipConfiguration.accelerateSpeed;
+        velocity += direction.normalized * Time.deltaTime * timeScalesComponent.gamePlayTimeScale * shipConfiguration.accelerateSpeed;
         var angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
@@ -31,7 +38,7 @@ public class ShipMovementComponent : MonoBehaviour
     }
 
 	void Update () {
-        transform.position += new Vector3(velocity.x, velocity.y,0) * Time.deltaTime * SingleComponentInstanceLocator.instance.timeScalesComponent.gamePlayTimeScale;
+        transform.position += new Vector3(velocity.x, velocity.y,0) * Time.deltaTime * timeScalesComponent.gamePlayTimeScale;
     }
 
     internal void Brake()

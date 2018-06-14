@@ -13,6 +13,7 @@ public class GameOverComponent : MonoBehaviour {
     public Text scoreText;
     public Text highscoreText;
     private IAnimationObject[] animationObjects;
+    private PlayerScoreComponent playerScoreComponent;
     private static readonly string HighscoreKey = "HighScore";
 
     private void Awake()
@@ -22,8 +23,14 @@ public class GameOverComponent : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        PlayerIdentifierComponent.playerGameObject.GetComponent<HealthComponent>().dieEvent += GameOver;
+        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
         gameObject.SetActive(false);
+    }
+
+    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    {
+        locator.componentReferences.playerIdentifierComponent.playerGameObject.GetComponent<HealthComponent>().dieEvent += GameOver;
+        playerScoreComponent = locator.componentReferences.playerScoreComponent;
     }
 
     private void GameOver(HealthComponent player)
@@ -34,10 +41,10 @@ public class GameOverComponent : MonoBehaviour {
             item.SetActive(false);
         }
 
-        scoreText.text = SingleComponentInstanceLocator.instance.playerScoreComponent.score.ToString();
-        if (SingleComponentInstanceLocator.instance.playerScoreComponent.score > GetHighScore())
+        scoreText.text = playerScoreComponent.score.ToString();
+        if (playerScoreComponent.score > GetHighScore())
         {
-            SaveHighScore(SingleComponentInstanceLocator.instance.playerScoreComponent.score);
+            SaveHighScore(playerScoreComponent.score);
         }
         highscoreText.text = "Highscore: " + GetHighScore();
 

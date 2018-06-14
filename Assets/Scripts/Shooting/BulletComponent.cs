@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 /// <summary>
 /// Responsible for moving a bullet and detecting collision
@@ -14,23 +15,32 @@ internal class BulletComponent : MonoBehaviour
     public float damage;
     float lifeSpanLeft;
     Vector3 startScale;
+    private TimeScalesComponent timeScalesComponent;
+    private ParticlePoolComponent particlePoolComponent;
 
     private void Awake()
     {
         startScale = transform.localScale;
         lifeSpanLeft = lifeSpanTotal;
+        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+    }
+
+    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    {
+        timeScalesComponent = locator.componentReferences.timeScalesComponent;
+        particlePoolComponent = locator.componentReferences.particlePoolComponent;
     }
 
     private void Update()
     {
-        lifeSpanLeft -= Time.deltaTime * SingleComponentInstanceLocator.instance.timeScalesComponent.gamePlayTimeScale;
+        lifeSpanLeft -= Time.deltaTime * timeScalesComponent.gamePlayTimeScale;
 
         if (lifeSpanLeft < 0f)
             Destroy(gameObject);
         
         var value = 1f - (lifeSpanLeft / lifeSpanTotal);
         transform.localScale = Vector3.Lerp(Vector3.zero, startScale, sizeFalling.Evaluate(value));
-        transform.position += transform.right * Time.deltaTime * SingleComponentInstanceLocator.instance.timeScalesComponent.gamePlayTimeScale * speed.Evaluate(value) * speedMultiplier;
+        transform.position += transform.right * Time.deltaTime * timeScalesComponent.gamePlayTimeScale * speed.Evaluate(value) * speedMultiplier;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -39,7 +49,7 @@ internal class BulletComponent : MonoBehaviour
         if (victim && victim.ownerComponent.owner != myOwner.owner)
         {
             victim.Damage(damage);
-            SingleComponentInstanceLocator.instance.particlePoolComponent.FireParticleSystem(ParticlePoolComponent.ParticleSystemType.ShipHit, transform.position, transform.eulerAngles.z + 180f);
+            particlePoolComponent.FireParticleSystem(ParticlePoolComponent.ParticleSystemType.ShipHit, transform.position, transform.eulerAngles.z + 180f);
         }
     }
 }

@@ -19,10 +19,14 @@ public class ScreenShakeComponent : MonoBehaviour {
     {
         cameraDirectorComponent = GetComponent<CameraDirectorComponent>();
 
-        PlayerIdentifierComponent.playerGameObject.GetComponent<HealthComponent>().healthChangedEvent += delegate (HealthComponent victim, float damage, float healthLeft) { StartShake(); };
-        PlayerIdentifierComponent.playerGameObject.GetComponent<PlayerShootComponent>().fireEvent += delegate () { StartShake(); };
+        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+    }
 
-        SingleComponentInstanceLocator.instance.aISpawnComponent.shipSpawnedEvent += ShipSpawned;
+    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    {
+        locator.componentReferences.playerIdentifierComponent.playerGameObject.GetComponent<HealthComponent>().healthChangedEvent += delegate (HealthComponent victim, float damage, float healthLeft) { StartShake(); };
+        locator.componentReferences.playerIdentifierComponent.playerGameObject.GetComponent<PlayerShootComponent>().fireEvent += delegate () { StartShake(); };
+        locator.componentReferences.aISpawnComponent.shipSpawnedEvent += ShipSpawned;
     }
 
     private void ShipSpawned(HealthComponent healthComponent)

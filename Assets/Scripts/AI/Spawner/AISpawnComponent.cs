@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,16 +16,25 @@ public class AISpawnComponent : MonoBehaviour {
     public ShipSpawned shipSpawnedEvent;
     public delegate void NewWave(int difficulty);
     public NewWave newWaveEvent;
+    private PlayerIdentifierComponent playerIdentifierComponent;
+    private CameraDirectorComponent cameraDirectorComponent;
     private static readonly float heightOffset = 11f;
 
-    private void Start()
+    private void Awake()
     {
-        SingleComponentInstanceLocator.instance.menuStartComponent.gameStartedEvent += SpawnWave;
+        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+    }
+
+    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    {
+        locator.componentReferences.menuStartComponent.gameStartedEvent += SpawnWave;
+        playerIdentifierComponent = locator.componentReferences.playerIdentifierComponent;
+        cameraDirectorComponent = locator.componentReferences.cameraDirectorComponent;
     }
 
     void SpawnWave()
     {
-        transform.position = PlayerIdentifierComponent.playerGameObject.transform.position + new Vector3(0, heightOffset, 0) + SingleComponentInstanceLocator.instance.cameraDirectorComponent.playerDistanceToCameraCenter;
+        transform.position = playerIdentifierComponent.playerGameObject.transform.position + new Vector3(0, heightOffset, 0) + cameraDirectorComponent.playerDistanceToCameraCenter;
 
         difficulty = Mathf.FloorToInt(difficulty + 1 + (difficulty/10f));
         if (newWaveEvent != null)
@@ -49,7 +59,7 @@ public class AISpawnComponent : MonoBehaviour {
 
     private void SpawnEnemy(GameObject prefab)
     {
-        var pos = new Vector2(transform.position.x + spawnAreaRange.x * Random.Range(-1f, 1f), transform.position.y + spawnAreaRange.y * Random.Range(-1f, 1f));
+        var pos = new Vector2(transform.position.x + spawnAreaRange.x * UnityEngine.Random.Range(-1f, 1f), transform.position.y + spawnAreaRange.y * UnityEngine.Random.Range(-1f, 1f));
         var spawn = Instantiate(prefab, pos, Quaternion.identity);
         var healthComponent = spawn.GetComponent<HealthComponent>();
         healthComponent.dieEvent += AIShipDead;

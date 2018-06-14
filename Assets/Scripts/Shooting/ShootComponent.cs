@@ -12,11 +12,18 @@ public class ShootComponent : MonoBehaviour {
     AudioSource audio;
     public Transform firePoint;
     public GameObject bulletPrefab;
+    private ParticlePoolComponent particlePoolComponent;
 
     private void Awake()
     {
         audio = GetComponent<AudioSource>();
         ownerComponent = GetComponentInParent<OwnerComponent>();
+        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+    }
+
+    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    {
+        particlePoolComponent = locator.componentReferences.particlePoolComponent;
     }
 
     internal void Fire()
@@ -24,7 +31,7 @@ public class ShootComponent : MonoBehaviour {
         var gmj = Instantiate(bulletPrefab, firePoint.position, transform.rotation);
         var bullet = gmj.GetComponent<BulletComponent>();
         bullet.myOwner.owner = ownerComponent.owner;
-        SingleComponentInstanceLocator.instance.particlePoolComponent.FireParticleSystem(ParticlePoolComponent.ParticleSystemType.CannonFire, firePoint.transform.position, transform.eulerAngles.z);
+        particlePoolComponent.FireParticleSystem(ParticlePoolComponent.ParticleSystemType.CannonFire, firePoint.transform.position, transform.eulerAngles.z);
         audio.Play();
     }
 }

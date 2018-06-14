@@ -16,14 +16,21 @@ public class FireCooldownComponent : MonoBehaviour {
 
     float cooldownLeft;
     public float cooldownTotal = 1f;
+    private TimeScalesComponent timeScalesComponent;
 
-	void Awake () {
+    void Awake () {
         cooldownLeft = 0f;
         StopCooldown();
         fireButton.onClick.AddListener(delegate () { StartCooldown(); });
+        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
     }
-	
-	void Update () {
+
+    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    {
+        timeScalesComponent = locator.componentReferences.timeScalesComponent;
+    }
+
+    void Update () {
         if (cooldownLeft >= 0f)
         {
             UICooldownUpdate();
@@ -36,7 +43,7 @@ public class FireCooldownComponent : MonoBehaviour {
 
     private void UICooldownUpdate()
     {
-        cooldownLeft -= SingleComponentInstanceLocator.instance.timeScalesComponent.gamePlayTimeScale * Time.deltaTime;
+        cooldownLeft -= timeScalesComponent.gamePlayTimeScale * Time.deltaTime;
         cooldownFillOverlay.fillAmount = cooldownLeft / cooldownTotal;
 
         string cooldownToString = null;

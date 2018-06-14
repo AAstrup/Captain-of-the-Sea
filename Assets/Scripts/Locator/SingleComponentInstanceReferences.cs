@@ -1,13 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-/// Keeps references to single instance components
+/// Provides the references to the unity components for SingleComponentInstanceLocator
 /// </summary>
-public class SingleComponentInstanceLocator : MonoBehaviour {
-    public static SingleComponentInstanceLocator instance;
-
+public class SingleComponentInstanceReferences : MonoBehaviour
+{
+    // Component instances
     public AISpawnComponent aISpawnComponent;
     public AudioLevelComponent audioLevelComponent;
     public SoundEffectPoolComponent soundEffectPoolComponent;
@@ -17,8 +15,10 @@ public class SingleComponentInstanceLocator : MonoBehaviour {
     public TimeScalesComponent timeScalesComponent;
     public MenuStartComponent menuStartComponent;
     public PlayerScoreComponent playerScoreComponent;
+    public PlayerIdentifierComponent playerIdentifierComponent;
 
-    void Awake () {
-        instance = this;
+    private void Start()
+    {
+        SingleComponentInstanceLocator.RegisterComponentReferences(this);
     }
 }

@@ -19,6 +19,11 @@ public class AudioMuteComponent : MonoBehaviour {
 
     private void SetAudioLevel()
     {
-        SingleComponentInstanceLocator.instance.audioLevelComponent.MuteAudioLevel(audioChannelType, muted);
+        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+    }
+
+    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    {
+        locator.componentReferences.audioLevelComponent.MuteAudioLevel(audioChannelType, muted);
     }
 }

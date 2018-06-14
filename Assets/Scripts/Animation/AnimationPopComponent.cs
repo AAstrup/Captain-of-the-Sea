@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,25 +8,32 @@ using UnityEngine;
 /// </summary>
 public class AnimationPopComponent : MonoBehaviour, IAnimationObject {
 
-    private float timeSincePress;
+    private float timeSinceTriggered;
     private Vector3 normalScale;
     public AnimationCurve sizeIncrement;
+    private TimeScalesComponent timeScalesComponent;
 
     private void Awake()
     {
-        timeSincePress = sizeIncrement.length;
+        timeSinceTriggered = sizeIncrement.length;
         normalScale = transform.localScale;
+        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+    }
+
+    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    {
+        timeScalesComponent = locator.componentReferences.timeScalesComponent;
     }
 
     public void StartAnimation()
     {
-        timeSincePress = 0f;
+        timeSinceTriggered = 0f;
     }
 
 	void Update () {
-        //if (timeSincePress > sizeIncrement.length)
-        //    return;
-        transform.localScale = normalScale * (1f + sizeIncrement.Evaluate(timeSincePress));
-        timeSincePress += Time.deltaTime * SingleComponentInstanceLocator.instance.timeScalesComponent.gamePlayTimeScale;
+        if (timeSinceTriggered > sizeIncrement.length)
+            return;
+        transform.localScale = normalScale * (1f + sizeIncrement.Evaluate(timeSinceTriggered));
+        timeSinceTriggered += Time.deltaTime * timeScalesComponent.gamePlayTimeScale;
     }
 }

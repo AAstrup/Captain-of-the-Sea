@@ -11,6 +11,7 @@ public class AudioSourceLevelSetterComponent : MonoBehaviour {
 
     public AudioLevelComponent.AudioChannelType audioChannelType;
     private AudioSource audioSource;
+    private AudioLevelComponent audioLevelComponent;
 
     private void Awake()
     {
@@ -18,7 +19,13 @@ public class AudioSourceLevelSetterComponent : MonoBehaviour {
     }
 
     void Start () {
-        SingleComponentInstanceLocator.instance.audioLevelComponent.audioLevelChangedEvent += UpdateAudioLevel;
+        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+    }
+
+    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    {
+        audioLevelComponent = locator.componentReferences.audioLevelComponent;
+        audioLevelComponent.audioLevelChangedEvent += UpdateAudioLevel;
         UpdateAudioLevel(audioChannelType);
     }
 
@@ -26,7 +33,7 @@ public class AudioSourceLevelSetterComponent : MonoBehaviour {
     {
         if(this.audioChannelType == audioChannelType)
         {
-            audioSource.volume = SingleComponentInstanceLocator.instance.audioLevelComponent.GetAudioVolume(audioChannelType);
+            audioSource.volume = audioLevelComponent.GetAudioVolume(audioChannelType);
         }
     }
 }

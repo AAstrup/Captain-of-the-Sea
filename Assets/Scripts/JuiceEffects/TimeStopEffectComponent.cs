@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,11 +11,18 @@ public class TimeStopEffectComponent : MonoBehaviour {
     // To prevent from activating on start it is by default set to 100
     float timeSinceLastStpo = 100f;
     public AnimationCurve timeReductionAmount;
+    private TimeScalesComponent timeScalesComponent;
 
     private void Start()
     {
-        PlayerIdentifierComponent.playerGameObject.GetComponent<HealthComponent>().healthChangedEvent += delegate (HealthComponent victim, float damage, float healthLeft) { StopTime(); };
-        SingleComponentInstanceLocator.instance.aISpawnComponent.shipSpawnedEvent += ShipSpawned;
+        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+    }
+
+    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    {
+        timeScalesComponent = locator.componentReferences.timeScalesComponent;
+        locator.componentReferences.playerIdentifierComponent.playerGameObject.GetComponent<HealthComponent>().healthChangedEvent += delegate (HealthComponent victim, float damage, float healthLeft) { StopTime(); };
+        locator.componentReferences.aISpawnComponent.shipSpawnedEvent += ShipSpawned;
     }
 
     private void ShipSpawned(HealthComponent healthComponent)
@@ -30,7 +38,7 @@ public class TimeStopEffectComponent : MonoBehaviour {
     void Update()
     {
         var timeValue = timeReductionAmount.Evaluate(timeSinceLastStpo);
-        SingleComponentInstanceLocator.instance.timeScalesComponent.gamePlayTimeScale = timeValue;
+        timeScalesComponent.gamePlayTimeScale = timeValue;
         timeSinceLastStpo += Time.deltaTime;
     }
 

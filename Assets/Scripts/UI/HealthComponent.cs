@@ -17,20 +17,27 @@ public class HealthComponent : MonoBehaviour
     public HealthChangedEvent healthChangedEvent;
     [HideInInspector]
     public OwnerComponent ownerComponent;
+    private SoundEffectPoolComponent soundEffectPoolComponent;
 
     private void Awake()
     {
         ownerComponent = GetComponent<OwnerComponent>();
+        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback);
     }
 
     public void Damage(float dmg)
     {
         health -= dmg;
-        SingleComponentInstanceLocator.instance.soundEffectPoolComponent.PlaySound(SoundEffectPoolComponent.SoundsType.HitShip);
+        soundEffectPoolComponent.PlaySound(SoundEffectPoolComponent.SoundsType.HitShip);
         if (healthChangedEvent != null)
             healthChangedEvent(this, dmg, health);
         if (health <= 0f)
             Death();
+    }
+
+    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    {
+        soundEffectPoolComponent = locator.componentReferences.soundEffectPoolComponent;
     }
 
     private void Death()

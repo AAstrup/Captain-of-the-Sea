@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,11 +18,16 @@ public class AIShipMovementComponent : MonoBehaviour {
 
     private void Start()
     {
-        gameObjectTarget = PlayerIdentifierComponent.playerGameObject;
+        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+    }
+
+    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    {
+        gameObjectTarget = locator.componentReferences.playerIdentifierComponent.playerGameObject;
     }
 
     void Update () {
-        if(PlayerIdentifierComponent.playerGameObject != null)
+        if(gameObjectTarget != null)
             movementComponent.ApplyMovementInDirection((gameObjectTarget.transform.position + gameObjectTarget.transform.right * -2f) - transform.position);
     }
 }

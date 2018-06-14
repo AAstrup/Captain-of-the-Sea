@@ -4,15 +4,13 @@ using UnityEngine;
 
 /// <summary>
 /// Fire a particle system at a position
-/// Serves only as a tool, and is a singleton to be more easily accessed
+/// Serves only as a tool
 /// </summary>
 public class ParticlePoolComponent : MonoBehaviour {
-    public static ParticlePoolComponent instance;
     public enum ParticleSystemType { CannonFire, ShipHit }
     Dictionary<ParticleSystemType, List<ParticleSystemRegisterComponent>> particlesSystems;
 
     void Awake () {
-        instance = this;
 
         particlesSystems = new Dictionary<ParticleSystemType, List<ParticleSystemRegisterComponent>>();
         foreach (var item in GetComponentsInChildren<ParticleSystemRegisterComponent>())

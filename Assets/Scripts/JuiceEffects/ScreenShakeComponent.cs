@@ -22,7 +22,7 @@ public class ScreenShakeComponent : MonoBehaviour {
         PlayerIdentifierComponent.playerGameObject.GetComponent<HealthComponent>().healthChangedEvent += delegate (HealthComponent victim, float damage, float healthLeft) { StartShake(); };
         PlayerIdentifierComponent.playerGameObject.GetComponent<PlayerShootComponent>().fireEvent += delegate () { StartShake(); };
 
-        AISpawnComponent.instance.shipSpawnedEvent += ShipSpawned;
+        SingleComponentInstanceLocator.instance.aISpawnComponent.shipSpawnedEvent += ShipSpawned;
     }
 
     private void ShipSpawned(HealthComponent healthComponent)

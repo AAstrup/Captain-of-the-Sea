@@ -7,11 +7,6 @@ using UnityEngine;
 /// </summary>
 public class TimeScalesComponent : MonoBehaviour {
 
-    public static TimeScalesComponent instance;
     [HideInInspector]
     public float gamePlayTimeScale = 1f;
-
-    void Awake () {
-        instance = this;
-    }
 }

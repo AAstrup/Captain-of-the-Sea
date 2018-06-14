@@ -34,10 +34,10 @@ public class GameOverComponent : MonoBehaviour {
             item.SetActive(false);
         }
 
-        scoreText.text = PlayerScoreComponent.instance.score.ToString();
-        if (PlayerScoreComponent.instance.score > GetHighScore())
+        scoreText.text = SingleComponentInstanceLocator.instance.playerScoreComponent.score.ToString();
+        if (SingleComponentInstanceLocator.instance.playerScoreComponent.score > GetHighScore())
         {
-            SaveHighScore(PlayerScoreComponent.instance.score);
+            SaveHighScore(SingleComponentInstanceLocator.instance.playerScoreComponent.score);
         }
         highscoreText.text = "Highscore: " + GetHighScore();
 

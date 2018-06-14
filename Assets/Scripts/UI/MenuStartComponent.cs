@@ -8,17 +8,11 @@ using UnityEngine;
 /// </summary>
 public class MenuStartComponent : MonoBehaviour {
 
-    public static MenuStartComponent instance;
     public GameObject[] gameObjectsToActivateOnStart;
     public Behaviour[] componentsToActivateOnStart;
     public GameObject[] gameObjectsToDisable;
     public delegate void GameStartedEvent();
     public GameStartedEvent gameStartedEvent;
-
-    private void Awake()
-    {
-        instance = this;
-    }
 
     private void Start()
     {

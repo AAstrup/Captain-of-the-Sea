@@ -20,7 +20,7 @@ public class ShipMovementComponent : MonoBehaviour
 
     public void ApplyMovementInDirection(Vector2 direction)
     {
-        velocity += direction.normalized * Time.deltaTime * TimeScalesComponent.instance.gamePlayTimeScale * shipConfiguration.accelerateSpeed;
+        velocity += direction.normalized * Time.deltaTime * SingleComponentInstanceLocator.instance.timeScalesComponent.gamePlayTimeScale * shipConfiguration.accelerateSpeed;
         var angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
 
@@ -31,7 +31,7 @@ public class ShipMovementComponent : MonoBehaviour
     }
 
 	void Update () {
-        transform.position += new Vector3(velocity.x, velocity.y,0) * Time.deltaTime * TimeScalesComponent.instance.gamePlayTimeScale;
+        transform.position += new Vector3(velocity.x, velocity.y,0) * Time.deltaTime * SingleComponentInstanceLocator.instance.timeScalesComponent.gamePlayTimeScale;
     }
 
     internal void Brake()

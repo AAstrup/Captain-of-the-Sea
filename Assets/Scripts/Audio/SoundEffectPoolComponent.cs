@@ -11,7 +11,6 @@ using System;
 public class SoundEffectPoolComponent : MonoBehaviour {
 
     public GameObject audioPrefab;
-    public static SoundEffectPoolComponent instance;
     public SoundManagerModel[] soundManagerModel;
     public enum SoundsType { HitShip }
     public int audioSourcePool = 30;
@@ -20,7 +19,6 @@ public class SoundEffectPoolComponent : MonoBehaviour {
 
     private void Awake()
     {
-        instance = this;
         pool = new List<AudioSource>();
         for (int i = 0; i < audioSourcePool; i++)
         {

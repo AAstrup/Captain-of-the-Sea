@@ -10,7 +10,6 @@ using UnityEngine;
 /// </summary>
 public class CameraDirectorComponent : MonoBehaviour {
 
-    public static CameraDirectorComponent instance;
     [HideInInspector]
     public Vector3 cameraPosition;
     private Vector3? targetPosition = null;
@@ -18,14 +17,13 @@ public class CameraDirectorComponent : MonoBehaviour {
     public Vector3 playerDistanceToCameraCenter;
 
     void Awake () {
-        instance = this;
         cameraPosition = transform.position;
     }
 
     private void Start()
     {
         playerDistanceToCameraCenter = transform.position - PlayerIdentifierComponent.playerGameObject.transform.position;
-        AISpawnComponent.instance.newWaveEvent += NewWave;
+        SingleComponentInstanceLocator.instance.aISpawnComponent.newWaveEvent += NewWave;
     }
 
     private void Update()

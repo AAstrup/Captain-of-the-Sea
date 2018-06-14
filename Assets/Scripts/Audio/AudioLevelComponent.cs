@@ -5,11 +5,9 @@ using UnityEngine;
 
 /// <summary>
 /// Controls the level of sound of each type of audio
-/// Is a singleton for components to get the level of sound
 /// </summary>
 public class AudioLevelComponent : MonoBehaviour {
 
-    public static AudioLevelComponent instance;
     public enum AudioChannelType { Sound, Music }
     Dictionary<AudioChannelType, float> audioLevelPercentage;
     static readonly float maxAudioLevel = 1f;
@@ -24,7 +22,6 @@ public class AudioLevelComponent : MonoBehaviour {
         {
             audioLevelPercentage.Add(item, maxAudioLevel);
         }
-        instance = this;
     }
 
     internal void MuteAudioLevel(AudioChannelType audioChannelType, bool muted)

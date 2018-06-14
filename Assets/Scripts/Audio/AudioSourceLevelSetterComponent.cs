@@ -18,14 +18,15 @@ public class AudioSourceLevelSetterComponent : MonoBehaviour {
     }
 
     void Start () {
-        AudioLevelComponent.instance.audioLevelChangedEvent += UpdateAudioLevel;
+        SingleComponentInstanceLocator.instance.audioLevelComponent.audioLevelChangedEvent += UpdateAudioLevel;
+        UpdateAudioLevel(audioChannelType);
     }
 
     private void UpdateAudioLevel(AudioLevelComponent.AudioChannelType audioChannelType)
     {
         if(this.audioChannelType == audioChannelType)
         {
-            audioSource.volume = AudioLevelComponent.instance.GetAudioVolume(audioChannelType);
+            audioSource.volume = SingleComponentInstanceLocator.instance.audioLevelComponent.GetAudioVolume(audioChannelType);
         }
     }
 }

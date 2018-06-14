@@ -26,7 +26,7 @@ public class HealthComponent : MonoBehaviour
     public void Damage(float dmg)
     {
         health -= dmg;
-        SoundEffectPoolComponent.instance.PlaySound(SoundEffectPoolComponent.SoundsType.HitShip);
+        SingleComponentInstanceLocator.instance.soundEffectPoolComponent.PlaySound(SoundEffectPoolComponent.SoundsType.HitShip);
         if (healthChangedEvent != null)
             healthChangedEvent(this, dmg, health);
         if (health <= 0f)

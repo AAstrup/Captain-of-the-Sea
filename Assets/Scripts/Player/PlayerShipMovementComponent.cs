@@ -25,7 +25,7 @@ public class PlayerShipMovementComponent : MonoBehaviour {
 
     private void Start()
     {
-        MenuStartComponent.instance.gameStartedEvent += UpdateTargetPosition;
+        SingleComponentInstanceLocator.instance.menuStartComponent.gameStartedEvent += UpdateTargetPosition;
     }
 
     void Update () {

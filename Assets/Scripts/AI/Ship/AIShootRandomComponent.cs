@@ -17,7 +17,7 @@ public class AIShootRandomComponent : MonoBehaviour {
 
     void Update()
     {
-        timeLeft -= Time.deltaTime * TimeScalesComponent.instance.gamePlayTimeScale; ;
+        timeLeft -= Time.deltaTime * SingleComponentInstanceLocator.instance.timeScalesComponent.gamePlayTimeScale; ;
         if (timeLeft < 0)
         {
             timeLeft = Random.Range(timeBetweenShotsMin, timeBetweenShotsMax);

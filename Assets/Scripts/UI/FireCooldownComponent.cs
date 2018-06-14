@@ -36,7 +36,7 @@ public class FireCooldownComponent : MonoBehaviour {
 
     private void UICooldownUpdate()
     {
-        cooldownLeft -= TimeScalesComponent.instance.gamePlayTimeScale * Time.deltaTime;
+        cooldownLeft -= SingleComponentInstanceLocator.instance.timeScalesComponent.gamePlayTimeScale * Time.deltaTime;
         cooldownFillOverlay.fillAmount = cooldownLeft / cooldownTotal;
 
         string cooldownToString = null;

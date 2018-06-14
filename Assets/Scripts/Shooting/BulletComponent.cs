@@ -23,14 +23,14 @@ internal class BulletComponent : MonoBehaviour
 
     private void Update()
     {
-        lifeSpanLeft -= Time.deltaTime * TimeScalesComponent.instance.gamePlayTimeScale;
+        lifeSpanLeft -= Time.deltaTime * SingleComponentInstanceLocator.instance.timeScalesComponent.gamePlayTimeScale;
 
         if (lifeSpanLeft < 0f)
             Destroy(gameObject);
         
         var value = 1f - (lifeSpanLeft / lifeSpanTotal);
         transform.localScale = Vector3.Lerp(Vector3.zero, startScale, sizeFalling.Evaluate(value));
-        transform.position += transform.right * Time.deltaTime * TimeScalesComponent.instance.gamePlayTimeScale * speed.Evaluate(value) * speedMultiplier;
+        transform.position += transform.right * Time.deltaTime * SingleComponentInstanceLocator.instance.timeScalesComponent.gamePlayTimeScale * speed.Evaluate(value) * speedMultiplier;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -39,7 +39,7 @@ internal class BulletComponent : MonoBehaviour
         if (victim && victim.ownerComponent.owner != myOwner.owner)
         {
             victim.Damage(damage);
-            ParticlePoolComponent.instance.FireParticleSystem(ParticlePoolComponent.ParticleSystemType.ShipHit, transform.position, transform.eulerAngles.z + 180f);
+            SingleComponentInstanceLocator.instance.particlePoolComponent.FireParticleSystem(ParticlePoolComponent.ParticleSystemType.ShipHit, transform.position, transform.eulerAngles.z + 180f);
         }
     }
 }

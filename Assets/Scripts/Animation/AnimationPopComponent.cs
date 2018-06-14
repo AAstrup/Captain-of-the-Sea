@@ -26,6 +26,6 @@ public class AnimationPopComponent : MonoBehaviour, IAnimationObject {
         //if (timeSincePress > sizeIncrement.length)
         //    return;
         transform.localScale = normalScale * (1f + sizeIncrement.Evaluate(timeSincePress));
-        timeSincePress += Time.deltaTime * TimeScalesComponent.instance.gamePlayTimeScale;
+        timeSincePress += Time.deltaTime * SingleComponentInstanceLocator.instance.timeScalesComponent.gamePlayTimeScale;
     }
 }

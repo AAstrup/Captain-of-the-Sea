@@ -24,7 +24,7 @@ public class ShootComponent : MonoBehaviour {
         var gmj = Instantiate(bulletPrefab, firePoint.position, transform.rotation);
         var bullet = gmj.GetComponent<BulletComponent>();
         bullet.myOwner.owner = ownerComponent.owner;
-        ParticlePoolComponent.instance.FireParticleSystem(ParticlePoolComponent.ParticleSystemType.CannonFire, firePoint.transform.position, transform.eulerAngles.z);
+        SingleComponentInstanceLocator.instance.particlePoolComponent.FireParticleSystem(ParticlePoolComponent.ParticleSystemType.CannonFire, firePoint.transform.position, transform.eulerAngles.z);
         audio.Play();
     }
 }

@@ -10,18 +10,12 @@ using UnityEngine.UI;
 /// </summary>
 public class PlayerScoreComponent : MonoBehaviour {
 
-    public static PlayerScoreComponent instance;
     public Text text;
     [HideInInspector]
     public int score;
 
-    private void Awake()
-    {
-        instance = this;
-    }
-
     void Start () {
-        AISpawnComponent.instance.shipSpawnedEvent += ShipSpawned;
+        SingleComponentInstanceLocator.instance.aISpawnComponent.shipSpawnedEvent += ShipSpawned;
 	}
 
     private void ShipSpawned(HealthComponent ship)

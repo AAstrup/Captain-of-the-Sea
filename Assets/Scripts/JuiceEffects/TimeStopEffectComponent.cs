@@ -14,7 +14,7 @@ public class TimeStopEffectComponent : MonoBehaviour {
     private void Start()
     {
         PlayerIdentifierComponent.playerGameObject.GetComponent<HealthComponent>().healthChangedEvent += delegate (HealthComponent victim, float damage, float healthLeft) { StopTime(); };
-        AISpawnComponent.instance.shipSpawnedEvent += ShipSpawned;
+        SingleComponentInstanceLocator.instance.aISpawnComponent.shipSpawnedEvent += ShipSpawned;
     }
 
     private void ShipSpawned(HealthComponent healthComponent)
@@ -30,7 +30,7 @@ public class TimeStopEffectComponent : MonoBehaviour {
     void Update()
     {
         var timeValue = timeReductionAmount.Evaluate(timeSinceLastStpo);
-        TimeScalesComponent.instance.gamePlayTimeScale = timeValue;
+        SingleComponentInstanceLocator.instance.timeScalesComponent.gamePlayTimeScale = timeValue;
         timeSinceLastStpo += Time.deltaTime;
     }
 

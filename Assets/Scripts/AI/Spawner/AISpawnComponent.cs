@@ -4,11 +4,8 @@ using UnityEngine;
 
 /// <summary>
 /// Responsible for spawning and tracking the enemies alive
-/// This is a singleton for other to subscribe to event
 /// </summary>
 public class AISpawnComponent : MonoBehaviour {
-
-    public static AISpawnComponent instance;
     public Vector2 spawnAreaRange;
     public AISpawnDefinition[] enemyDefinitions;
     int shipsAlive;
@@ -20,19 +17,14 @@ public class AISpawnComponent : MonoBehaviour {
     public NewWave newWaveEvent;
     private static readonly float heightOffset = 11f;
 
-    private void Awake()
-    {
-        instance = this;
-    }
-
     private void Start()
     {
-        MenuStartComponent.instance.gameStartedEvent += SpawnWave;
+        SingleComponentInstanceLocator.instance.menuStartComponent.gameStartedEvent += SpawnWave;
     }
 
     void SpawnWave()
     {
-        transform.position = PlayerIdentifierComponent.playerGameObject.transform.position + new Vector3(0, heightOffset, 0) + CameraDirectorComponent.instance.playerDistanceToCameraCenter;
+        transform.position = PlayerIdentifierComponent.playerGameObject.transform.position + new Vector3(0, heightOffset, 0) + SingleComponentInstanceLocator.instance.cameraDirectorComponent.playerDistanceToCameraCenter;
 
         difficulty = Mathf.FloorToInt(difficulty + 1 + (difficulty/10f));
         if (newWaveEvent != null)

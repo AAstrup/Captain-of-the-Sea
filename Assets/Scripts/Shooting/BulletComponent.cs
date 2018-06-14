@@ -33,14 +33,13 @@ internal class BulletComponent : MonoBehaviour
         transform.position += transform.right * Time.deltaTime * TimeScalesComponent.instance.gamePlayTimeScale * speed.Evaluate(value) * speedMultiplier;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         HealthComponent victim = collision.gameObject.GetComponent<HealthComponent>();
         if (victim && victim.ownerComponent.owner != myOwner.owner)
         {
             victim.Damage(damage);
             ParticlePoolComponent.instance.FireParticleSystem(ParticlePoolComponent.ParticleSystemType.ShipHit, transform.position, transform.eulerAngles.z + 180f);
-            Destroy(gameObject);
         }
     }
 }

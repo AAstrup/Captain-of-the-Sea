@@ -9,32 +9,37 @@ using UnityEngine;
 public class ParticlePoolComponent : MonoBehaviour {
     public static ParticlePoolComponent instance;
     public enum ParticleSystemType { CannonFire, ShipHit }
-    Dictionary<ParticleSystemType, ParticleSystemRegisterComponent> particlesSystems;
+    Dictionary<ParticleSystemType, List<ParticleSystemRegisterComponent>> particlesSystems;
 
     void Awake () {
         instance = this;
 
-        particlesSystems = new Dictionary<ParticleSystemType, ParticleSystemRegisterComponent>();
+        particlesSystems = new Dictionary<ParticleSystemType, List<ParticleSystemRegisterComponent>>();
         foreach (var item in GetComponentsInChildren<ParticleSystemRegisterComponent>())
         {
-            particlesSystems.Add(item.particleSystemType, item);
+            if (!particlesSystems.ContainsKey(item.particleSystemType))
+                particlesSystems.Add(item.particleSystemType, new List<ParticleSystemRegisterComponent>());
+            particlesSystems[item.particleSystemType].Add(item);
         }
 	}
 
     /// <summary>
-    /// Fires the particles default amount of particles at the given position and rotation
+    /// Fires the particles of the type with a default amount of particles at the given position and rotation
     /// </summary>
     /// <param name="systemType">Type of particle</param>
     /// <param name="position">Position to spawn particle</param>
     /// <param name="rotation">Rotation of particleSystem</param>
 	public void FireParticleSystem(ParticleSystemType systemType, Vector3 position, float rotation)
     {
-        var system = particlesSystems[systemType];
-        FireParticleSystem(systemType, position, rotation, system.defaultParticleAmount);
+        var systems = particlesSystems[systemType];
+        foreach (var item in systems)
+        {
+            FireParticlesSystem(item, position, rotation, Random.Range(item.defaultParticleAmountMin, item.defaultParticleAmountMax));
+        }
     }
 
     /// <summary>
-    /// Fires the particles of the type at a position and rotation
+    /// Fires the particlesystems of the type at a position and rotation
     /// </summary>
     /// <param name="systemType">Type of particle</param>
     /// <param name="position">Position to spawn particle</param>
@@ -42,13 +47,27 @@ public class ParticlePoolComponent : MonoBehaviour {
     /// <param name="amount">Amount of particles to spawn</param>
     public void FireParticleSystem(ParticleSystemType systemType, Vector3 position, float rotation,int amount)
     {
-        var system = particlesSystems[systemType];
+        var systems = particlesSystems[systemType];
+        foreach (var item in systems)
+        {
+            FireParticlesSystem(item, position, rotation, amount);
+        }
+    }
 
+    /// <summary>
+    /// Fires a ParticleSystemRegisterComponent at a position with a rotation
+    /// </summary>
+    /// <param name="system">ParticleSystemRegisterComponent to fire</param>
+    /// <param name="position">Position to set it to</param>
+    /// <param name="rotation">Rotation to set it to</param>
+    /// <param name="amount">Amount to fire</param>
+    private void FireParticlesSystem(ParticleSystemRegisterComponent system, Vector3 position, float rotation, int amount)
+    {
         system.transform.position = position;
         system.transform.eulerAngles = (system.rotationVector * rotation) + system.rotationOffset;
 
         if (amount == 0)
-            amount = system.defaultParticleAmount;
+            amount = Random.Range(system.defaultParticleAmountMin, system.defaultParticleAmountMax);
 
         system.particleSystemContained.Emit(amount);
     }

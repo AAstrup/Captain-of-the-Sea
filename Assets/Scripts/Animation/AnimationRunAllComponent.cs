@@ -5,30 +5,28 @@ using UnityEngine;
 public class AnimationRunAllComponent : MonoBehaviour {
     public bool repeat;
     public float repeatTime = 0f;
-    float timeLeftBefore;
+    public float delayTime = 0f;
+    float triggerTimeLeft;
     private IAnimationObject[] animationComponents;
 
     void Start () {
         animationComponents = GetComponents<IAnimationObject>();
-        foreach (var item in animationComponents)
-        {
-            item.StartAnimation();
-        }
+        triggerTimeLeft = repeatTime + delayTime;
     }
 
     private void Update()
     {
-        if (!repeat)
-            return;
-
-        timeLeftBefore += Time.deltaTime;
-        if(timeLeftBefore >= repeatTime)
+        triggerTimeLeft -= Time.deltaTime;
+        if(triggerTimeLeft < 0f)
         {
-            timeLeftBefore -= repeatTime;
+            triggerTimeLeft = repeatTime;
             foreach (var item in animationComponents)
             {
                 item.StartAnimation();
             }
+
+            if (!repeat)
+                enabled = false;
         }
     }
 }

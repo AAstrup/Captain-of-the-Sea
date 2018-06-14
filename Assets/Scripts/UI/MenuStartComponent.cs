@@ -9,8 +9,8 @@ using UnityEngine;
 public class MenuStartComponent : MonoBehaviour {
 
     public static MenuStartComponent instance;
-    public GameObject[] gameObjectsToActivate;
-    public Behaviour[] componentsToActivate;
+    public GameObject[] gameObjectsToActivateOnStart;
+    public Behaviour[] componentsToActivateOnStart;
     public GameObject[] gameObjectsToDisable;
     public delegate void GameStartedEvent();
     public GameStartedEvent gameStartedEvent;
@@ -22,11 +22,11 @@ public class MenuStartComponent : MonoBehaviour {
 
     private void Start()
     {
-        foreach (var item in gameObjectsToActivate)
+        foreach (var item in gameObjectsToActivateOnStart)
         {
             item.SetActive(false);
         }
-        foreach (var item in componentsToActivate)
+        foreach (var item in componentsToActivateOnStart)
         {
             item.enabled = false;
         }
@@ -34,11 +34,11 @@ public class MenuStartComponent : MonoBehaviour {
 
     public void StartMap()
     {
-        foreach (var item in gameObjectsToActivate)
+        foreach (var item in gameObjectsToActivateOnStart)
         {
             item.SetActive(true);
         }
-        foreach (var item in componentsToActivate)
+        foreach (var item in componentsToActivateOnStart)
         {
             item.enabled = true;
         }

@@ -41,6 +41,12 @@ TagManager:
   - name: Water
     uniqueID: 2237678897
     locked: 0
+  - name: CannonBall
+    uniqueID: 1093404001
+    locked: 0
+  - name: ParticlesBackground
+    uniqueID: 840514057
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

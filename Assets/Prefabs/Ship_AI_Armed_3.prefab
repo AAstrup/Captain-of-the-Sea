@@ -69,6 +69,7 @@ GameObject:
   - component: {fileID: 212358306115883982}
   - component: {fileID: 114613824242741962}
   - component: {fileID: 82348965627539654}
+  - component: {fileID: 114617114007919766}
   m_Layer: 0
   m_Name: Cannon
   m_TagString: Untagged
@@ -103,6 +104,7 @@ GameObject:
   - component: {fileID: 212542494673247088}
   - component: {fileID: 114863015216642898}
   - component: {fileID: 82176064643444854}
+  - component: {fileID: 114417441109095808}
   m_Layer: 0
   m_Name: Cannon (1)
   m_TagString: Untagged
@@ -194,7 +196,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1634089391017992}
   m_LocalRotation: {x: 0, y: -0, z: 0.7071068, w: -0.7071068}
-  m_LocalPosition: {x: -8.423583, y: -3.9582558, z: 0}
+  m_LocalPosition: {x: -16.589407, y: -8.295826, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4642523048648962}
@@ -497,7 +499,7 @@ TrailRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -2057288399
-  m_SortingLayer: -1
+  m_SortingLayer: -3
   m_SortingOrder: 1
   m_Time: 2
   m_Parameters:
@@ -595,6 +597,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timeBetweenShotsMin: 3
   timeBetweenShotsMax: 5
+--- !u!114 &114417441109095808
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1629160669953272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5762431e8e30ff840b3bdd22f1219e42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioChannelType: 0
 --- !u!114 &114530686560314436
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -620,6 +634,18 @@ MonoBehaviour:
   firePoint: {fileID: 4157667908301154}
   bulletPrefab: {fileID: 1109240966156710, guid: c690886dbf8746041a12f0f8161eb97f,
     type: 2}
+--- !u!114 &114617114007919766
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1400249425941354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5762431e8e30ff840b3bdd22f1219e42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioChannelType: 0
 --- !u!114 &114632737403863174
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -692,12 +718,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6be12adfc7d74c247a24e01ce191299a, type: 3}
+  m_Sprite: {fileID: 21300022, guid: 6285f07d1018ed141b6849644b335bf9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 5.6, y: 1.3}
+  m_Size: {x: 0.55, y: 0.34}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -736,12 +762,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: d25ed89291cdabe4a906c101b3ebe71c, type: 3}
+  m_Sprite: {fileID: 21300006, guid: 6285f07d1018ed141b6849644b335bf9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.5, y: 1.08}
+  m_Size: {x: 1.28, y: 0.89}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -780,12 +806,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6be12adfc7d74c247a24e01ce191299a, type: 3}
+  m_Sprite: {fileID: 21300022, guid: 6285f07d1018ed141b6849644b335bf9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 5.6, y: 1.3}
+  m_Size: {x: 0.55, y: 0.34}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -824,12 +850,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 5d4faad351f2b2d458cdcc47695fbb99, type: 3}
+  m_Sprite: {fileID: 21300014, guid: 6285f07d1018ed141b6849644b335bf9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.5, y: 1.08}
+  m_Size: {x: 0.96, y: 2.09}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

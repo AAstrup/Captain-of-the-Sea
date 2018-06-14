@@ -32,6 +32,6 @@ public class PlayerScoreComponent : MonoBehaviour {
     private void IncreaseScore(HealthComponent victim)
     {
         score++;
-        text.text = "Score: " + score;
+        text.text = score.ToString();
     }
 }

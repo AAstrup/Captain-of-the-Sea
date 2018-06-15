@@ -25,10 +25,10 @@ public class PlayerShipMovementComponent : MonoBehaviour {
 
     private void Start()
     {
-        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback);
+        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback);
     }
 
-    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
         locator.componentReferences.menuStartComponent.gameStartedEvent += UpdateTargetPosition;
     }

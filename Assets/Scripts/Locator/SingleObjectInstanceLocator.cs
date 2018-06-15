@@ -7,24 +7,30 @@ using UnityEngine;
 /// Allows any component at any time to register for a callback returning unity component dependencies
 /// Returns components there is a single instance of
 /// </summary>
-public class SingleComponentInstanceLocator {
+public class SingleObjectInstanceLocator {
 
-    // References
-    private static SingleComponentInstanceLocator instance;
-    private static SingleComponentInstanceLocator Instance
+    // Instance management
+    private static SingleObjectInstanceLocator instance;
+    private static SingleObjectInstanceLocator GetInstance()
     {
-        get
+        if (instance == null)
         {
-            if (instance == null)
-                instance = new SingleComponentInstanceLocator();
-            return instance;
+            instance = new SingleObjectInstanceLocator();
+            instance.objectReferences.SetupDependentObjects();
         }
+        return instance;
     }
-    private SingleComponentInstanceLocator() { }
+
+    private SingleObjectInstanceLocator() {
+        objectReferences = new SingleObjectInstanceReferences();
+    }
+
+    // Instances that it has located
     public SingleComponentInstanceReferences componentReferences;
+    public SingleObjectInstanceReferences objectReferences;
 
     // Callback
-    public delegate void DependenciesReadyEvent(SingleComponentInstanceLocator locator);
+    public delegate void DependenciesReadyEvent(SingleObjectInstanceLocator locator);
     public DependenciesReadyEvent dependenciesReadyEvent;
 
     /// <summary>
@@ -34,9 +40,9 @@ public class SingleComponentInstanceLocator {
     /// <param name="singleComponentInstanceBehaviour"></param>
     public static void RegisterComponentReferences(SingleComponentInstanceReferences singleComponentInstanceBehaviour)
     {
-        Instance.componentReferences = singleComponentInstanceBehaviour;
-        if (Instance.dependenciesReadyEvent != null)
-            Instance.dependenciesReadyEvent(instance);
+        GetInstance().componentReferences = singleComponentInstanceBehaviour;
+        if (GetInstance().dependenciesReadyEvent != null)
+            GetInstance().dependenciesReadyEvent(instance);
     }
 
     /// <summary>
@@ -45,10 +51,10 @@ public class SingleComponentInstanceLocator {
     /// <param name="callback"></param>
     public static void SubscribeToDependenciesCallback(DependenciesReadyEvent callback)
     {
-        if (Instance.IsReady())
-            callback(Instance);
+        if (GetInstance().IsReady())
+            callback(GetInstance());
         else
-            Instance.dependenciesReadyEvent += callback;
+            GetInstance().dependenciesReadyEvent += callback;
     }
 
     private bool IsReady()
@@ -66,6 +72,11 @@ public class SingleComponentInstanceLocator {
     {
         behaviour.enabled = false;
         SubscribeToDependenciesCallback(callback);
-        SubscribeToDependenciesCallback(delegate (SingleComponentInstanceLocator singleComponentInstanceLocator) { behaviour.enabled = true; });
+        SubscribeToDependenciesCallback(delegate (SingleObjectInstanceLocator singleComponentInstanceLocator) { behaviour.enabled = true; });
+    }
+
+    internal static void ReloadScene()
+    {
+        instance = null;
     }
 }

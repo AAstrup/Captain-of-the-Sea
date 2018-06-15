@@ -22,7 +22,7 @@ public class HealthComponent : MonoBehaviour
     private void Awake()
     {
         ownerComponent = GetComponent<OwnerComponent>();
-        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback);
+        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback);
     }
 
     public void Damage(float dmg)
@@ -35,7 +35,7 @@ public class HealthComponent : MonoBehaviour
             Death();
     }
 
-    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
         soundEffectPoolComponent = locator.componentReferences.soundEffectPoolComponent;
     }

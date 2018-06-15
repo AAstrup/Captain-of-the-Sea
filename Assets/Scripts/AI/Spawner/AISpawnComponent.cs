@@ -7,14 +7,18 @@ using UnityEngine;
 /// Responsible for spawning and tracking the enemies alive
 /// </summary>
 public class AISpawnComponent : MonoBehaviour {
+    // Spawn info
     public Vector2 spawnAreaRange;
     public AISpawnDefinition[] enemyDefinitions;
-    int shipsAlive;
-    int waveNr;
-    int difficulty;
     public delegate void ShipSpawned(HealthComponent healthComponent);
     public ShipSpawned shipSpawnedEvent;
-    public delegate void NewWave(int difficulty);
+    int shipsAlive;
+    
+    // Wave info
+    int waveNr;
+    int difficultyAccumilated;
+    public DifficultyIncrease[] difficultyIncreases;
+    public delegate void NewWave(int difficulty, DifficultyIncrease difficultyIncrease);
     public NewWave newWaveEvent;
     private PlayerIdentifierComponent playerIdentifierComponent;
     private CameraDirectorComponent cameraDirectorComponent;
@@ -22,10 +26,10 @@ public class AISpawnComponent : MonoBehaviour {
 
     private void Awake()
     {
-        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
     }
 
-    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
         locator.componentReferences.menuStartComponent.gameStartedEvent += SpawnWave;
         playerIdentifierComponent = locator.componentReferences.playerIdentifierComponent;
@@ -36,18 +40,19 @@ public class AISpawnComponent : MonoBehaviour {
     {
         transform.position = playerIdentifierComponent.playerGameObject.transform.position + new Vector3(0, heightOffset, 0) + cameraDirectorComponent.playerDistanceToCameraCenter;
 
-        difficulty = Mathf.FloorToInt(difficulty + 1 + (difficulty/10f));
+        waveNr++;
+        var difficultyIncrease = difficultyIncreases[waveNr % difficultyIncreases.Length];
+        difficultyAccumilated += difficultyIncrease.increaseAmount;
+        int difficultyThisWave = difficultyAccumilated + difficultyIncrease.currentWaveOnlyIncrease;
         if (newWaveEvent != null)
-            newWaveEvent(difficulty);
-
-        int difficultyResourceLeft = difficulty;
+            newWaveEvent(difficultyThisWave, difficultyIncrease);
 
         for (int i = enemyDefinitions.Length - 1; i >= 0; i--)
         {
-            while(enemyDefinitions[i].difficultyCost <= difficultyResourceLeft)
+            while(enemyDefinitions[i].difficultyCost <= difficultyThisWave)
             {
                 SpawnEnemy(enemyDefinitions[i].prefab);
-                difficultyResourceLeft -= enemyDefinitions[i].difficultyCost;
+                difficultyThisWave -= enemyDefinitions[i].difficultyCost;
             }
         }
     }

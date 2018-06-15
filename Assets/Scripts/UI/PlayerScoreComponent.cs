@@ -15,10 +15,11 @@ public class PlayerScoreComponent : MonoBehaviour {
     public int score;
 
     void Start () {
-        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
-	}
+        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+        UpdateUI();
+    }
 
-    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
         locator.componentReferences.aISpawnComponent.shipSpawnedEvent += ShipSpawned;
     }
@@ -31,6 +32,11 @@ public class PlayerScoreComponent : MonoBehaviour {
     private void IncreaseScore(HealthComponent victim)
     {
         score++;
-        text.text = score.ToString();
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        text.text = "Ships sunk " + score.ToString();
     }
 }

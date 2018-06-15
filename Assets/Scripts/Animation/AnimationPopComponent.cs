@@ -17,10 +17,10 @@ public class AnimationPopComponent : MonoBehaviour, IAnimationObject {
     {
         timeSinceTriggered = sizeIncrement.length;
         normalScale = transform.localScale;
-        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
     }
 
-    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
         timeScalesComponent = locator.componentReferences.timeScalesComponent;
     }

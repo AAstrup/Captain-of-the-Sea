@@ -12,10 +12,10 @@ public class PlayerHealthBarComponent : MonoBehaviour {
     private float startHealth;
 
     void Start () {
-        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
 	}
 
-    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
         var playerHealthComponent = locator.componentReferences.playerIdentifierComponent.playerGameObject.GetComponent<HealthComponent>();
         startHealth = playerHealthComponent.health;

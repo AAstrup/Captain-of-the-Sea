@@ -19,6 +19,6 @@ public class SingleComponentInstanceReferences : MonoBehaviour
 
     private void Start()
     {
-        SingleComponentInstanceLocator.RegisterComponentReferences(this);
+        SingleObjectInstanceLocator.RegisterComponentReferences(this);
     }
 }

@@ -11,10 +11,10 @@ public class FireButtonSetupComponent : MonoBehaviour {
 
     private void Awake()
     {
-        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback);
+        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback);
     }
 
-    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
         button.onClick.AddListener(delegate () { locator.componentReferences.playerIdentifierComponent.playerGameObject.GetComponent<PlayerShootComponent>().Fire(); });
     }

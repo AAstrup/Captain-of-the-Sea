@@ -14,10 +14,10 @@ public class WaterMoveComponent : MonoBehaviour {
     private static readonly int checkTickRate = 30;
 
     void Start () {
-        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
     }
 
-    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
         cachedPlayerReference = locator.componentReferences.playerIdentifierComponent.playerGameObject.transform;
     }

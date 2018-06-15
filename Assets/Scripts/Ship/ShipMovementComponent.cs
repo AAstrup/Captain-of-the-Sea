@@ -16,11 +16,11 @@ public class ShipMovementComponent : MonoBehaviour
 
     public void Awake()
     {
-        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
         shipConfiguration = GetComponent<ShipConfigurationComponent>();
     }
 
-    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
         timeScalesComponent = locator.componentReferences.timeScalesComponent;
     }

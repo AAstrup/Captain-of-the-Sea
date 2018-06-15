@@ -18,10 +18,10 @@ public class AIShipMovementComponent : MonoBehaviour {
 
     private void Start()
     {
-        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
     }
 
-    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
         gameObjectTarget = locator.componentReferences.playerIdentifierComponent.playerGameObject;
     }

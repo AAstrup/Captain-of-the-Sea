@@ -23,11 +23,11 @@ public class GameOverComponent : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
         gameObject.SetActive(false);
     }
 
-    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
         locator.componentReferences.playerIdentifierComponent.playerGameObject.GetComponent<HealthComponent>().dieEvent += GameOver;
         playerScoreComponent = locator.componentReferences.playerScoreComponent;

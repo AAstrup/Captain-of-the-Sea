@@ -23,10 +23,10 @@ public class CameraDirectorComponent : MonoBehaviour {
 
     private void Start()
     {
-        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
     }
 
-    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
         playerIdentifierComponent = locator.componentReferences.playerIdentifierComponent;
         playerDistanceToCameraCenter = transform.position - playerIdentifierComponent.playerGameObject.transform.position;
@@ -39,7 +39,7 @@ public class CameraDirectorComponent : MonoBehaviour {
             cameraPosition = (targetPosition.Value - cameraPosition)/2f + cameraPosition;
     }
 
-    private void NewWave(int difficulty)
+    private void NewWave(int difficulty, DifficultyIncrease difficultyIncrease)
     {
         SetCameraTargetPosition(playerIdentifierComponent.playerGameObject.transform.position);
     }

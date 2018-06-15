@@ -18,10 +18,10 @@ public class ShootComponent : MonoBehaviour {
     {
         audio = GetComponent<AudioSource>();
         ownerComponent = GetComponentInParent<OwnerComponent>();
-        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
     }
 
-    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
         particlePoolComponent = locator.componentReferences.particlePoolComponent;
     }

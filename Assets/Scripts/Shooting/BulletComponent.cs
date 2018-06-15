@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -17,15 +18,17 @@ internal class BulletComponent : MonoBehaviour
     Vector3 startScale;
     private TimeScalesComponent timeScalesComponent;
     private ParticlePoolComponent particlePoolComponent;
+    private List<HealthComponent> victimsHit;
 
     private void Awake()
     {
         startScale = transform.localScale;
         lifeSpanLeft = lifeSpanTotal;
-        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+        victimsHit = new List<HealthComponent>();
     }
 
-    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
         timeScalesComponent = locator.componentReferences.timeScalesComponent;
         particlePoolComponent = locator.componentReferences.particlePoolComponent;
@@ -46,8 +49,9 @@ internal class BulletComponent : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         HealthComponent victim = collision.gameObject.GetComponent<HealthComponent>();
-        if (victim && victim.ownerComponent.owner != myOwner.owner)
+        if (victim && victim.ownerComponent.owner != myOwner.owner && !victimsHit.Contains(victim))
         {
+            victimsHit.Add(victim);
             victim.Damage(damage);
             particlePoolComponent.FireParticleSystem(ParticlePoolComponent.ParticleSystemType.ShipHit, transform.position, transform.eulerAngles.z + 180f);
         }

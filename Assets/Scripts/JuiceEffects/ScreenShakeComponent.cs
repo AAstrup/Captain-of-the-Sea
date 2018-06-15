@@ -19,10 +19,10 @@ public class ScreenShakeComponent : MonoBehaviour {
     {
         cameraDirectorComponent = GetComponent<CameraDirectorComponent>();
 
-        SingleComponentInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
     }
 
-    private void DependencyCallback(SingleComponentInstanceLocator locator)
+    private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
         locator.componentReferences.playerIdentifierComponent.playerGameObject.GetComponent<HealthComponent>().healthChangedEvent += delegate (HealthComponent victim, float damage, float healthLeft) { StartShake(); };
         locator.componentReferences.playerIdentifierComponent.playerGameObject.GetComponent<PlayerShootComponent>().fireEvent += delegate () { StartShake(); };

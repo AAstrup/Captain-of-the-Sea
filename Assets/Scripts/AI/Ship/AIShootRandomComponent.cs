@@ -25,7 +25,7 @@ public class AIShootRandomComponent : MonoBehaviour {
 
     void Update()
     {
-        timeLeft -= Time.deltaTime * timeScalesComponent.gamePlayTimeScale; ;
+        timeLeft -= Time.deltaTime * timeScalesComponent.GetGamePlayTimeScale();
         if (timeLeft < 0)
         {
             timeLeft = UnityEngine.Random.Range(timeBetweenShotsMin, timeBetweenShotsMax);

@@ -16,6 +16,7 @@ public class PlayerShipMovementComponent : MonoBehaviour {
     private int fingerID = 0;
 
     public AnimationPopComponent targetAnimation;
+    private CameraDirectorComponent cameraDirectorComponent;
 
     void Awake () {
         playerInputLibrary = GetComponent<PlayerInputComponent>();
@@ -31,6 +32,7 @@ public class PlayerShipMovementComponent : MonoBehaviour {
     private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
         locator.componentReferences.menuStartComponent.gameStartedEvent += UpdateTargetPosition;
+        cameraDirectorComponent = locator.componentReferences.cameraDirectorComponent;
     }
 
     void Update () {

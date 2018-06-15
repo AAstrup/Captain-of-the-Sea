@@ -10,6 +10,7 @@ using UnityEngine;
 [RequireComponent(typeof(OwnerComponent))]
 public class HealthComponent : MonoBehaviour
 {
+    float startHealth;
     public float health = 10;
     public delegate void DieEvent(HealthComponent victim);
     public DieEvent dieEvent;
@@ -18,10 +19,14 @@ public class HealthComponent : MonoBehaviour
     [HideInInspector]
     public OwnerComponent ownerComponent;
     private SoundEffectPoolComponent soundEffectPoolComponent;
+    private ParticlePoolComponent particlePoolComponent;
+    private ICustomDeathComponent customDeathComponent;
 
     private void Awake()
     {
+        startHealth = health;
         ownerComponent = GetComponent<OwnerComponent>();
+        customDeathComponent = GetComponent<ICustomDeathComponent>();
         SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback);
     }
 
@@ -35,9 +40,17 @@ public class HealthComponent : MonoBehaviour
             Death();
     }
 
+    public void Revive()
+    {
+        health = startHealth;
+        if (healthChangedEvent != null)
+            healthChangedEvent(this, -startHealth, health);
+    }
+
     private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
         soundEffectPoolComponent = locator.componentReferences.soundEffectPoolComponent;
+        particlePoolComponent = locator.componentReferences.particlePoolComponent;
     }
 
     private void Death()
@@ -45,6 +58,10 @@ public class HealthComponent : MonoBehaviour
         if (dieEvent != null)
             dieEvent(this);
 
-        Destroy(gameObject);
+        particlePoolComponent.FireParticleSystem(ParticlePoolComponent.ParticleSystemType.ShipDead, transform.position, 0f);
+        if (customDeathComponent != null)
+            customDeathComponent.TriggerDeathEvent();
+        else
+            Destroy(gameObject);
     }
 }

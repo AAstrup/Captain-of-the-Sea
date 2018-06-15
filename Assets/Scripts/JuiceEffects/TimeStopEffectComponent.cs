@@ -38,7 +38,7 @@ public class TimeStopEffectComponent : MonoBehaviour {
     void Update()
     {
         var timeValue = timeReductionAmount.Evaluate(timeSinceLastStpo);
-        timeScalesComponent.gamePlayTimeScale = timeValue;
+        timeScalesComponent.SetGamePlayTimeScale(timeValue);
         timeSinceLastStpo += Time.deltaTime;
     }
 

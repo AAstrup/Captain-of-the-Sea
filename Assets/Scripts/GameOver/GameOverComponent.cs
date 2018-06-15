@@ -31,6 +31,16 @@ public class GameOverComponent : MonoBehaviour {
     {
         locator.componentReferences.playerIdentifierComponent.playerGameObject.GetComponent<HealthComponent>().dieEvent += GameOver;
         playerScoreComponent = locator.componentReferences.playerScoreComponent;
+        locator.componentReferences.playerIdentifierComponent.GetComponent<PlayerReviveComponent>().playerRevivedEvent += playerRevived;
+    }
+
+    private void playerRevived()
+    {
+        gameObject.SetActive(false);
+        foreach (var item in disableGameObjectsOnGameOver)
+        {
+            item.SetActive(true);
+        }
     }
 
     private void GameOver(HealthComponent player)

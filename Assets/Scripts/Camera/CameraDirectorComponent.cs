@@ -16,6 +16,10 @@ public class CameraDirectorComponent : MonoBehaviour {
     [HideInInspector]
     public Vector3 playerDistanceToCameraCenter;
     private PlayerIdentifierComponent playerIdentifierComponent;
+    private AISpawnComponent aISpawnComponent;
+    private TimeScalesComponent timeScalesComponent;
+    public float panSpeed = 1f;
+    private float enemyShipWeight = 0.666f;
 
     void Awake () {
         cameraPosition = transform.position;
@@ -30,22 +34,30 @@ public class CameraDirectorComponent : MonoBehaviour {
     {
         playerIdentifierComponent = locator.componentReferences.playerIdentifierComponent;
         playerDistanceToCameraCenter = transform.position - playerIdentifierComponent.playerGameObject.transform.position;
-        locator.componentReferences.aISpawnComponent.newWaveEvent += NewWave;
+        aISpawnComponent = locator.componentReferences.aISpawnComponent;
+        timeScalesComponent = locator.componentReferences.timeScalesComponent;
     }
 
     private void Update()
     {
-        if(targetPosition.HasValue)
-            cameraPosition = (targetPosition.Value - cameraPosition)/2f + cameraPosition;
-    }
+        var playerPos = new Vector3(playerIdentifierComponent.transform.position.x, playerIdentifierComponent.transform.position.y, cameraPosition.z);
+        targetPosition = playerPos;
 
-    private void NewWave(int difficulty, DifficultyIncrease difficultyIncrease)
-    {
-        SetCameraTargetPosition(playerIdentifierComponent.playerGameObject.transform.position);
-    }
+        if (aISpawnComponent.shipsAlive.Count > 0)
+        {
+            Vector3 accumilatedShipPositions = Vector3.zero;
+            Vector3 averageShipPosition = Vector3.zero;
+            foreach (var item in aISpawnComponent.shipsAlive)
+            {
+                accumilatedShipPositions += item.position - playerPos;
+            }
+            {
+                averageShipPosition = (accumilatedShipPositions / aISpawnComponent.shipsAlive.Count) * enemyShipWeight;
+            }
+            targetPosition += new Vector3(averageShipPosition.x, averageShipPosition.y, 0f);
+        }
 
-    void SetCameraTargetPosition(Vector3 position)
-    {
-        targetPosition = new Vector3(position.x, position.y, cameraPosition.z) + playerDistanceToCameraCenter;
+        if (targetPosition.HasValue)
+            cameraPosition = (targetPosition.Value - cameraPosition) * timeScalesComponent.GetGamePlayTimeScale() * Time.deltaTime * panSpeed + cameraPosition;
     }
 }

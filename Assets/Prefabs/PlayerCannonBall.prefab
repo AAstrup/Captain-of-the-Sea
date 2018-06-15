@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1109240966156710}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.882984, y: 1.1011567, z: 0}
+  m_LocalPosition: {x: -9.086, y: -1.1536729, z: 0}
   m_LocalScale: {x: 0.4, y: 0.35, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -110,14 +110,14 @@ MonoBehaviour:
     - serializedVersion: 2
       time: 0
       value: 1
-      inSlope: -1
-      outSlope: -1
+      inSlope: -0.3271326
+      outSlope: -0.3271326
       tangentMode: 0
     - serializedVersion: 2
       time: 1
-      value: 0
-      inSlope: -1
-      outSlope: -1
+      value: 0.15
+      inSlope: -1.6542542
+      outSlope: -1.6542542
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -142,6 +142,24 @@ MonoBehaviour:
     m_RotationOrder: 0
   speedMultiplier: 5
   damage: 1
+  particleSpawnRate:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 40
+      inSlope: -40.107258
+      outSlope: -40.107258
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: -40.051826
+      outSlope: -40.051826
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
 --- !u!212 &212936889607149058
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -174,7 +192,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1093404001
-  m_SortingLayer: -2
+  m_SortingLayer: -1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b104bde9b1b30a74bae032d265e82ec2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

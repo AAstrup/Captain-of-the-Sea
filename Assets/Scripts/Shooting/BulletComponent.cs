@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Responsible for moving a bullet and detecting collision
+/// Responsible for moving a bullet, detecting collision, and decreasing its size (including collider)
 /// </summary>
 [RequireComponent(typeof(OwnerComponent))]
 internal class BulletComponent : MonoBehaviour
@@ -14,16 +14,19 @@ internal class BulletComponent : MonoBehaviour
     public AnimationCurve speed;
     public float speedMultiplier = 1f;
     public float damage;
-    float lifeSpanLeft;
+    float lifeTimeElapsed;
     Vector3 startScale;
     private TimeScalesComponent timeScalesComponent;
     private ParticlePoolComponent particlePoolComponent;
     private List<HealthComponent> victimsHit;
+    private float particlesAccumilated;
+    public AnimationCurve particleSpawnRate;
+    private static readonly float particleStopFireTime = 0.70f;
 
     private void Awake()
     {
         startScale = transform.localScale;
-        lifeSpanLeft = lifeSpanTotal;
+        lifeTimeElapsed = 0f;
         SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
         victimsHit = new List<HealthComponent>();
     }
@@ -36,14 +39,21 @@ internal class BulletComponent : MonoBehaviour
 
     private void Update()
     {
-        lifeSpanLeft -= Time.deltaTime * timeScalesComponent.gamePlayTimeScale;
+        lifeTimeElapsed += Time.deltaTime * timeScalesComponent.GetGamePlayTimeScale();
+        particlesAccumilated += timeScalesComponent.GetGamePlayTimeScale() * Time.deltaTime;
 
-        if (lifeSpanLeft < 0f)
+        if (lifeTimeElapsed > lifeSpanTotal)
             Destroy(gameObject);
-        
-        var value = 1f - (lifeSpanLeft / lifeSpanTotal);
-        transform.localScale = Vector3.Lerp(Vector3.zero, startScale, sizeFalling.Evaluate(value));
-        transform.position += transform.right * Time.deltaTime * timeScalesComponent.gamePlayTimeScale * speed.Evaluate(value) * speedMultiplier;
+
+        var elapsedFraction = lifeTimeElapsed / lifeSpanTotal;
+        transform.localScale = sizeFalling.Evaluate(elapsedFraction) * startScale;
+        transform.position += transform.right * Time.deltaTime * timeScalesComponent.GetGamePlayTimeScale() * speed.Evaluate(elapsedFraction) * speedMultiplier;
+
+        int particlesToSpawn = Mathf.FloorToInt(particlesAccumilated * particleSpawnRate.Evaluate(elapsedFraction));
+        if (particlesToSpawn > 0 && particleStopFireTime > elapsedFraction) {
+            particlesAccumilated -= particlesToSpawn / particleSpawnRate.Evaluate(elapsedFraction);
+            particlePoolComponent.FireParticleSystem(ParticlePoolComponent.ParticleSystemType.CannonBallInAir, transform.position, 0f, particlesToSpawn);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

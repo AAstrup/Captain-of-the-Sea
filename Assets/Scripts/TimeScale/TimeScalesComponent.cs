@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,5 +9,18 @@ using UnityEngine;
 public class TimeScalesComponent : MonoBehaviour {
 
     [HideInInspector]
-    public float gamePlayTimeScale = 1f;
+    float gamePlayTimeScale = 1f;
+    public bool gamePlayStopped;
+
+    public float GetGamePlayTimeScale()
+    {
+        if (gamePlayStopped)
+            return 0f;
+        return gamePlayTimeScale;
+    }
+
+    public void SetGamePlayTimeScale(float v)
+    {
+        gamePlayTimeScale = v;
+    }
 }

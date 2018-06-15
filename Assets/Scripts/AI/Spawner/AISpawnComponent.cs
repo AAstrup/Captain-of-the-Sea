@@ -12,7 +12,7 @@ public class AISpawnComponent : MonoBehaviour {
     public AISpawnDefinition[] enemyDefinitions;
     public delegate void ShipSpawned(HealthComponent healthComponent);
     public ShipSpawned shipSpawnedEvent;
-    int shipsAlive;
+    public List<Transform> shipsAlive;
     
     // Wave info
     int waveNr;
@@ -26,6 +26,7 @@ public class AISpawnComponent : MonoBehaviour {
 
     private void Awake()
     {
+        shipsAlive = new List<Transform>();
         SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
     }
 
@@ -68,15 +69,15 @@ public class AISpawnComponent : MonoBehaviour {
         var spawn = Instantiate(prefab, pos, Quaternion.identity);
         var healthComponent = spawn.GetComponent<HealthComponent>();
         healthComponent.dieEvent += AIShipDead;
-        shipsAlive++;
-        if(shipSpawnedEvent != null)
+        shipsAlive.Add(healthComponent.transform);
+        if (shipSpawnedEvent != null)
             shipSpawnedEvent(healthComponent);
     }
 
     private void AIShipDead(HealthComponent victim)
     {
-        shipsAlive--;
-        if (shipsAlive == 0)
+        shipsAlive.Remove(victim.transform);
+        if (shipsAlive.Count == 0)
             SpawnWave();
     }
 }

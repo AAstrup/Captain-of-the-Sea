@@ -6,15 +6,18 @@ using UnityEngine.UI;
 
 /// <summary>
 /// Responsible for updating the UI player score
-/// Is a ´singleton to allow other scripts to acces its score
+/// Also runs animations
 /// </summary>
+[RequireComponent(typeof(AnimationPopComponent))]
 public class PlayerScoreComponent : MonoBehaviour {
 
     public Text text;
     [HideInInspector]
     public int score;
+    AnimationPopComponent animationPopComponent;
 
-    void Start () {
+    void Awake () {
+        animationPopComponent = GetComponent<AnimationPopComponent>();
         SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
         UpdateUI();
     }
@@ -32,11 +35,12 @@ public class PlayerScoreComponent : MonoBehaviour {
     private void IncreaseScore(HealthComponent victim)
     {
         score++;
+        animationPopComponent.StartAnimation();
         UpdateUI();
     }
 
     private void UpdateUI()
     {
-        text.text = "Ships sunk " + score.ToString();
+        text.text = score.ToString();
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine;
 /// Serves only as a tool
 /// </summary>
 public class ParticlePoolComponent : MonoBehaviour {
-    public enum ParticleSystemType { CannonFire, ShipHit }
+    public enum ParticleSystemType { CannonFire, ShipHit, ShipDead, CannonBallInAir }
     Dictionary<ParticleSystemType, List<ParticleSystemRegisterComponent>> particlesSystems;
 
     void Awake () {

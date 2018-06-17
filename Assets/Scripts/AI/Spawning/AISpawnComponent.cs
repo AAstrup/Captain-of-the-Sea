@@ -9,7 +9,7 @@ using UnityEngine;
 public class AISpawnComponent : MonoBehaviour {
     // Spawn info
     public Vector2 spawnAreaRange;
-    public AISpawnDefinition[] enemyDefinitions;
+    public AISpawnDefinition[] shipBase;
     public delegate void ShipSpawned(HealthComponent healthComponent);
     public ShipSpawned shipSpawnedEvent;
     public List<Transform> shipsAlive;
@@ -48,19 +48,19 @@ public class AISpawnComponent : MonoBehaviour {
         if (newWaveEvent != null)
             newWaveEvent(difficultyThisWave, difficultyIncrease);
 
-        for (int i = enemyDefinitions.Length - 1; i >= 0; i--)
+        for (int i = shipBase.Length - 1; i >= 0; i--)
         {
-            while(enemyDefinitions[i].difficultyCost <= difficultyThisWave)
+            while(shipBase[i].difficultyCost <= difficultyThisWave)
             {
-                SpawnEnemy(enemyDefinitions[i].prefab);
-                difficultyThisWave -= enemyDefinitions[i].difficultyCost;
+                SpawnEnemy(shipBase[i].prefab);
+                difficultyThisWave -= shipBase[i].difficultyCost;
             }
         }
     }
 
     private float cheapestEnemyCost()
     {
-        return enemyDefinitions[0].difficultyCost;
+        return shipBase[0].difficultyCost;
     }
 
     private void SpawnEnemy(GameObject prefab)

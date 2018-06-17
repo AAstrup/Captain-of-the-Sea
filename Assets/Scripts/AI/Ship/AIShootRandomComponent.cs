@@ -3,18 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Fires shootcomponent that is children of the gameobject
+/// Fires whenever possible, starting with the cooldown on
+/// </summary>
+[RequireComponent(typeof(ShipConfigurationComponent))]
 public class AIShootRandomComponent : MonoBehaviour {
 
     ShootComponent[] shootComponents;
-    public float timeBetweenShotsMin = 1f;
-    public float timeBetweenShotsMax = 1.5f;
+    private ShipConfigurationComponent config;
     float timeLeft;
     private TimeScalesComponent timeScalesComponent;
 
     void Awake()
     {
         shootComponents = GetComponentsInChildren<ShootComponent>();
-        timeLeft = UnityEngine.Random.Range(timeBetweenShotsMin, timeBetweenShotsMax);
+        config = GetComponent<ShipConfigurationComponent>();
+        timeLeft = config.fireSpeed;
         SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
     }
 
@@ -28,7 +33,7 @@ public class AIShootRandomComponent : MonoBehaviour {
         timeLeft -= Time.deltaTime * timeScalesComponent.GetGamePlayTimeScale();
         if (timeLeft < 0)
         {
-            timeLeft = UnityEngine.Random.Range(timeBetweenShotsMin, timeBetweenShotsMax);
+            timeLeft = config.fireSpeed;
             foreach (var shootComponent in shootComponents)
             {
                 shootComponent.Fire();

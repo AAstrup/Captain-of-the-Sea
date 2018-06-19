@@ -3,16 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Advertisements;
+using UnityEngine.UI;
 
 /// <summary>
 /// Respawns the player if an ad is shown succesfully
 /// </summary>
+[RequireComponent(typeof(Button))]
 public class RespawnUIComponent : MonoBehaviour
 {
     private PlayerIdentifierComponent playerIdentifierComponent;
+    private Button button;
 
     private void Awake()
     {
+        button = GetComponent<Button>();
         SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupDependencies);
     }
 
@@ -27,6 +31,7 @@ public class RespawnUIComponent : MonoBehaviour
         {
             var options = new ShowOptions { resultCallback = HandleShowResult };
             Advertisement.Show("rewardedVideo", options);
+            button.interactable = false;
         }
     }
 

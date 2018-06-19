@@ -36,7 +36,7 @@ public class PlayerShipMovementComponent : MonoBehaviour {
     }
 
     void Update () {
-        if (Input.GetKeyDown(playerInputLibrary.moveKey) && !EventSystem.current.IsPointerOverGameObject(fingerID))
+        if (Input.GetKey(playerInputLibrary.moveKey) && !EventSystem.current.IsPointerOverGameObject(fingerID))
         {
             UpdateTargetPosition();
         }

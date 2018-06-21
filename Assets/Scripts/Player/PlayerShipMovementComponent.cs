@@ -36,7 +36,7 @@ public class PlayerShipMovementComponent : MonoBehaviour {
     }
 
     void Update () {
-        if (Input.GetKey(playerInputLibrary.moveKey) && !EventSystem.current.IsPointerOverGameObject(fingerID))
+        if (Input.GetKey(playerInputLibrary.moveKey) && !EventSystem.current.IsPointerOverGameObject(GetCursorID()))
         {
             UpdateTargetPosition();
         }
@@ -45,6 +45,14 @@ public class PlayerShipMovementComponent : MonoBehaviour {
             movementComponent.ApplyMovementInDirection(targetDirection);
         else
             movementComponent.Brake();
+    }
+
+    private int GetCursorID()
+    {
+        if (Application.isEditor)
+            return -1;
+        else
+            return fingerID;
     }
 
     private void UpdateTargetPosition()

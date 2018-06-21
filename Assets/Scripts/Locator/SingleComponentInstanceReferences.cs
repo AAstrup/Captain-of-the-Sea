@@ -16,6 +16,8 @@ public class SingleComponentInstanceReferences : MonoBehaviour
     public MenuStartComponent menuStartComponent;
     public PlayerScoreComponent playerScoreComponent;
     public PlayerIdentifierComponent playerIdentifierComponent;
+    public ShopItemPanelComponent shopItemPanelComponent;
+    public ShopItemLibraryComponent shopItemLibraryComponent;
 
     private void Start()
     {

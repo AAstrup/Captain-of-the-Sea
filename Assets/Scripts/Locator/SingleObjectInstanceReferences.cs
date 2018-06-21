@@ -6,6 +6,12 @@
 public class SingleObjectInstanceReferences
 {
     public PlayerCurrency playerCurrency;
+    public PlayerItemInventory playerItemInventory;
+
+    public SingleObjectInstanceReferences()
+    {
+        playerItemInventory = new PlayerItemInventory();
+    }
 
     /// <summary>
     /// Objects that subscribes to the callback has to be created here to prevent circulair dependency with the setup of the Instance of SingleObjectInstanceLocator

@@ -35,6 +35,22 @@ public class PlayerCurrency
     public void AddGold(int amountToAdd)
     {
         amount += amountToAdd;
+        Save();
+    }
+
+    internal bool CanAfford(int v)
+    {
+        return amount >= v;
+    }
+
+    internal void SpendGold(int v)
+    {
+        amount -= v;
+        Save();
+    }
+
+    private void Save()
+    {
         PlayerPrefs.SetInt(GoldKey, amount);
         if (goldChangedEvent != null)
             goldChangedEvent.Invoke(amount);

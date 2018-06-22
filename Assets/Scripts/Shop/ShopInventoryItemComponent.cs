@@ -7,7 +7,7 @@ using UnityEngine.UI;
 /// <summary>
 /// Responsible for showing an Item in the inventory UI
 /// </summary>
-[RequireComponent(typeof(Button), typeof(Image))]
+[RequireComponent(typeof(Button))]
 public class ShopInventoryItemComponent : MonoBehaviour {
     public Button button;
     public Image image;

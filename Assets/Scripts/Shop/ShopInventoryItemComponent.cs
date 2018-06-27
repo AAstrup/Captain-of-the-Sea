@@ -15,7 +15,7 @@ public class ShopInventoryItemComponent : MonoBehaviour {
     private PlayerItemInventory inventory;
     private PlayerItem item;
     private static readonly Color pickedColor = new Color(1f,1f,1f);
-    private static readonly Color notPickedColor = new Color(0.7f, 0.7f, 0.7f);
+    private static readonly Color notPickedColor = new Color(0.1f, 0.1f, 0.1f);
 
     private void Awake()
     {
@@ -48,8 +48,6 @@ public class ShopInventoryItemComponent : MonoBehaviour {
     private void SetIsPicked(bool isPicked)
     {
         this.isPicked = isPicked;
-        float increase = isPicked ? 0.1f : 0f;
-        transform.localScale = new Vector3(1 + increase, 1 + increase, 1 + increase);
         if (isPicked)
         {
             image.color = pickedColor;

@@ -13,7 +13,6 @@ public class ShipConfigurationComponent : MonoBehaviour
     List<IMultiplier> maxSpeedMultiplier;
     public float accelerateSpeed = 0.01f;
     List<IMultiplier> accelerationMultiplier;
-    public float fireSpeed = 2f;
     [HideInInspector]
     public HealthComponent healthComponent;
     public SpriteRenderer[] flags;

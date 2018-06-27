@@ -9,7 +9,7 @@ using UnityEngine.UI;
 /// Respawns the player if an ad is shown succesfully
 /// </summary>
 [RequireComponent(typeof(Button))]
-public class RespawnUIComponent : MonoBehaviour
+public class RespawnAdComponent : MonoBehaviour
 {
     private PlayerIdentifierComponent playerIdentifierComponent;
     private Button button;

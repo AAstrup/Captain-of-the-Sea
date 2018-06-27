@@ -11,17 +11,20 @@ public class AbilitySetupComponent : MonoBehaviour {
     private ShopItemLibraryComponent library;
     public delegate void ItemAbilitiesSetupEvent(List<IItemAbilityComponent> itemAbilities);
     public ItemAbilitiesSetupEvent itemAbilitiesSetup;
+    public SingleObjectInstanceLocator.DependenciesLoadedEvent dependenciesLoaded;
 
-    private void Awake()
+    private void Start()
     {
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(setupDependencies);
+        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupDependencies);
         if(abilitySpots == null || abilitySpots.Length == 0)
             abilitySpots = GetComponentsInChildren<AbilitySetupPositionComponent>();
     }
 
-    private void setupDependencies(SingleObjectInstanceLocator locator)
+    private void SetupDependencies(SingleObjectInstanceLocator locator)
     {
         library = locator.componentReferences.shopItemLibraryComponent;
+        if(dependenciesLoaded != null)
+            dependenciesLoaded();
     }
 
     public void InstantiateAbilities (List<AbilitySetupInfo> abilitySetupInfos)

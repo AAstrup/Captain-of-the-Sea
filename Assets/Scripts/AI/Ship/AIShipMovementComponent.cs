@@ -26,7 +26,7 @@ public class AIShipMovementComponent : MonoBehaviour {
         gameObjectTarget = locator.componentReferences.playerIdentifierComponent.playerGameObject;
     }
 
-    void Update () {
+    void FixedUpdate () {
         if(gameObjectTarget != null)
             movementComponent.ApplyMovementInDirection((gameObjectTarget.transform.position + gameObjectTarget.transform.right * -2f) - transform.position);
     }

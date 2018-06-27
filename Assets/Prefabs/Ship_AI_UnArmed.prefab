@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 114142593896386566}
   - component: {fileID: 114221044615158528}
   - component: {fileID: 114111880167350524}
+  - component: {fileID: 114385021035581336}
   m_Layer: 0
   m_Name: Ship_AI_UnArmed
   m_TagString: Untagged
@@ -311,10 +312,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 0.5
   accelerateSpeed: 0.5
-  fireSpeed: 2
   healthComponent: {fileID: 0}
   flags:
   - {fileID: 212211348089864318}
+  brakeSpeedDivider: 5
+--- !u!114 &114385021035581336
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1043980431842430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21b63304d8f90d842b4d2795fe8a73eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireSpeed: 4
 --- !u!114 &114675411745501420
 MonoBehaviour:
   m_ObjectHideFlags: 1

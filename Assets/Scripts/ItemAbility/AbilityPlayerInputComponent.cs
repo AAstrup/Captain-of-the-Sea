@@ -14,7 +14,7 @@ public class AbilityPlayerInputComponent : MonoBehaviour {
     public delegate void AbilityTriggerEvent(IItemAbilityComponent usedAbility, IItemAbilityComponent nextAbility);
     public AbilityTriggerEvent abilityTriggerEvent;
 
-    void Awake () {
+    void Start () {
         abilitySetupComponent = GetComponent<AbilitySetupComponent>();
         abilitySetupComponent.itemAbilitiesSetup += SetupAbilities;
         SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupButton);

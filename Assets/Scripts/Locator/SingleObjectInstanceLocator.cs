@@ -33,6 +33,9 @@ public class SingleObjectInstanceLocator {
     public delegate void DependenciesReadyEvent(SingleObjectInstanceLocator locator);
     public DependenciesReadyEvent dependenciesReadyEvent;
 
+    // Event declaration to use for any component that has to have loaded its dependencies to work
+    public delegate void DependenciesLoadedEvent();
+
     /// <summary>
     /// Register component references
     /// Provided from a unity behaviour

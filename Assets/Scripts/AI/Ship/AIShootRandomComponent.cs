@@ -7,19 +7,25 @@ using UnityEngine;
 /// Fires shootcomponent that is children of the gameobject
 /// Fires whenever possible, starting with the cooldown on
 /// </summary>
-[RequireComponent(typeof(ShipConfigurationComponent))]
+[RequireComponent(typeof(ShipConfigurationComponent), typeof(AIShipConfigurationComponent))]
 public class AIShootRandomComponent : MonoBehaviour {
 
     ShootComponent[] shootComponents;
-    private ShipConfigurationComponent config;
+    public ShipConfigurationComponent config;
+    public AIShipConfigurationComponent aiConfig;
     float timeLeft;
     private TimeScalesComponent timeScalesComponent;
 
     void Awake()
     {
         shootComponents = GetComponentsInChildren<ShootComponent>();
-        config = GetComponent<ShipConfigurationComponent>();
-        timeLeft = config.fireSpeed;
+        if(config == null)
+            config = GetComponent<ShipConfigurationComponent>();
+
+        if (aiConfig == null)
+            aiConfig = GetComponent<AIShipConfigurationComponent>();
+
+        timeLeft = aiConfig.fireSpeed;
         SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
     }
 
@@ -33,7 +39,7 @@ public class AIShootRandomComponent : MonoBehaviour {
         timeLeft -= Time.deltaTime * timeScalesComponent.GetGamePlayTimeScale();
         if (timeLeft < 0)
         {
-            timeLeft = config.fireSpeed;
+            timeLeft = aiConfig.fireSpeed;
             foreach (var shootComponent in shootComponents)
             {
                 shootComponent.Trigger();

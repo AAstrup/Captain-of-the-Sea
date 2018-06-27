@@ -19,7 +19,7 @@ public class PlayerCurrency
 
     Dictionary<CurrencyType, Currency> currencies;
     public enum CurrencyType { Gold, Gems };
-    public delegate void CurrenyChangedEvent(int goldAmount);
+    public delegate void CurrenyChangedEvent(int currencyAmount);
 
     public PlayerCurrency()
     {

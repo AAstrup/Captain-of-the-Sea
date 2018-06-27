@@ -25,19 +25,31 @@ public class ShipMovementComponent : MonoBehaviour
         timeScalesComponent = locator.componentReferences.timeScalesComponent;
     }
 
-    public void ApplyMovementInDirection(Vector2 direction)
+    internal void SetSpeed(float multiplier)
     {
-        velocity += direction.normalized * Time.deltaTime * timeScalesComponent.GetGamePlayTimeScale() * shipConfiguration.accelerateSpeed;
-        var angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
-        if(velocity.magnitude > shipConfiguration.maxSpeed)
-        {
-            velocity = velocity.normalized * shipConfiguration.maxSpeed;
-        }
+        velocity = velocity.normalized * multiplier;
     }
 
-	void Update () {
+    public void ApplyMovementInDirection(Vector2 direction)
+    {
+        var initialMagnitude = velocity.magnitude;
+        var velocityToAdd = direction.normalized * Time.deltaTime * timeScalesComponent.GetGamePlayTimeScale() * shipConfiguration.GetAccelerationWithMultipliers();
+        var sumVelocity = velocity + velocityToAdd;
+        
+        if(velocity.magnitude < shipConfiguration.GetMaxSpeedWithMultipliers())
+        {
+            velocity = sumVelocity;
+        }
+        else
+        {
+            velocity = (velocity.magnitude - (velocity.magnitude / shipConfiguration.brakeSpeedDivider) * timeScalesComponent.GetGamePlayTimeScale() * Time.deltaTime) * sumVelocity.normalized;
+        }
+
+        var angle = Mathf.Atan2(velocity.y, velocity.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+    }
+
+    void Update () {
         transform.position += new Vector3(velocity.x, velocity.y,0) * Time.deltaTime * timeScalesComponent.GetGamePlayTimeScale();
     }
 

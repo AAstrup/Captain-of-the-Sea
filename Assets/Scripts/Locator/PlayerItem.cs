@@ -7,8 +7,8 @@ using System.Collections.Generic;
 [Serializable]
 public class PlayerItem
 {
-    // To identify the item
-    public string uniqueItemID;
+    public ShopItemModel.ItemID uniqueItemID;
+    public AbilitySetupInfo abilitySetupInfo;
     public int itemLevel;
     public bool isActiveItem;
 }

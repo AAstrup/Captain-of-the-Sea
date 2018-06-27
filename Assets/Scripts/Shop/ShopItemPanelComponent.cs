@@ -59,7 +59,7 @@ public class ShopItemPanelComponent : MonoBehaviour {
         Debug.Log("Move costAmountCoin depending on size of gold cost");
 
         upgradeButton.onClick.RemoveAllListeners();
-        upgradeButton.interactable = playerCurrency.CanAfford(cost);
+        upgradeButton.interactable = playerCurrency.CanAfford(PlayerCurrency.CurrencyType.Gold, cost);
         if (upgradeButton.interactable)
         {
             upgradeButton.onClick.AddListener(delegate
@@ -72,7 +72,7 @@ public class ShopItemPanelComponent : MonoBehaviour {
     private void BuyItem(IShopItemModel shopItemModel)
     {
         int itemLevel = inventory.GetItemLevel(shopItemModel);
-        playerCurrency.SpendGold(shopItemModel.GetGoldCost(itemLevel));
+        playerCurrency.Spend(PlayerCurrency.CurrencyType.Gold, shopItemModel.GetGoldCost(itemLevel));
         Debug.Log("Item " + shopItemModel.GetID() + " was bought");
     }
 }

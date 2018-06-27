@@ -76,4 +76,5 @@ public class GameOverComponent : MonoBehaviour {
         else
             return 0;
     }
+    
 }

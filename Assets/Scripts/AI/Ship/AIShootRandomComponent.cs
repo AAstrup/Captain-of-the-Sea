@@ -36,7 +36,7 @@ public class AIShootRandomComponent : MonoBehaviour {
             timeLeft = config.fireSpeed;
             foreach (var shootComponent in shootComponents)
             {
-                shootComponent.Fire();
+                shootComponent.Trigger();
             }
         }
     }

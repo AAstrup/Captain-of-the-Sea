@@ -11,6 +11,12 @@ public class TimeScalesComponent : MonoBehaviour {
     [HideInInspector]
     float gamePlayTimeScale = 1f;
     public bool gamePlayStopped;
+    public float gamePlayTimeTime;
+
+    private void Update()
+    {
+        gamePlayTimeTime += Time.deltaTime * gamePlayTimeScale;
+    }
 
     public float GetGamePlayTimeScale()
     {

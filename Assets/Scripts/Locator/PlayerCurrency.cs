@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -6,15 +7,44 @@ using UnityEngine;
 /// </summary>
 public class PlayerCurrency
 {
-    int amount;
-    public static readonly string GoldKey = "Gold";
-    public delegate void GoldChangedEvent(int goldAmount);
-    public GoldChangedEvent goldChangedEvent;
+    /// <summary>
+    /// Represents a single currency
+    /// </summary>
+    public class Currency
+    {
+        public CurrencyType CurrencyType;
+        public int amount;
+        public CurrenyChangedEvent valueChanged;
+    }
+
+    Dictionary<CurrencyType, Currency> currencies;
+    public enum CurrencyType { Gold, Gems };
+    public delegate void CurrenyChangedEvent(int goldAmount);
 
     public PlayerCurrency()
     {
-        amount = PlayerPrefs.GetInt(GoldKey, 0);
+        currencies = new Dictionary<CurrencyType, Currency>();
+        foreach (CurrencyType item in Enum.GetValues(typeof(CurrencyType)))
+        {
+            currencies.Add(item, 
+                new Currency()
+            {
+                amount = PlayerPrefs.GetInt(item.ToString(), 0),
+                CurrencyType = item
+            });
+        }
+
         SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupDependencies);
+    }
+
+    internal int GetCurrencyAmount(CurrencyType currencyType)
+    {
+        return currencies[currencyType].amount;
+    }
+
+    internal void OnCurrencyChange(CurrencyType currencyType, CurrenyChangedEvent callback)
+    {
+        currencies[currencyType].valueChanged += callback;
     }
 
     private void SetupDependencies(SingleObjectInstanceLocator locator)
@@ -24,35 +54,35 @@ public class PlayerCurrency
 
     private void SetupShipDependency(HealthComponent healthComponent)
     {
-        healthComponent.dieEvent += delegate (HealthComponent victim) { AddGold(1); };
+        healthComponent.dieEvent += delegate (HealthComponent victim) { AddCurrency(CurrencyType.Gold, 1); };
     }
 
-    public int GetGoldAmount()
+    public void AddCurrency(CurrencyType currencyType, int amountToAdd)
     {
-        return amount;
-    }
-
-    public void AddGold(int amountToAdd)
-    {
-        amount += amountToAdd;
+        currencies[currencyType].amount += amountToAdd;
+        if (currencies[currencyType].valueChanged != null)
+            currencies[currencyType].valueChanged(currencies[currencyType].amount);
         Save();
     }
 
-    internal bool CanAfford(int v)
+    internal void Spend(CurrencyType currencyType, int amountToReduce)
     {
-        return amount >= v;
+        currencies[currencyType].amount -= amountToReduce;
+        if (currencies[currencyType].valueChanged != null)
+            currencies[currencyType].valueChanged(currencies[currencyType].amount);
+        Save();
     }
 
-    internal void SpendGold(int v)
+    internal bool CanAfford(CurrencyType currencyType, int minimumRequirement)
     {
-        amount -= v;
-        Save();
+        return currencies[currencyType].amount >= minimumRequirement;
     }
 
     private void Save()
     {
-        PlayerPrefs.SetInt(GoldKey, amount);
-        if (goldChangedEvent != null)
-            goldChangedEvent.Invoke(amount);
+        foreach (var currency in currencies)
+        {
+            PlayerPrefs.SetInt(currency.Key.ToString(), currency.Value.amount);
+        }
     }
 }

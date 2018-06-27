@@ -8,8 +8,11 @@ using UnityEngine;
 [Serializable]
 public class ShopItemModel : IShopItemModel
 {
-    public string uniqueNameID;
+    public enum ItemID { Cannon, WindSail }
+    public ItemID uniqueNameID;
     public Sprite sprite;
+    public GameObject prefab;
+    public float cooldown;
     public ShopItemStatModel[] shopItemStatModels;
     public int[] goldCostAtItemLevel;
 
@@ -23,7 +26,7 @@ public class ShopItemModel : IShopItemModel
         return goldCostAtItemLevel[itemLevel];
     }
 
-    public string GetID()
+    public ItemID GetID()
     {
         return uniqueNameID;
     }

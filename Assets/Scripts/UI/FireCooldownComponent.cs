@@ -17,17 +17,35 @@ public class FireCooldownComponent : MonoBehaviour {
     float cooldownLeft;
     public float cooldownTotal = 1f;
     private TimeScalesComponent timeScalesComponent;
+    private ShopItemLibraryComponent library;
+
+    Dictionary<IItemAbilityComponent, float> abilityFireTime;
 
     void Awake () {
-        cooldownLeft = 0f;
         StopCooldown();
         fireButton.onClick.AddListener(delegate () { StartCooldown(); });
+        abilityFireTime = new Dictionary<IItemAbilityComponent, float>();
         SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
     }
 
     private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
         timeScalesComponent = locator.componentReferences.timeScalesComponent;
+        library = locator.componentReferences.shopItemLibraryComponent;
+        locator.componentReferences.playerIdentifierComponent.GetComponent<AbilityPlayerInputComponent>().abilityTriggerEvent += abilityFired;
+    }
+
+    private void abilityFired(IItemAbilityComponent usedItemAbility, IItemAbilityComponent nextItemAbility)
+    {
+        if (!abilityFireTime.ContainsKey(usedItemAbility))
+            abilityFireTime.Add(usedItemAbility, timeScalesComponent.gamePlayTimeTime);
+        else
+            abilityFireTime[usedItemAbility] = timeScalesComponent.gamePlayTimeTime;
+
+        if (abilityFireTime.ContainsKey(nextItemAbility))
+            cooldownLeft = Mathf.Max(0f, abilityFireTime[nextItemAbility] + nextItemAbility.GetModel().cooldown - timeScalesComponent.gamePlayTimeTime);
+        else
+            cooldownLeft = 0f;
     }
 
     void Update () {

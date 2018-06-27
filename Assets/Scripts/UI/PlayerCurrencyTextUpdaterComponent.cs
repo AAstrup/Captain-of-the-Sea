@@ -8,9 +8,10 @@ using UnityEngine.UI;
 /// Shows the amount of gold the player has
 /// </summary>
 [RequireComponent(typeof(Text),typeof(AnimationPopComponent))]
-public class PlayerCoins : MonoBehaviour {
+public class PlayerCurrencyTextUpdaterComponent : MonoBehaviour {
     private Text textComp;
     private AnimationPopComponent animationPopComponent;
+    public PlayerCurrency.CurrencyType currencyType;
 
     void Awake () {
         animationPopComponent = GetComponent<AnimationPopComponent>();
@@ -20,13 +21,13 @@ public class PlayerCoins : MonoBehaviour {
 
     private void SetupDependencies(SingleObjectInstanceLocator locator)
     {
-        locator.objectReferences.playerCurrency.goldChangedEvent += UpdateUI;
-        UpdateUI(locator.objectReferences.playerCurrency.GetGoldAmount());
+        locator.objectReferences.playerCurrency.OnCurrencyChange(currencyType, UpdateUI);
+        UpdateUI(locator.objectReferences.playerCurrency.GetCurrencyAmount(currencyType));
     }
 
-    private void UpdateUI(int goldAmount)
+    private void UpdateUI(int amount)
     {
-        textComp.text = goldAmount.ToString();
+        textComp.text = amount.ToString();
         animationPopComponent.StartAnimation();
     }
 }

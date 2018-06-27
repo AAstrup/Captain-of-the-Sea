@@ -4,18 +4,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Component used for managing the fire button in the UI
+/// </summary>
 public class FireButtonSetupComponent : MonoBehaviour {
 
+    public Image skillImage;
     public Button button;
-    private PlayerIdentifierComponent playerIdentifierComponent;
 
-    private void Awake()
+    private void Start()
     {
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback);
+        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(dependencies);
     }
 
-    private void DependencyCallback(SingleObjectInstanceLocator locator)
+    private void dependencies(SingleObjectInstanceLocator locator)
     {
-        button.onClick.AddListener(delegate () { locator.componentReferences.playerIdentifierComponent.playerGameObject.GetComponent<PlayerShootComponent>().Fire(); });
+        locator.componentReferences.playerIdentifierComponent.GetComponent<AbilityPlayerInputComponent>().abilityTriggerEvent += triggerEvent;
+    }
+
+    private void triggerEvent(IItemAbilityComponent usedAbility, IItemAbilityComponent nextAbility)
+    {
+        skillImage.sprite = nextAbility.GetModel().sprite;
+    }
+
+    internal void AddDelegateToButton(Action fireAbility)
+    {
+        button.onClick.AddListener(delegate () { fireAbility(); });
     }
 }

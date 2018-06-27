@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Contains the models for items
+/// Contains the models for ItemsAbilities
 /// </summary>
 public class ShopItemLibraryComponent : MonoBehaviour {
 
@@ -36,7 +36,7 @@ public class ShopItemLibraryComponent : MonoBehaviour {
     /// Ideally it generated a dictionary on start
     /// </summary>
     /// <param name="uniqueNameID"></param>
-    public ShopItemModel GetItem(string uniqueNameID)
+    public ShopItemModel GetItem(ShopItemModel.ItemID uniqueNameID)
     {
         return itemModels.Find(x => x.GetID() == uniqueNameID);
     }

@@ -10,6 +10,6 @@ public interface IShopItemModel
     Sprite GetItemSprite();
     IShopItemStatModel[] GetItemStats();
     int GetGoldCost(int itemLevel);
-    string GetID();
+    ShopItemModel.ItemID GetID();
     int GetAttributeLevel(IShopItemStatModel shopItemStatModel, int itemLevel);
 }

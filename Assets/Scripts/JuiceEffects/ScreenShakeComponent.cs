@@ -25,7 +25,8 @@ public class ScreenShakeComponent : MonoBehaviour {
     private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
         locator.componentReferences.playerIdentifierComponent.playerGameObject.GetComponent<HealthComponent>().healthChangedEvent += delegate (HealthComponent victim, float damage, float healthLeft) { StartShake(); };
-        locator.componentReferences.playerIdentifierComponent.playerGameObject.GetComponent<PlayerShootComponent>().fireEvent += delegate () { StartShake(); };
+        var test = locator.componentReferences.playerIdentifierComponent.playerGameObject.GetComponent<AbilityPlayerInputComponent>();
+        test.abilityTriggerEvent += delegate (IItemAbilityComponent usedAbility, IItemAbilityComponent nextAbility) { StartShake(); };
         locator.componentReferences.aISpawnComponent.shipSpawnedEvent += ShipSpawned;
     }
 

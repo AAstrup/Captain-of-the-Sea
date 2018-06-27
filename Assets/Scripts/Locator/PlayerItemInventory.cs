@@ -6,15 +6,39 @@ using System.Linq;
 /// </summary>
 public class PlayerItemInventory
 {
-    // The key is the id of an item
-    public Dictionary<string, PlayerItem> items;
+    public Dictionary<ShopItemModel.ItemID, PlayerItem> items;
     public static readonly int maxActiveItems = 3;
 
     public PlayerItemInventory()
     {
-        items = new Dictionary<string, PlayerItem>();
+        items = new Dictionary<ShopItemModel.ItemID, PlayerItem>();
 
-        AddItem(new PlayerItem() { itemLevel = 1, uniqueItemID = "Cannon", isActiveItem = true });
+        AddItem(
+            new PlayerItem() {
+                itemLevel = 1,
+                uniqueItemID = ShopItemModel.ItemID.Cannon,
+                isActiveItem = true,
+                abilitySetupInfo = new AbilitySetupInfo()
+                {
+                    abilitySpotNumber = new int[] { 0 },
+                    uniqueNameID = ShopItemModel.ItemID.Cannon
+                }
+            }
+        );
+
+        AddItem(
+            new PlayerItem()
+            {
+                itemLevel = 1,
+                uniqueItemID = ShopItemModel.ItemID.WindSail,
+                isActiveItem = true,
+                abilitySetupInfo = new AbilitySetupInfo()
+                {
+                    abilitySpotNumber = new int[] { 1 },
+                    uniqueNameID = ShopItemModel.ItemID.WindSail
+                }
+            }
+        );
     }
 
     private void AddItem(PlayerItem playerItem)
@@ -50,7 +74,7 @@ public class PlayerItemInventory
             return 0;
     }
 
-    public KeyValuePair<string, PlayerItem>[] GetAllActiveItems()
+    public KeyValuePair<ShopItemModel.ItemID, PlayerItem>[] GetAllActiveItems()
     {
         return items.Where(x => x.Value.isActiveItem == true).ToArray();
     }

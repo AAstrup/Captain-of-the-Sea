@@ -8,7 +8,12 @@ public class PlayerItemInventory
 {
     public Dictionary<ShopItemModel.ItemID, PlayerItem> items;
     public static readonly int maxActiveItems = 3;
+    public delegate void ItemsChangedEvent();
+    public ItemsChangedEvent itemChangedEvent;
 
+    /// <summary>
+    /// Constructor used when creating a new inventory
+    /// </summary>
     public PlayerItemInventory()
     {
         items = new Dictionary<ShopItemModel.ItemID, PlayerItem>();
@@ -39,6 +44,24 @@ public class PlayerItemInventory
                 }
             }
         );
+    }
+
+    /// <summary>
+    /// Constructor used for deserializing
+    /// </summary>
+    /// <param name="serializedItems"></param>
+    public PlayerItemInventory(List<PlayerItem> serializedItems)
+    {
+        items = new Dictionary<ShopItemModel.ItemID, PlayerItem>();
+        foreach (var serializedItem in serializedItems)
+        {
+            items.Add(serializedItem.uniqueItemID, serializedItem);
+        }
+    }
+
+    internal Dictionary<ShopItemModel.ItemID, PlayerItem> GetSerializeInfo()
+    {
+        return items;
     }
 
     private void AddItem(PlayerItem playerItem)

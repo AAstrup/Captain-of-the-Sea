@@ -19,9 +19,8 @@ public class AbilityPlayerSetupComponent : MonoBehaviour {
 
     private void setupDependencies(SingleObjectInstanceLocator locator)
     {
-        inventory = locator.objectReferences.playerItemInventory;
+        inventory = locator.objectReferences.playerProfile.playerItemInventory;
         locator.componentReferences.menuStartComponent.gameStartedEvent += start;
-
     }
 
     private void start()

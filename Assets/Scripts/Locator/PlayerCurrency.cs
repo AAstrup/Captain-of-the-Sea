@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 
 /// <summary>
@@ -7,20 +8,14 @@ using UnityEngine;
 /// </summary>
 public class PlayerCurrency
 {
-    /// <summary>
-    /// Represents a single currency
-    /// </summary>
-    public class Currency
-    {
-        public CurrencyType CurrencyType;
-        public int amount;
-        public CurrenyChangedEvent valueChanged;
-    }
-
     Dictionary<CurrencyType, Currency> currencies;
-    public enum CurrencyType { Gold, Gems };
     public delegate void CurrenyChangedEvent(int currencyAmount);
+    public delegate void CurrenySpendEvent();
+    public CurrenySpendEvent currencySpendEvent;
 
+    /// <summary>
+    /// Constructor used when creating a new playercurrency with no serialized data
+    /// </summary>
     public PlayerCurrency()
     {
         currencies = new Dictionary<CurrencyType, Currency>();
@@ -29,11 +24,27 @@ public class PlayerCurrency
             currencies.Add(item, 
                 new Currency()
             {
-                amount = PlayerPrefs.GetInt(item.ToString(), 0),
-                CurrencyType = item
+                amount = 0,
+                currencyType = item
             });
         }
+    }
 
+    /// <summary>
+    /// Constructor used when deserializing
+    /// </summary>
+    /// <param name="serializedCurrencies"></param>
+    public PlayerCurrency(List<Currency> serializedCurrencies)
+    {
+        currencies = new Dictionary<CurrencyType, Currency>();
+        foreach (var item in serializedCurrencies)
+        {
+            currencies.Add(item.currencyType, item);
+        }
+    }
+
+    public void SetupDependencies()
+    {
         SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupDependencies);
     }
 
@@ -44,7 +55,7 @@ public class PlayerCurrency
 
     internal void OnCurrencyChange(CurrencyType currencyType, CurrenyChangedEvent callback)
     {
-        currencies[currencyType].valueChanged += callback;
+        currencies[currencyType].Subscribe(callback);
     }
 
     private void SetupDependencies(SingleObjectInstanceLocator locator)
@@ -59,18 +70,14 @@ public class PlayerCurrency
 
     public void AddCurrency(CurrencyType currencyType, int amountToAdd)
     {
-        currencies[currencyType].amount += amountToAdd;
-        if (currencies[currencyType].valueChanged != null)
-            currencies[currencyType].valueChanged(currencies[currencyType].amount);
-        Save();
+        currencies[currencyType].AddAmount(amountToAdd);
     }
 
     internal void Spend(CurrencyType currencyType, int amountToReduce)
     {
-        currencies[currencyType].amount -= amountToReduce;
-        if (currencies[currencyType].valueChanged != null)
-            currencies[currencyType].valueChanged(currencies[currencyType].amount);
-        Save();
+        currencies[currencyType].AddAmount(-amountToReduce);
+        if (currencySpendEvent != null)
+            currencySpendEvent();
     }
 
     internal bool CanAfford(CurrencyType currencyType, int minimumRequirement)
@@ -78,11 +85,8 @@ public class PlayerCurrency
         return currencies[currencyType].amount >= minimumRequirement;
     }
 
-    private void Save()
+    internal Dictionary<CurrencyType, Currency> GetSerializeInfo()
     {
-        foreach (var currency in currencies)
-        {
-            PlayerPrefs.SetInt(currency.Key.ToString(), currency.Value.amount);
-        }
+        return currencies;
     }
 }

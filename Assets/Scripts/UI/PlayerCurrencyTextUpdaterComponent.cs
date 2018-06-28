@@ -11,7 +11,7 @@ using UnityEngine.UI;
 public class PlayerCurrencyTextUpdaterComponent : MonoBehaviour {
     private Text textComp;
     private AnimationPopComponent animationPopComponent;
-    public PlayerCurrency.CurrencyType currencyType;
+    public CurrencyType currencyType;
 
     void Awake () {
         animationPopComponent = GetComponent<AnimationPopComponent>();
@@ -21,8 +21,8 @@ public class PlayerCurrencyTextUpdaterComponent : MonoBehaviour {
 
     private void SetupDependencies(SingleObjectInstanceLocator locator)
     {
-        locator.objectReferences.playerCurrency.OnCurrencyChange(currencyType, UpdateUI);
-        UpdateUI(locator.objectReferences.playerCurrency.GetCurrencyAmount(currencyType));
+        locator.objectReferences.playerProfile.playerCurrency.OnCurrencyChange(currencyType, UpdateUI);
+        UpdateUI(locator.objectReferences.playerProfile.playerCurrency.GetCurrencyAmount(currencyType));
     }
 
     private void UpdateUI(int amount)

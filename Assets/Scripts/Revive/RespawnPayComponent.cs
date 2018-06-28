@@ -26,9 +26,9 @@ public class RespawnPayComponent : MonoBehaviour
     private void SetupDependencies(SingleObjectInstanceLocator locator)
     {
         playerIdentifierComponent = locator.componentReferences.playerIdentifierComponent;
-        currency = locator.objectReferences.playerCurrency;
-        currency.OnCurrencyChange(PlayerCurrency.CurrencyType.Gems, CurrencyUpdate);
-        CurrencyUpdate(currency.GetCurrencyAmount(PlayerCurrency.CurrencyType.Gems));
+        currency = locator.objectReferences.playerProfile.playerCurrency;
+        currency.OnCurrencyChange(CurrencyType.Gems, CurrencyUpdate);
+        CurrencyUpdate(currency.GetCurrencyAmount(CurrencyType.Gems));
     }
 
     private void CurrencyUpdate(int currencyAmount)
@@ -38,12 +38,12 @@ public class RespawnPayComponent : MonoBehaviour
 
     public void ButtonPressed()
     {
-        if (!currency.CanAfford(PlayerCurrency.CurrencyType.Gems, respawnCost))
+        if (!currency.CanAfford(CurrencyType.Gems, respawnCost))
         {
             Debug.Log("FAILSAFE, button should not be enabled");
             return;
         }
-        currency.Spend(PlayerCurrency.CurrencyType.Gems, respawnCost);
+        currency.Spend(CurrencyType.Gems, respawnCost);
         respawnCost *= 2;
         costText.text = respawnCost.ToString();
     }

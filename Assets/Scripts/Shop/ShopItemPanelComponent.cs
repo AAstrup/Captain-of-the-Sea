@@ -30,8 +30,8 @@ public class ShopItemPanelComponent : MonoBehaviour {
 
     private void SetupDependencies(SingleObjectInstanceLocator locator)
     {
-        inventory = locator.objectReferences.playerItemInventory;
-        playerCurrency = locator.objectReferences.playerCurrency;
+        inventory = locator.objectReferences.playerProfile.playerItemInventory;
+        playerCurrency = locator.objectReferences.playerProfile.playerCurrency;
     }
 
     public void PresentItem(IShopItemModel shopItemModel)
@@ -59,7 +59,7 @@ public class ShopItemPanelComponent : MonoBehaviour {
         Debug.Log("Move costAmountCoin depending on size of gold cost");
 
         upgradeButton.onClick.RemoveAllListeners();
-        upgradeButton.interactable = playerCurrency.CanAfford(PlayerCurrency.CurrencyType.Gold, cost);
+        upgradeButton.interactable = playerCurrency.CanAfford(CurrencyType.Gold, cost);
         if (upgradeButton.interactable)
         {
             upgradeButton.onClick.AddListener(delegate
@@ -72,7 +72,7 @@ public class ShopItemPanelComponent : MonoBehaviour {
     private void BuyItem(IShopItemModel shopItemModel)
     {
         int itemLevel = inventory.GetItemLevel(shopItemModel);
-        playerCurrency.Spend(PlayerCurrency.CurrencyType.Gold, shopItemModel.GetGoldCost(itemLevel));
+        playerCurrency.Spend(CurrencyType.Gold, shopItemModel.GetGoldCost(itemLevel));
         Debug.Log("Item " + shopItemModel.GetID() + " was bought");
     }
 }

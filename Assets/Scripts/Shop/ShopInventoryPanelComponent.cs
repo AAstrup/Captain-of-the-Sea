@@ -16,7 +16,7 @@ public class ShopInventoryPanelComponent : MonoBehaviour {
 
     private void SetupDependencies(SingleObjectInstanceLocator locator)
     {
-        var playerInventory = locator.objectReferences.playerItemInventory;
+        var playerInventory = locator.objectReferences.playerProfile.playerItemInventory;
         var itemnLibrary = locator.componentReferences.shopItemLibraryComponent;
 
         int currentUIItemIndex = 0;

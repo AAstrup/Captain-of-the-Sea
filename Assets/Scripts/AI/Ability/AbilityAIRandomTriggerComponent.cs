@@ -15,6 +15,8 @@ public class AbilityAIRandomTriggerComponent : MonoBehaviour {
     private TimeScalesComponent timeScalesComponent;
 
     void Awake () {
+        timeLeftBeforeFire = shipConfigurationComponent.fireSpeed;
+
         if (abilitySetupComponent == null)
             abilitySetupComponent = GetComponent<AbilitySetupComponent>();
         abilitySetupComponent.itemAbilitiesSetup += SetItemAbilities;

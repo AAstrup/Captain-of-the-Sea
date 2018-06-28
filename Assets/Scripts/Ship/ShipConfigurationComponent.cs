@@ -16,7 +16,7 @@ public class ShipConfigurationComponent : MonoBehaviour
     [HideInInspector]
     public HealthComponent healthComponent;
     public SpriteRenderer[] flags;
-    public float brakeSpeedDivider = 2f;
+    public float brakeSpeedDivider = 1.5f;
 
     private void Awake()
     {

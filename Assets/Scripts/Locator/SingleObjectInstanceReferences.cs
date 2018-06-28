@@ -5,19 +5,32 @@
 /// </summary>
 public class SingleObjectInstanceReferences
 {
-    public PlayerCurrency playerCurrency;
-    public PlayerItemInventory playerItemInventory;
+    public PlayerProfile playerProfile;
 
     public SingleObjectInstanceReferences()
     {
-        playerItemInventory = new PlayerItemInventory();
+        if (SaveLoad.PlayerProfileExist())
+            playerProfile = SaveLoad.LoadPlayerProfile();
+        else
+            playerProfile = new PlayerProfile();
+
+        playerProfile.playerCurrency.currencySpendEvent += SavePlayerProfile;
+        playerProfile.playerItemInventory.itemChangedEvent += SavePlayerProfile;
     }
 
-    /// <summary>
-    /// Objects that subscribes to the callback has to be created here to prevent circulair dependency with the setup of the Instance of SingleObjectInstanceLocator
-    /// </summary>
     internal void SetupDependentObjects()
     {
-        playerCurrency = new PlayerCurrency();
+        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(setup);
+        playerProfile.SetupDependentObjects();
+    }
+
+    private void setup(SingleObjectInstanceLocator locator)
+    {
+        locator.componentReferences.playerIdentifierComponent.playerGameObject.GetComponent<HealthComponent>().dieEvent += delegate (HealthComponent comp) { SavePlayerProfile(); };
+    }
+
+    public void SavePlayerProfile()
+    {
+        SaveLoad.SavePlayerProfile(playerProfile);
     }
 }

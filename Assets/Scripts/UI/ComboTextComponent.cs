@@ -12,7 +12,7 @@ public class ComboTextComponent : MonoBehaviour {
 
     private Text textComp;
     private static readonly int minimumComboToShowText = 2;
-    private static readonly float fadeTimeTotal = 1f;
+    private static readonly float fadeTimeTotal = 0.75f;
     private float fadeTimeLeft;
     int currentCombo;
     private TimeScalesComponent timeScalesComponent;

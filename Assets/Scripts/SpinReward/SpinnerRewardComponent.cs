@@ -27,7 +27,7 @@ public class SpinnerRewardComponent : MonoBehaviour {
 
     private void dependencies(SingleObjectInstanceLocator locator)
     {
-        playerCurrency = locator.objectReferences.playerCurrency;
+        playerCurrency = locator.objectReferences.playerProfile.playerCurrency;
         iapStore = locator.componentReferences.IAPShopCanvas;
     }
 
@@ -44,10 +44,10 @@ public class SpinnerRewardComponent : MonoBehaviour {
 
     private void respin()
     {
-        if (playerCurrency.CanAfford(PlayerCurrency.CurrencyType.Gems, cost))
+        if (playerCurrency.CanAfford(CurrencyType.Gems, cost))
         {
             Spin();
-            playerCurrency.Spend(PlayerCurrency.CurrencyType.Gems, cost);
+            playerCurrency.Spend(CurrencyType.Gems, cost);
             UpdateCost(cost * 2);
             respinButton.interactable = false;
         }

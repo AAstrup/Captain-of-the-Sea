@@ -379,8 +379,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfdb24ba785843e45902fb09bfed97c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  abilitySetupComponent: {fileID: 0}
-  shipConfigurationComponent: {fileID: 0}
+  abilitySetupComponent: {fileID: 114727398325721732}
+  shipConfigurationComponent: {fileID: 114287331113583518}
 --- !u!114 &114287331113583518
 MonoBehaviour:
   m_ObjectHideFlags: 1

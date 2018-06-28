@@ -9,11 +9,28 @@ using UnityEngine;
 [RequireComponent(typeof(ShipMovementComponent))]
 public class AIShipMovementComponent : MonoBehaviour {
 
-    GameObject gameObjectTarget;
+    public AbilitySetupComponent abilitySetupComponent;
+    private GameObject gameObjectTarget;
+    private ShipMovementComponent movementComponent;
+    private float desiredWeaponAngle;
 
-    ShipMovementComponent movementComponent;
     void Awake () {
+        if (abilitySetupComponent != null)
+            GetComponent<AbilitySetupComponent>().GetAbilitiesWhenInstantiated(SetupAbilities);
+        else
+            desiredWeaponAngle = 0f;
+
         movementComponent = GetComponent<ShipMovementComponent>();
+    }
+
+    private void SetupAbilities(List<IItemAbilityComponent> itemAbilities)
+    {
+        desiredWeaponAngle = itemAbilities[0].GetRotation();
+    }
+
+    public static Vector3 DegreeToVector2(float degree)
+    {
+        return new Vector3(Mathf.Cos(degree * Mathf.Deg2Rad), Mathf.Sin(degree * Mathf.Deg2Rad),0);
     }
 
     private void Start()
@@ -26,8 +43,11 @@ public class AIShipMovementComponent : MonoBehaviour {
         gameObjectTarget = locator.componentReferences.playerIdentifierComponent.playerGameObject;
     }
 
-    void FixedUpdate () {
-        if(gameObjectTarget != null)
-            movementComponent.ApplyMovementInDirection((gameObjectTarget.transform.position + gameObjectTarget.transform.right * -2f) - transform.position);
+    void Update()
+    {
+        if (gameObjectTarget != null)
+        {
+            movementComponent.ApplyMovementInDirection((gameObjectTarget.transform.position + DegreeToVector2(desiredWeaponAngle + gameObjectTarget.transform.eulerAngles.z) * -2f) - transform.position);
+        }
     }
 }

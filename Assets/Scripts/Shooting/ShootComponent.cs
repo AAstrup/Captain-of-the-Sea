@@ -45,4 +45,9 @@ public class ShootComponent : MonoBehaviour, IItemAbilityComponent {
     {
         this.model = model;
     }
+
+    public float GetRotation()
+    {
+        return transform.localEulerAngles.z;
+    }
 }

@@ -7,4 +7,5 @@ using UnityEngine;
 /// </summary>
 public class AIShipConfigurationComponent : MonoBehaviour {
     public float fireSpeed = 4;
+    public int maxAbilities = 1;
 }

@@ -44,4 +44,9 @@ public class AbilityWindComponent : MonoBehaviour, IItemAbilityComponent, IMulti
     {
         timeActivated = timeScalesComponent.gamePlayTimeTime;
     }
+
+    public float GetRotation()
+    {
+        return transform.localEulerAngles.z;
+    }
 }

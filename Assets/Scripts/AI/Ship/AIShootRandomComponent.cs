@@ -25,7 +25,7 @@ public class AIShootRandomComponent : MonoBehaviour {
         if (aiConfig == null)
             aiConfig = GetComponent<AIShipConfigurationComponent>();
 
-        timeLeft = aiConfig.fireSpeed;
+        timeLeft = UnityEngine.Random.Range(0, aiConfig.fireSpeed);
         SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
     }
 

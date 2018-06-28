@@ -8,4 +8,5 @@ public interface IItemAbilityComponent
     void Initialize(GameObject shipGameObject, ShopItemModel model);
     void Trigger();
     ShopItemModel GetModel();
+    float GetRotation();
 }

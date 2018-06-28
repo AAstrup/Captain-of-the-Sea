@@ -15,7 +15,7 @@ public class ShopInventoryItemComponent : MonoBehaviour {
     private PlayerItemInventory inventory;
     private PlayerItem item;
     private static readonly Color pickedColor = new Color(1f,1f,1f);
-    private static readonly Color notPickedColor = new Color(0.1f, 0.1f, 0.1f);
+    private static readonly Color notPickedColor = new Color(0.25f, 0.25f, 0.25f);
 
     private void Awake()
     {

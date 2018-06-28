@@ -22,14 +22,16 @@ public class AISpawnAbilityComponent : MonoBehaviour
         var abilitySetupComp = healthComponent.GetComponent<AbilitySetupComponent>();
         if (abilitySetupComp == null)
             return;
+        var config = healthComponent.GetComponent<AIShipConfigurationComponent>();
 
         List<AbilitySetupInfo> abilities = new List<AbilitySetupInfo>();
-        for (int i = 0; i < abilitySetupComp.abilitySpots.Length; i++)
+        int randomSpotNumberOffset = UnityEngine.Random.Range(0, abilitySetupComp.abilitySpots.Length);
+        for (int i = 0; i < abilitySetupComp.abilitySpots.Length && i < config.maxAbilities; i++)
         {
             abilities.Add(
                 new AbilitySetupInfo()
                 {
-                    abilitySpotNumber = new int[] { i },
+                    abilitySpotNumber = new int[] { (randomSpotNumberOffset + i) % abilitySetupComp.abilitySpots.Length },
                     uniqueNameID = itemAbilities[UnityEngine.Random.Range(0, itemAbilities.Length)]
                 }
             );

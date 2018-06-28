@@ -12,6 +12,7 @@ public class AbilitySetupComponent : MonoBehaviour {
     public delegate void ItemAbilitiesSetupEvent(List<IItemAbilityComponent> itemAbilities);
     public ItemAbilitiesSetupEvent itemAbilitiesSetup;
     public SingleObjectInstanceLocator.DependenciesLoadedEvent dependenciesLoaded;
+    private List<IItemAbilityComponent> itemAbilities;
 
     private void Start()
     {
@@ -29,7 +30,7 @@ public class AbilitySetupComponent : MonoBehaviour {
 
     public void InstantiateAbilities (List<AbilitySetupInfo> abilitySetupInfos)
     {
-        var itemAbilities = new List<IItemAbilityComponent>();
+        itemAbilities = new List<IItemAbilityComponent>();
         for (int i = 0; i < abilitySetupInfos.Count; i++)
         {
             if (i >= abilitySpots.Length)
@@ -47,5 +48,13 @@ public class AbilitySetupComponent : MonoBehaviour {
         }
         if (itemAbilitiesSetup != null)
             itemAbilitiesSetup(itemAbilities);
+    }
+
+    public void GetAbilitiesWhenInstantiated(ItemAbilitiesSetupEvent callback)
+    {
+        if (itemAbilities == null)
+            itemAbilitiesSetup += callback;
+        else
+            callback(itemAbilities);
     }
 }

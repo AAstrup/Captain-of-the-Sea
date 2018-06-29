@@ -49,11 +49,6 @@ public class ShipMovementComponent : MonoBehaviour
         transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
     }
 
-    internal void ApplyMovementInDirection(object p)
-    {
-        throw new NotImplementedException();
-    }
-
     void Update () {
         transform.position += new Vector3(velocity.x, velocity.y,0) * Time.deltaTime * timeScalesComponent.GetGamePlayTimeScale();
     }

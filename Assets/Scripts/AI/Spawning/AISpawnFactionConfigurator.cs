@@ -27,7 +27,7 @@ public class AISpawnFactionConfigurator : MonoBehaviour {
             shipConfig.maxSpeed += shipConfig.maxSpeed * randomFaction.maxSpeedMultiplierIncrease;
             // to prevent firing each second, a small safety check is put in places, though this is still a dirty implementation
             var aiShipConfig = healthComponent.GetComponent<AIShipConfigurationComponent>();
-            aiShipConfig.fireSpeed = Mathf.Max(0.25f, aiShipConfig.fireSpeed / randomFaction.fireSpeedMultiplierIncrease);
+            aiShipConfig.fireSpeed = Mathf.Max(0.25f, aiShipConfig.fireSpeed / (1 + randomFaction.fireSpeedMultiplierIncrease));
             foreach (var item in shipConfig.flags)
             {
                 item.sprite = randomFaction.flagSprite;

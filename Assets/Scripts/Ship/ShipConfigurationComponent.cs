@@ -10,9 +10,9 @@ using UnityEngine;
 public class ShipConfigurationComponent : MonoBehaviour
 {
     public float maxSpeed = 0.02f;
-    List<IMultiplier> maxSpeedMultiplier;
+    List<ISubstitudeValueCandidate> maxSpeedMultiplier;
     public float accelerateSpeed = 0.01f;
-    List<IMultiplier> accelerationMultiplier;
+    List<ISubstitudeValueCandidate> accelerationMultiplier;
     [HideInInspector]
     public HealthComponent healthComponent;
     public SpriteRenderer[] flags;
@@ -21,8 +21,8 @@ public class ShipConfigurationComponent : MonoBehaviour
     private void Awake()
     {
         healthComponent = GetComponent<HealthComponent>();
-        maxSpeedMultiplier = new List<IMultiplier>();
-        accelerationMultiplier = new List<IMultiplier>();
+        maxSpeedMultiplier = new List<ISubstitudeValueCandidate>();
+        accelerationMultiplier = new List<ISubstitudeValueCandidate>();
     }
 
     public float GetMaxSpeedWithMultipliers()
@@ -30,7 +30,8 @@ public class ShipConfigurationComponent : MonoBehaviour
         float speed = maxSpeed;
         foreach (var item in maxSpeedMultiplier)
         {
-            speed *= item.GetMultiplier();
+            if (item.GetSubstitudeValue() > speed)
+                speed = item.GetSubstitudeValue();
         }
         return speed;
     }
@@ -40,17 +41,18 @@ public class ShipConfigurationComponent : MonoBehaviour
         float speed = accelerateSpeed;
         foreach (var item in accelerationMultiplier)
         {
-            speed *= item.GetMultiplier();
+            if (item.GetSubstitudeValue() > speed)
+                speed = item.GetSubstitudeValue();
         }
         return speed;
     }
 
-    internal void AddAcelerationMultiplier(IMultiplier multiplier)
+    internal void AddAcelerationMultiplier(ISubstitudeValueCandidate multiplier)
     {
         accelerationMultiplier.Add(multiplier);
     }
 
-    public void AddMaxSpeedMultiplier(IMultiplier multiplier)
+    public void AddMaxSpeedMultiplier(ISubstitudeValueCandidate multiplier)
     {
         maxSpeedMultiplier.Add(multiplier);
     }

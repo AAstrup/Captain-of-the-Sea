@@ -6,12 +6,12 @@ using UnityEngine;
 /// <summary>
 /// ItemAbility for speed boost
 /// </summary>
-public class AbilityWindComponent : MonoBehaviour, IItemAbilityComponent, IMultiplier {
+public class AbilityWindComponent : MonoBehaviour, IItemAbilityComponent, ISubstitudeValueCandidate {
     private ShopItemModel model;
     private float timeActivated;
     private TimeScalesComponent timeScalesComponent;
     private static readonly float windDuration = .6f;
-    private static readonly float windEffect = 30f;
+    private static readonly float windEffect = 6f;
 
     private void Awake()
     {
@@ -28,9 +28,10 @@ public class AbilityWindComponent : MonoBehaviour, IItemAbilityComponent, IMulti
         return model;
     }
 
-    public float GetMultiplier()
+    public float GetSubstitudeValue()
     {
-        return Mathf.Max(1f, ((timeActivated + windDuration) - timeScalesComponent.gamePlayTimeTime) * windEffect);
+        //return Mathf.Max(1f, ((timeActivated + windDuration) - timeScalesComponent.gamePlayTimeTime) * windEffect);
+        return (timeActivated + windDuration) > timeScalesComponent.gamePlayTimeTime ? windEffect : 1f;
     }
 
     public void Initialize(GameObject shipGameObject, ShopItemModel model)

@@ -12,8 +12,10 @@ public class GameOverComponent : MonoBehaviour {
     public GameObject[] disableGameObjectsOnGameOver;
     public Text scoreText;
     public Text highscoreText;
+    public Text chestLevelText;
     private IAnimationObject[] animationObjects;
     private PlayerScoreComponent playerScoreComponent;
+    private AISpawnComponent aISpawnComponent;
     private static readonly string HighscoreKey = "HighScore";
 
     private void Awake()
@@ -32,6 +34,7 @@ public class GameOverComponent : MonoBehaviour {
         locator.componentReferences.playerIdentifierComponent.playerGameObject.GetComponent<HealthComponent>().dieEvent += GameOver;
         playerScoreComponent = locator.componentReferences.playerScoreComponent;
         locator.componentReferences.playerIdentifierComponent.GetComponent<PlayerReviveComponent>().playerRevivedEvent += playerRevived;
+        aISpawnComponent = locator.componentReferences.aISpawnComponent;
     }
 
     private void playerRevived()
@@ -62,6 +65,7 @@ public class GameOverComponent : MonoBehaviour {
         {
             item.StartAnimation();
         }
+        chestLevelText.text = "Chest level " + aISpawnComponent.waveNr.ToString();
     }
 
     private void SaveHighScore(int score)

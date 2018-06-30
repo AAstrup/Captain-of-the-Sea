@@ -67,6 +67,15 @@ public class PlayerItemInventory
     private void AddItem(PlayerItem playerItem)
     {
         items.Add(playerItem.uniqueItemID, playerItem);
+        if (itemChangedEvent != null)
+            itemChangedEvent();
+    }
+
+    internal void AddItem(ShopItemModel itemToUnlock, int v)
+    {
+        if (!items.ContainsKey(itemToUnlock.uniqueNameID))
+            items.Add(itemToUnlock.uniqueNameID, new PlayerItem(itemToUnlock));
+        items[itemToUnlock.uniqueNameID].AddExperience(v);
     }
 
     internal void DeactivateItem(PlayerItem item)

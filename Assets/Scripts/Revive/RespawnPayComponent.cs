@@ -14,7 +14,7 @@ public class RespawnPayComponent : MonoBehaviour
     private PlayerCurrency currency;
     private Button button;
     public Text costText;
-    private int respawnCost = 5;
+    private int respawnCost = 1;
 
     private void Awake()
     {
@@ -46,5 +46,6 @@ public class RespawnPayComponent : MonoBehaviour
         currency.Spend(CurrencyType.Gems, respawnCost);
         respawnCost *= 2;
         costText.text = respawnCost.ToString();
+        playerIdentifierComponent.GetComponent<PlayerReviveComponent>().Revive();
     }
 }

@@ -31,6 +31,11 @@ public class ShopItemLibraryComponent : MonoBehaviour {
         }
     }
 
+    internal ShopItemModel GetRandomItemModel()
+    {
+        return itemModels[UnityEngine.Random.Range(0, itemModels.Count)];
+    }
+
     /// <summary>
     /// Looking up in a list could be optimized, is only a list to be able to show in inspector
     /// Ideally it generated a dictionary on start

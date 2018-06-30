@@ -25,6 +25,7 @@ public class ShopIAPOfferComponent : MonoBehaviour {
 
     private void Awake()
     {
+        payButton.onClick.AddListener(Buy);
         SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupDependencies);
         costAmountText.text = cost.ToString() + "$";
         rewardFlatAmountText.text = rewardFlat.ToString();

@@ -4,14 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Shows a image with text saying "Boss Level" using an animation component
+/// Shows a image with text saying "Final wave" using an animation component
 /// </summary>
 [RequireComponent(typeof(AnimationPopComponent))]
-public class BossLevelText : MonoBehaviour {
+public class FinalLevelText : MonoBehaviour {
     private AnimationPopComponent animationPopComponent;
 
-    // Use this for initialization
-    void Start () {
+    void Awake () {
         animationPopComponent = GetComponent<AnimationPopComponent>();
         SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupDependencies);
 	}
@@ -23,7 +22,7 @@ public class BossLevelText : MonoBehaviour {
 
     private void WaveSpawned(int difficulty, DifficultyIncrease difficultyIncrease)
     {
-        if (difficultyIncrease.bossLevel)
+        if (difficultyIncrease.finalLevel)
         {
             animationPopComponent.StartAnimation();
         }

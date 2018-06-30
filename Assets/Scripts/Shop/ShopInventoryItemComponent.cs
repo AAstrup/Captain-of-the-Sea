@@ -11,6 +11,7 @@ using UnityEngine.UI;
 public class ShopInventoryItemComponent : MonoBehaviour {
     public Button button;
     public Image image;
+    public Text levelText;
     private bool isPicked;
     private PlayerItemInventory inventory;
     private PlayerItem item;
@@ -43,6 +44,7 @@ public class ShopInventoryItemComponent : MonoBehaviour {
         SetIsPicked(playerItem.isActiveItem);
         gameObject.SetActive(true);
         image.sprite = itemModel.GetItemSprite();
+        levelText.text = playerItem.itemLevel.ToString();
     }
      
     private void SetIsPicked(bool isPicked)

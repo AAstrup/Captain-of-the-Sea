@@ -28,6 +28,8 @@ public class PlayerCurrency
                 currencyType = item
             });
         }
+        currencies[CurrencyType.Gold].AddAmount(100);
+        currencies[CurrencyType.Gems].AddAmount(10);
     }
 
     /// <summary>
@@ -80,9 +82,19 @@ public class PlayerCurrency
             currencySpendEvent();
     }
 
+    internal void Spend(Currency cost)
+    {
+        Spend(cost.currencyType, cost.amount);
+    }
+
     internal bool CanAfford(CurrencyType currencyType, int minimumRequirement)
     {
         return currencies[currencyType].amount >= minimumRequirement;
+    }
+
+    internal bool CanAfford(Currency cost)
+    {
+        return CanAfford(cost.currencyType, cost.amount);
     }
 
     internal Dictionary<CurrencyType, Currency> GetSerializeInfo()

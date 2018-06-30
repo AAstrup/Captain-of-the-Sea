@@ -12,10 +12,11 @@ public class AISpawnComponent : MonoBehaviour {
     public AISpawnDefinition[] shipBase;
     public delegate void ShipSpawned(HealthComponent healthComponent);
     public ShipSpawned shipSpawnedEvent;
+    [HideInInspector]
     public List<Transform> shipsAlive;
     
     // Wave info
-    int waveNr;
+    public int waveNr;
     int difficultyAccumilated;
     public DifficultyIncrease[] difficultyIncreases;
     public delegate void NewWave(int difficulty, DifficultyIncrease difficultyIncrease);

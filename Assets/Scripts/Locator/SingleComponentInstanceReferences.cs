@@ -18,7 +18,7 @@ public class SingleComponentInstanceReferences : MonoBehaviour
     public PlayerIdentifierComponent playerIdentifierComponent;
     public ShopItemPanelComponent shopItemPanelComponent;
     public ShopItemLibraryComponent shopItemLibraryComponent;
-    public GameObject IAPShopCanvas;
+    public IAPPurchaseCanvasComponent IAPShopCanvas;
     public FireButtonSetupComponent fireButtonSetupComponent;
 
     private void Start()

@@ -15,6 +15,7 @@ public class BuyNewAbilityComponent : MonoBehaviour {
     private PlayerCurrency playerCurrency;
     private PlayerItemInventory inventory;
     private ShopItemLibraryComponent itemLibrary;
+    private IAPPurchaseCanvasComponent iAPShopCanvas;
     public Text costText;
 
     private void Awake()
@@ -34,6 +35,10 @@ public class BuyNewAbilityComponent : MonoBehaviour {
             var itemToUnlock = itemLibrary.GetRandomItemModel();
             inventory.AddItem(itemToUnlock, 1);
         }
+        else
+        {
+            iAPShopCanvas.OpenShopAsPopUp();
+        }
     }
 
     private void SetupDependency(SingleObjectInstanceLocator locator)
@@ -41,5 +46,6 @@ public class BuyNewAbilityComponent : MonoBehaviour {
         playerCurrency = locator.objectReferences.playerProfile.playerCurrency;
         inventory = locator.objectReferences.playerProfile.playerItemInventory;
         itemLibrary = locator.componentReferences.shopItemLibraryComponent;
+        iAPShopCanvas = locator.componentReferences.IAPShopCanvas;
     }
 }

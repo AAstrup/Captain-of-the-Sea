@@ -14,8 +14,9 @@ public class AISpawnComponent : MonoBehaviour {
     public ShipSpawned shipSpawnedEvent;
     [HideInInspector]
     public List<Transform> shipsAlive;
-    
+
     // Wave info
+    public int difficultyNr;
     public int waveNr;
     int difficultyAccumilated;
     public DifficultyIncrease[] difficultyIncreases;
@@ -46,6 +47,9 @@ public class AISpawnComponent : MonoBehaviour {
         var difficultyIncrease = difficultyIncreases[waveNr % difficultyIncreases.Length];
         difficultyAccumilated += difficultyIncrease.increaseAmount;
         int difficultyThisWave = difficultyAccumilated + difficultyIncrease.currentWaveOnlyIncrease;
+        if (difficultyIncreases[waveNr].finalLevel)
+            difficultyNr++;
+
         if (newWaveEvent != null)
             newWaveEvent(difficultyThisWave, difficultyIncrease);
 

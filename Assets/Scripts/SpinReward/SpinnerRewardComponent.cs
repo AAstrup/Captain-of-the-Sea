@@ -15,7 +15,7 @@ public class SpinnerRewardComponent : MonoBehaviour {
     public Text costAmountText;
     private int cost = 1;
     private PlayerCurrency playerCurrency;
-    private GameObject iapStore;
+    private IAPPurchaseCanvasComponent iapStore;
     private static readonly int maxCost = 1000;
 
 	void Awake () {
@@ -59,7 +59,7 @@ public class SpinnerRewardComponent : MonoBehaviour {
 
     private void OpenStore()
     {
-        iapStore.SetActive(true);
+        iapStore.OpenShopAsPopUp();
     }
 
     private void UpdateCost(int newCost)

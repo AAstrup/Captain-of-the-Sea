@@ -12,9 +12,10 @@ public class RespawnPayComponent : MonoBehaviour
 {
     private PlayerIdentifierComponent playerIdentifierComponent;
     private PlayerCurrency currency;
+    private IAPPurchaseCanvasComponent IAP;
     private Button button;
     public Text costText;
-    private int respawnCost = 1;
+    private int respawnCost = 2;
 
     private void Awake()
     {
@@ -27,20 +28,14 @@ public class RespawnPayComponent : MonoBehaviour
     {
         playerIdentifierComponent = locator.componentReferences.playerIdentifierComponent;
         currency = locator.objectReferences.playerProfile.playerCurrency;
-        currency.OnCurrencyChange(CurrencyType.Gems, CurrencyUpdate);
-        CurrencyUpdate(currency.GetCurrencyAmount(CurrencyType.Gems));
-    }
-
-    private void CurrencyUpdate(int currencyAmount)
-    {
-        button.interactable = currencyAmount >= respawnCost;
+        IAP = locator.componentReferences.IAPShopCanvas;
     }
 
     public void ButtonPressed()
     {
         if (!currency.CanAfford(CurrencyType.Gems, respawnCost))
         {
-            Debug.Log("FAILSAFE, button should not be enabled");
+            IAP.OpenShopAsPopUp();
             return;
         }
         currency.Spend(CurrencyType.Gems, respawnCost);

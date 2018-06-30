@@ -17,6 +17,8 @@ public class GameOverComponent : MonoBehaviour {
     private PlayerScoreComponent playerScoreComponent;
     private AISpawnComponent aISpawnComponent;
     private static readonly string HighscoreKey = "HighScore";
+    public delegate void GameOverEvent();
+    public GameOverEvent gameOverEvent;
 
     private void Awake()
     {
@@ -65,7 +67,9 @@ public class GameOverComponent : MonoBehaviour {
         {
             item.StartAnimation();
         }
-        chestLevelText.text = "Chest level " + aISpawnComponent.waveNr.ToString();
+
+        if (gameOverEvent != null)
+            gameOverEvent();
     }
 
     private void SaveHighScore(int score)

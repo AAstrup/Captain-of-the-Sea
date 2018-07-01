@@ -7,6 +7,6 @@ using System.Collections.Generic;
 [Serializable]
 public class AbilitySetupInfo
 {
-    public int[] abilitySpotNumber;
+    public List<int> abilitySpotNumber;
     public ShopItemModel.ItemID uniqueNameID;
 }

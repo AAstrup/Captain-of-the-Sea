@@ -5,7 +5,7 @@
 /// </summary>
 public interface IItemAbilityComponent
 {
-    void Initialize(GameObject shipGameObject, ShopItemModel model);
+    void Initialize(GameObject gameObject, ShopItemModel item, OwnerComponent.Owner owner);
     void Trigger();
     ShopItemModel GetModel();
     float GetRotation();

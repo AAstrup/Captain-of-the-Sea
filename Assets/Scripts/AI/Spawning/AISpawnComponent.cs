@@ -26,7 +26,7 @@ public class AISpawnComponent : MonoBehaviour {
     private CameraDirectorComponent cameraDirectorComponent;
     private static readonly float heightOffset = 11f;
 
-    private void Awake()
+    private void Start()
     {
         shipsAlive = new List<Transform>();
         SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);

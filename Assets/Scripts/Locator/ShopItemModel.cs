@@ -8,7 +8,7 @@ using UnityEngine;
 [Serializable]
 public class ShopItemModel : IShopItemModel
 {
-    public enum ItemID { Cannon, WindSail }
+    public enum ItemID { Cannon, WindSail, Bomb }
     public ItemID uniqueNameID;
     public Sprite sprite;
     public GameObject prefab;

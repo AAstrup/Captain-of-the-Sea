@@ -7,7 +7,7 @@ using System.Linq;
 public class PlayerItemInventory
 {
     public Dictionary<ShopItemModel.ItemID, PlayerItem> items;
-    public static readonly int maxActiveItems = 3;
+    public static readonly int maxActiveItems = 2;
     public delegate void ItemsChangedEvent();
     public ItemsChangedEvent itemChangedEvent;
 
@@ -25,22 +25,8 @@ public class PlayerItemInventory
                 isActiveItem = true,
                 abilitySetupInfo = new AbilitySetupInfo()
                 {
-                    abilitySpotNumber = new int[] { 0 },
+                    abilitySpotNumber = new List<int>() { 0, 1 },
                     uniqueNameID = ShopItemModel.ItemID.Cannon
-                }
-            }
-        );
-
-        AddItem(
-            new PlayerItem()
-            {
-                itemLevel = 1,
-                uniqueItemID = ShopItemModel.ItemID.WindSail,
-                isActiveItem = true,
-                abilitySetupInfo = new AbilitySetupInfo()
-                {
-                    abilitySpotNumber = new int[] { 1 },
-                    uniqueNameID = ShopItemModel.ItemID.WindSail
                 }
             }
         );
@@ -80,6 +66,7 @@ public class PlayerItemInventory
 
     internal void DeactivateItem(PlayerItem item)
     {
+        item.abilitySetupInfo = null;
         item.isActiveItem = false;
     }
 
@@ -88,9 +75,40 @@ public class PlayerItemInventory
         var activeItems = items.Where(x => x.Value.isActiveItem == true).ToArray();
         if((activeItems.Length + 1) >= maxActiveItems)
         {
-            activeItems[0].Value.isActiveItem = false;
+            DeactivateItem(activeItems[0].Value);
         }
         item.isActiveItem = true;
+        var availableSpots = GetUnsignedSpotItems();
+        item.abilitySetupInfo = new AbilitySetupInfo()
+        {
+            abilitySpotNumber = new List<int>(),
+            uniqueNameID = item.uniqueItemID
+        };
+        foreach (var spotNumber in availableSpots)
+        {
+            item.abilitySetupInfo.abilitySpotNumber.Add(spotNumber);
+        }
+    }
+
+    private List<int> GetUnsignedSpotItems()
+    {
+        List<int> spots = new List<int>();
+        for (int i = 0; i < maxActiveItems; i++)
+        {
+            spots.Add(i);
+        }
+        foreach (var item in items)
+        {
+            if (item.Value.abilitySetupInfo == null)
+                continue;
+
+            for (int i = 0; i < item.Value.abilitySetupInfo.abilitySpotNumber.Count; i++)
+            {
+                spots.Remove(i);
+            }
+        }
+
+        return spots;
     }
 
     /// <summary>

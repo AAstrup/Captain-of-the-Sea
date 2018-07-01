@@ -6,7 +6,7 @@ using UnityEngine;
 /// Responsible for moving a bullet, detecting collision, and decreasing its size (including collider)
 /// </summary>
 [RequireComponent(typeof(OwnerComponent))]
-internal class BulletComponent : MonoBehaviour
+internal class BulletComponent : MonoBehaviour, IAbilitySpawnComponent
 {
     public OwnerComponent myOwner;
     public float lifeSpanTotal = 3f;
@@ -65,5 +65,10 @@ internal class BulletComponent : MonoBehaviour
             victim.Damage(damage);
             particlePoolComponent.FireParticleSystem(ParticlePoolComponent.ParticleSystemType.ShipHit, transform.position, transform.eulerAngles.z + 180f);
         }
+    }
+
+    public void SetOwner(OwnerComponent.Owner owner)
+    {
+        myOwner.owner = owner;
     }
 }

@@ -34,7 +34,7 @@ public class AbilityWindComponent : MonoBehaviour, IItemAbilityComponent, ISubst
         return (timeActivated + windDuration) > timeScalesComponent.gamePlayTimeTime ? windEffect : 1f;
     }
 
-    public void Initialize(GameObject shipGameObject, ShopItemModel model)
+    public void Initialize(GameObject shipGameObject, ShopItemModel model, OwnerComponent.Owner owner)
     {
         shipGameObject.GetComponent<ShipConfigurationComponent>().AddMaxSpeedMultiplier(this);
         shipGameObject.GetComponent<ShipConfigurationComponent>().AddAcelerationMultiplier(this);

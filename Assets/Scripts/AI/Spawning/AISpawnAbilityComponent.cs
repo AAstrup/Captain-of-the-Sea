@@ -12,7 +12,7 @@ public class AISpawnAbilityComponent : MonoBehaviour
     public ShopItemModel.ItemID[] itemAbilities;
     List<AbilitySetupComponent> toSetup;
 
-    private void Start()
+    private void Awake()
     {
         GetComponent<AISpawnComponent>().shipSpawnedEvent += AddAbilities;
     }
@@ -31,12 +31,12 @@ public class AISpawnAbilityComponent : MonoBehaviour
             abilities.Add(
                 new AbilitySetupInfo()
                 {
-                    abilitySpotNumber = new int[] { (randomSpotNumberOffset + i) % abilitySetupComp.abilitySpots.Length },
+                    abilitySpotNumber = new List<int>() { (randomSpotNumberOffset + i) % abilitySetupComp.abilitySpots.Length },
                     uniqueNameID = itemAbilities[UnityEngine.Random.Range(0, itemAbilities.Length)]
                 }
             );
         }
 
-        abilitySetupComp.dependenciesLoaded += delegate () { abilitySetupComp.InstantiateAbilities(abilities); };
+        abilitySetupComp.SubscribeDependenciesLoaded(delegate () { abilitySetupComp.InstantiateAbilities(abilities); });
     }
 }

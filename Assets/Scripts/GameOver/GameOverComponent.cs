@@ -33,10 +33,10 @@ public class GameOverComponent : MonoBehaviour {
 
     private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
-        locator.componentReferences.playerIdentifierComponent.playerGameObject.GetComponent<HealthComponent>().dieEvent += GameOver;
-        playerScoreComponent = locator.componentReferences.playerScoreComponent;
-        locator.componentReferences.playerIdentifierComponent.GetComponent<PlayerReviveComponent>().playerRevivedEvent += playerRevived;
-        aISpawnComponent = locator.componentReferences.aISpawnComponent;
+        locator.componentReferences.GetDependency<PlayerIdentifierComponent>().playerGameObject.GetComponent<HealthComponent>().dieEvent += GameOver;
+        playerScoreComponent = locator.componentReferences.GetDependency<PlayerScoreComponent>();
+        locator.componentReferences.GetDependency<PlayerIdentifierComponent>().GetComponent<PlayerReviveComponent>().playerRevivedEvent += playerRevived;
+        aISpawnComponent = locator.componentReferences.GetDependency<AISpawnComponent>();
     }
 
     private void playerRevived()

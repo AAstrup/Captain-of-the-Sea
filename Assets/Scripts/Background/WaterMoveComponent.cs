@@ -19,7 +19,7 @@ public class WaterMoveComponent : MonoBehaviour {
 
     private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
-        cachedPlayerReference = locator.componentReferences.playerIdentifierComponent.playerGameObject.transform;
+        cachedPlayerReference = locator.componentReferences.GetDependency<PlayerIdentifierComponent>().playerGameObject.transform;
     }
 
     void Update () {

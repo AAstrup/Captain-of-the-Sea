@@ -22,7 +22,7 @@ public class ShipMovementComponent : MonoBehaviour
 
     private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
-        timeScalesComponent = locator.componentReferences.timeScalesComponent;
+        timeScalesComponent = locator.componentReferences.GetDependency<TimeScalesComponent>();
     }
 
     internal void SetSpeed(float multiplier)

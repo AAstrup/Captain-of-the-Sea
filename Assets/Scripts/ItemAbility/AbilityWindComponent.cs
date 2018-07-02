@@ -20,7 +20,7 @@ public class AbilityWindComponent : MonoBehaviour, IItemAbilityComponent, ISubst
 
     private void dependency(SingleObjectInstanceLocator locator)
     {
-        timeScalesComponent = locator.componentReferences.timeScalesComponent;
+        timeScalesComponent = locator.componentReferences.GetDependency<TimeScalesComponent>();
     }
 
     public ShopItemModel GetModel()

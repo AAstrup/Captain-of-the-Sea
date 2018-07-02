@@ -1,25 +1,27 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Provides the references to the unity components for SingleComponentInstanceLocator
 /// </summary>
 public class SingleComponentInstanceReferences : MonoBehaviour
 {
-    // Component instances
-    public AISpawnComponent aISpawnComponent;
-    public AudioLevelComponent audioLevelComponent;
-    public SoundEffectPoolComponent soundEffectPoolComponent;
-    public CameraDirectorComponent cameraDirectorComponent;
-    public ParticlePoolComponent particlePoolComponent;
-    public SpriteEffectsComponent spriteEffectsComponent;
-    public TimeScalesComponent timeScalesComponent;
-    public MenuStartComponent menuStartComponent;
-    public PlayerScoreComponent playerScoreComponent;
-    public PlayerIdentifierComponent playerIdentifierComponent;
-    public ShopItemPanelComponent shopItemPanelComponent;
-    public ShopItemLibraryComponent shopItemLibraryComponent;
-    public IAPPurchaseCanvasComponent IAPShopCanvas;
-    public FireButtonSetupComponent fireButtonSetupComponent;
+    Dictionary<Type, object> componentDendencies;
+
+    public T GetDependency<T>()
+    {
+        if (componentDendencies == null)
+            componentDendencies = new Dictionary<Type, object>();
+
+        if (!componentDendencies.ContainsKey(typeof(T)))
+        {
+            var comp = GetComponentInChildren<T>(true);
+            componentDendencies.Add(typeof(T), comp);
+        }
+
+        return (T) componentDendencies[typeof(T)];
+    }
 
     private void Start()
     {

@@ -26,9 +26,9 @@ public class RespawnPayComponent : MonoBehaviour
 
     private void SetupDependencies(SingleObjectInstanceLocator locator)
     {
-        playerIdentifierComponent = locator.componentReferences.playerIdentifierComponent;
+        playerIdentifierComponent = locator.componentReferences.GetDependency<PlayerIdentifierComponent>();
         currency = locator.objectReferences.playerProfile.playerCurrency;
-        IAP = locator.componentReferences.IAPShopCanvas;
+        IAP = locator.componentReferences.GetDependency<IAPPurchaseCanvasComponent>();
     }
 
     public void ButtonPressed()

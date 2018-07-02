@@ -45,7 +45,7 @@ public class BuyNewAbilityComponent : MonoBehaviour {
     {
         playerCurrency = locator.objectReferences.playerProfile.playerCurrency;
         inventory = locator.objectReferences.playerProfile.playerItemInventory;
-        itemLibrary = locator.componentReferences.shopItemLibraryComponent;
-        iAPShopCanvas = locator.componentReferences.IAPShopCanvas;
+        itemLibrary = locator.componentReferences.GetDependency<ShopItemLibraryComponent>();
+        iAPShopCanvas = locator.componentReferences.GetDependency<IAPPurchaseCanvasComponent>();
     }
 }

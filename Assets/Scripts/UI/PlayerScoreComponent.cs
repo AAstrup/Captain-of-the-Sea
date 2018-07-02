@@ -24,7 +24,7 @@ public class PlayerScoreComponent : MonoBehaviour {
 
     private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
-        locator.componentReferences.aISpawnComponent.shipSpawnedEvent += ShipSpawned;
+        locator.componentReferences.GetDependency<AISpawnComponent>().shipSpawnedEvent += ShipSpawned;
     }
 
     private void ShipSpawned(HealthComponent ship)

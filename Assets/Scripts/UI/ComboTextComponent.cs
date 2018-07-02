@@ -25,8 +25,8 @@ public class ComboTextComponent : MonoBehaviour {
 
     private void SetupDependencies(SingleObjectInstanceLocator locator)
     {
-        locator.componentReferences.aISpawnComponent.shipSpawnedEvent += shipSpawnSetup;
-        timeScalesComponent = locator.componentReferences.timeScalesComponent;
+        locator.componentReferences.GetDependency<AISpawnComponent>().shipSpawnedEvent += shipSpawnSetup;
+        timeScalesComponent = locator.componentReferences.GetDependency<TimeScalesComponent>();
     }
 
     private void shipSpawnSetup(HealthComponent healthComponent)

@@ -20,7 +20,7 @@ public class ShopItemLibraryComponent : MonoBehaviour {
 
     private void SetupDependencies(SingleObjectInstanceLocator locator)
     {
-        shop = locator.componentReferences.shopItemPanelComponent;
+        shop = locator.componentReferences.GetDependency<ShopItemPanelComponent>();
     }
 
     private void Update()

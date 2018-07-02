@@ -22,7 +22,8 @@ public class AbilityPlayerInputComponent : MonoBehaviour {
 
     private void SetupButton(SingleObjectInstanceLocator locator)
     {
-        locator.componentReferences.fireButtonSetupComponent.AddDelegateToButton(FireAbility);
+        var reference = locator.componentReferences.GetDependency<FireButtonSetupComponent>();
+        reference.AddDelegateToButton(FireAbility);
     }
 
     private void FireAbility()

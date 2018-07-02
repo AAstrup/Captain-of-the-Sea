@@ -17,7 +17,7 @@ public class PlayerHealthBarComponent : MonoBehaviour {
 
     private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
-        var playerHealthComponent = locator.componentReferences.playerIdentifierComponent.playerGameObject.GetComponent<HealthComponent>();
+        var playerHealthComponent = locator.componentReferences.GetDependency<PlayerIdentifierComponent>().playerGameObject.GetComponent<HealthComponent>();
         startHealth = playerHealthComponent.health;
         playerHealthComponent.healthChangedEvent += UpdateHealthUI;
     }

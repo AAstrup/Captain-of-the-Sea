@@ -22,7 +22,7 @@ public class RespawnAdComponent : MonoBehaviour
 
     private void SetupDependencies(SingleObjectInstanceLocator locator)
     {
-        playerIdentifierComponent = locator.componentReferences.playerIdentifierComponent;
+        playerIdentifierComponent = locator.componentReferences.GetDependency<PlayerIdentifierComponent>();
     }
 
     public void ShowRewardedAd()

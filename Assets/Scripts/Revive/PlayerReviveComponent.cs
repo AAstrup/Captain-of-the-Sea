@@ -16,8 +16,8 @@ internal class PlayerReviveComponent : MonoBehaviour
 
     private void SetupDependencies(SingleObjectInstanceLocator locator)
     {
-        timeScalesComponent = locator.componentReferences.timeScalesComponent;
-        playerIdentifierComponent = locator.componentReferences.playerIdentifierComponent;
+        timeScalesComponent = locator.componentReferences.GetDependency<TimeScalesComponent>();
+        playerIdentifierComponent = locator.componentReferences.GetDependency<PlayerIdentifierComponent>();
     }
 
     internal void Revive()

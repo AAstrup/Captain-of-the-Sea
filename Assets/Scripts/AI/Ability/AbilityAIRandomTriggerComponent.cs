@@ -29,7 +29,7 @@ public class AbilityAIRandomTriggerComponent : MonoBehaviour {
 
     private void setupDependencies(SingleObjectInstanceLocator locator)
     {
-        timeScalesComponent = locator.componentReferences.timeScalesComponent;
+        timeScalesComponent = locator.componentReferences.GetDependency<TimeScalesComponent>();
     }
 
     private void SetItemAbilities(List<IItemAbilityComponent> itemAbilities)

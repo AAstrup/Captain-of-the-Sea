@@ -62,7 +62,7 @@ public class PlayerCurrency
 
     private void SetupDependencies(SingleObjectInstanceLocator locator)
     {
-        locator.componentReferences.aISpawnComponent.shipSpawnedEvent += SetupShipDependency;
+        locator.componentReferences.GetDependency<AISpawnComponent>().shipSpawnedEvent += SetupShipDependency;
     }
 
     private void SetupShipDependency(HealthComponent healthComponent)

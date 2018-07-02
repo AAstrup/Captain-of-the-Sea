@@ -34,9 +34,9 @@ public class AISpawnComponent : MonoBehaviour {
 
     private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
-        locator.componentReferences.menuStartComponent.gameStartedEvent += SpawnWave;
-        playerIdentifierComponent = locator.componentReferences.playerIdentifierComponent;
-        cameraDirectorComponent = locator.componentReferences.cameraDirectorComponent;
+        locator.componentReferences.GetDependency<MenuStartComponent>().gameStartedEvent += SpawnWave;
+        playerIdentifierComponent = locator.componentReferences.GetDependency<PlayerIdentifierComponent>();
+        cameraDirectorComponent = locator.componentReferences.GetDependency<CameraDirectorComponent>();
     }
 
     void SpawnWave()

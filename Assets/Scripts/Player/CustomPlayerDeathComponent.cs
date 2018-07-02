@@ -18,7 +18,7 @@ public class CustomPlayerDeathComponent : MonoBehaviour, ICustomDeathComponent
 
     private void DependencySetup(SingleObjectInstanceLocator locator)
     {
-        timeScalesComponent = locator.componentReferences.timeScalesComponent;
+        timeScalesComponent = locator.componentReferences.GetDependency<TimeScalesComponent>();
     }
 
     public void TriggerDeathEvent()

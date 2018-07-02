@@ -32,10 +32,10 @@ public class CameraDirectorComponent : MonoBehaviour {
 
     private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
-        playerIdentifierComponent = locator.componentReferences.playerIdentifierComponent;
+        playerIdentifierComponent = locator.componentReferences.GetDependency<PlayerIdentifierComponent>();
         playerDistanceToCameraCenter = transform.position - playerIdentifierComponent.playerGameObject.transform.position;
-        aISpawnComponent = locator.componentReferences.aISpawnComponent;
-        timeScalesComponent = locator.componentReferences.timeScalesComponent;
+        aISpawnComponent = locator.componentReferences.GetDependency<AISpawnComponent>();
+        timeScalesComponent = locator.componentReferences.GetDependency<TimeScalesComponent>();
     }
 
     private void Update()

@@ -26,7 +26,7 @@ public class SingleObjectInstanceReferences
 
     private void setup(SingleObjectInstanceLocator locator)
     {
-        locator.componentReferences.playerIdentifierComponent.playerGameObject.GetComponent<HealthComponent>().dieEvent += delegate (HealthComponent comp) { SavePlayerProfile(); };
+        locator.componentReferences.GetDependency<PlayerIdentifierComponent>().playerGameObject.GetComponent<HealthComponent>().dieEvent += delegate (HealthComponent comp) { SavePlayerProfile(); };
     }
 
     public void SavePlayerProfile()

@@ -22,7 +22,7 @@ public class AnimationPopComponent : MonoBehaviour, IAnimationObject {
 
     private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
-        timeScalesComponent = locator.componentReferences.timeScalesComponent;
+        timeScalesComponent = locator.componentReferences.GetDependency<TimeScalesComponent>();
     }
 
     public void StartAnimation()

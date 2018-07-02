@@ -17,7 +17,7 @@ public class FinalLevelText : MonoBehaviour {
 
     private void SetupDependencies(SingleObjectInstanceLocator locator)
     {
-        locator.componentReferences.aISpawnComponent.newWaveEvent += WaveSpawned;
+        locator.componentReferences.GetDependency<AISpawnComponent>().newWaveEvent += WaveSpawned;
     }
 
     private void WaveSpawned(int difficulty, DifficultyIncrease difficultyIncrease)

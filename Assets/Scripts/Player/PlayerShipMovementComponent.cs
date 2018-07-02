@@ -31,8 +31,8 @@ public class PlayerShipMovementComponent : MonoBehaviour {
 
     private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
-        locator.componentReferences.menuStartComponent.gameStartedEvent += UpdateTargetPosition;
-        cameraDirectorComponent = locator.componentReferences.cameraDirectorComponent;
+        locator.componentReferences.GetDependency<MenuStartComponent>().gameStartedEvent += UpdateTargetPosition;
+        cameraDirectorComponent = locator.componentReferences.GetDependency<CameraDirectorComponent>();
     }
 
     void Update () {

@@ -33,8 +33,8 @@ internal class BombComponent : MonoBehaviour, IAbilitySpawnComponent
 
     private void SetupDependencies(SingleObjectInstanceLocator locator)
     {
-        timeScalesComponent = locator.componentReferences.timeScalesComponent;
-        particlePoolComponent = locator.componentReferences.particlePoolComponent;
+        timeScalesComponent = locator.componentReferences.GetDependency<TimeScalesComponent>();
+        particlePoolComponent = locator.componentReferences.GetDependency<ParticlePoolComponent>();
     }
 
     private void Update()

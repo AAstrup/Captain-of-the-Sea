@@ -29,7 +29,7 @@ public class AbilitySetupComponent : MonoBehaviour {
 
     private void SetupDependencies(SingleObjectInstanceLocator locator)
     {
-        library = locator.componentReferences.shopItemLibraryComponent;
+        library = locator.componentReferences.GetDependency<ShopItemLibraryComponent>();
         dependenciesHasLoaded = true;
         if (dependenciesLoaded != null)
             dependenciesLoaded();

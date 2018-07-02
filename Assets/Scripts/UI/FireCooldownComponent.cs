@@ -30,9 +30,9 @@ public class FireCooldownComponent : MonoBehaviour {
 
     private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
-        timeScalesComponent = locator.componentReferences.timeScalesComponent;
-        library = locator.componentReferences.shopItemLibraryComponent;
-        locator.componentReferences.playerIdentifierComponent.GetComponent<AbilityPlayerInputComponent>().abilityTriggerEvent += abilityFired;
+        timeScalesComponent = locator.componentReferences.GetDependency<TimeScalesComponent>();
+        library = locator.componentReferences.GetDependency<ShopItemLibraryComponent>();
+        locator.componentReferences.GetDependency<PlayerIdentifierComponent>().GetComponent<AbilityPlayerInputComponent>().abilityTriggerEvent += abilityFired;
     }
 
     private void abilityFired(IItemAbilityComponent usedItemAbility, IItemAbilityComponent nextItemAbility)

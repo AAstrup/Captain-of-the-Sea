@@ -49,8 +49,8 @@ public class HealthComponent : MonoBehaviour
 
     private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
-        soundEffectPoolComponent = locator.componentReferences.soundEffectPoolComponent;
-        particlePoolComponent = locator.componentReferences.particlePoolComponent;
+        soundEffectPoolComponent = locator.componentReferences.GetDependency<SoundEffectPoolComponent>();
+        particlePoolComponent = locator.componentReferences.GetDependency<ParticlePoolComponent>();
     }
 
     private void Death()

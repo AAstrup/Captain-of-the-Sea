@@ -27,7 +27,7 @@ public class AbilitySpawnComponent : MonoBehaviour, IItemAbilityComponent
 
     private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
-        particlePoolComponent = locator.componentReferences.particlePoolComponent;
+        particlePoolComponent = locator.componentReferences.GetDependency<ParticlePoolComponent>();
     }
 
     public void Trigger()

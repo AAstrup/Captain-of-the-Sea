@@ -40,7 +40,7 @@ public class AIShipMovementComponent : MonoBehaviour {
 
     private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
-        gameObjectTarget = locator.componentReferences.playerIdentifierComponent.playerGameObject;
+        gameObjectTarget = locator.componentReferences.GetDependency<PlayerIdentifierComponent>().playerGameObject;
     }
 
     void Update()

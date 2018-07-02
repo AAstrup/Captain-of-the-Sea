@@ -24,10 +24,10 @@ public class ScreenShakeComponent : MonoBehaviour {
 
     private void DependencyCallback(SingleObjectInstanceLocator locator)
     {
-        locator.componentReferences.playerIdentifierComponent.playerGameObject.GetComponent<HealthComponent>().healthChangedEvent += delegate (HealthComponent victim, float damage, float healthLeft) { StartShake(); };
-        var test = locator.componentReferences.playerIdentifierComponent.playerGameObject.GetComponent<AbilityPlayerInputComponent>();
+        locator.componentReferences.GetDependency<PlayerIdentifierComponent>().playerGameObject.GetComponent<HealthComponent>().healthChangedEvent += delegate (HealthComponent victim, float damage, float healthLeft) { StartShake(); };
+        var test = locator.componentReferences.GetDependency<PlayerIdentifierComponent>().playerGameObject.GetComponent<AbilityPlayerInputComponent>();
         test.abilityTriggerEvent += delegate (IItemAbilityComponent usedAbility, IItemAbilityComponent nextAbility) { StartShake(); };
-        locator.componentReferences.aISpawnComponent.shipSpawnedEvent += ShipSpawned;
+        locator.componentReferences.GetDependency<AISpawnComponent>().shipSpawnedEvent += ShipSpawned;
     }
 
     private void ShipSpawned(HealthComponent healthComponent)

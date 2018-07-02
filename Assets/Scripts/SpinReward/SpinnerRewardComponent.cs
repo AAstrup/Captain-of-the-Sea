@@ -28,7 +28,7 @@ public class SpinnerRewardComponent : MonoBehaviour {
     private void dependencies(SingleObjectInstanceLocator locator)
     {
         playerCurrency = locator.objectReferences.playerProfile.playerCurrency;
-        iapStore = locator.componentReferences.IAPShopCanvas;
+        iapStore = locator.componentReferences.GetDependency<IAPPurchaseCanvasComponent>();
     }
 
     public void InitialSpin()

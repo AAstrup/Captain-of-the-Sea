@@ -15,12 +15,7 @@ public class ShopItemLibraryComponent : MonoBehaviour {
 
     private void Awake()
     {
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupDependencies);
-    }
-
-    private void SetupDependencies(SingleObjectInstanceLocator locator)
-    {
-        shop = locator.componentReferences.GetDependency<ShopItemPanelComponent>();
+        shop = ComponentLocator.instance.GetDependency<ShopItemPanelComponent>();
     }
 
     private void Update()

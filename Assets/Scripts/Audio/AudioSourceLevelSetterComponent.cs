@@ -19,12 +19,7 @@ public class AudioSourceLevelSetterComponent : MonoBehaviour {
     }
 
     void Start () {
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
-    }
-
-    private void DependencyCallback(SingleObjectInstanceLocator locator)
-    {
-        audioLevelComponent = locator.componentReferences.GetDependency<AudioLevelComponent>();
+        audioLevelComponent = ComponentLocator.instance.GetDependency<AudioLevelComponent>();
         audioLevelComponent.audioLevelChangedEvent += UpdateAudioLevel;
         UpdateAudioLevel(audioChannelType);
     }

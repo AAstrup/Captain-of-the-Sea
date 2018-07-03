@@ -13,12 +13,7 @@ public class CustomPlayerDeathComponent : MonoBehaviour, ICustomDeathComponent
 
     private void Awake()
     {
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencySetup);
-    }
-
-    private void DependencySetup(SingleObjectInstanceLocator locator)
-    {
-        timeScalesComponent = locator.componentReferences.GetDependency<TimeScalesComponent>();
+        timeScalesComponent = ComponentLocator.instance.GetDependency<TimeScalesComponent>();
     }
 
     public void TriggerDeathEvent()

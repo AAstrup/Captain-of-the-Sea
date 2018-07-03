@@ -20,15 +20,10 @@ public class RespawnPayComponent : MonoBehaviour
     private void Awake()
     {
         button = GetComponent<Button>();
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupDependencies);
         costText.text = respawnCost.ToString();
-    }
-
-    private void SetupDependencies(SingleObjectInstanceLocator locator)
-    {
-        playerIdentifierComponent = locator.componentReferences.GetDependency<PlayerIdentifierComponent>();
-        currency = locator.objectReferences.playerProfile.playerCurrency;
-        IAP = locator.componentReferences.GetDependency<IAPPurchaseCanvasComponent>();
+        playerIdentifierComponent = ComponentLocator.instance.GetDependency<PlayerIdentifierComponent>();
+        currency = ComponentLocator.instance.singleObjectInstanceReferences.playerProfile.playerCurrency;
+        IAP = ComponentLocator.instance.GetDependency<IAPPurchaseCanvasComponent>();
     }
 
     public void ButtonPressed()

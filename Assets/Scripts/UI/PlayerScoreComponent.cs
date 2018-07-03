@@ -18,13 +18,8 @@ public class PlayerScoreComponent : MonoBehaviour {
 
     void Awake () {
         animationPopComponent = GetComponent<AnimationPopComponent>();
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
+        ComponentLocator.instance.GetDependency<AISpawnComponent>().shipSpawnedEvent += ShipSpawned;
         UpdateUI();
-    }
-
-    private void DependencyCallback(SingleObjectInstanceLocator locator)
-    {
-        locator.componentReferences.GetDependency<AISpawnComponent>().shipSpawnedEvent += ShipSpawned;
     }
 
     private void ShipSpawned(HealthComponent ship)

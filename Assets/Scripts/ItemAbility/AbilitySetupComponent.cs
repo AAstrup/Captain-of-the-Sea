@@ -10,29 +10,20 @@ using UnityEngine;
 public class AbilitySetupComponent : MonoBehaviour {
     public AbilitySetupPositionComponent[] abilitySpots;
     private ShopItemLibraryComponent library;
-
     public delegate void ItemAbilitiesSetupEvent(List<IItemAbilityComponent> itemAbilities);
     public ItemAbilitiesSetupEvent itemAbilitiesSetup;
-    public SingleObjectInstanceLocator.DependenciesLoadedEvent dependenciesLoaded;
     private bool dependenciesHasLoaded;
     private List<IItemAbilityComponent> itemAbilities;
     public OwnerComponent owner;
 
     private void Awake()
     {
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupDependencies);
         if (owner == null)
             owner = GetComponent<OwnerComponent>();
         if (abilitySpots == null || abilitySpots.Length == 0)
             abilitySpots = GetComponentsInChildren<AbilitySetupPositionComponent>();
-    }
-
-    private void SetupDependencies(SingleObjectInstanceLocator locator)
-    {
-        library = locator.componentReferences.GetDependency<ShopItemLibraryComponent>();
+        library = ComponentLocator.instance.GetDependency<ShopItemLibraryComponent>();
         dependenciesHasLoaded = true;
-        if (dependenciesLoaded != null)
-            dependenciesLoaded();
     }
 
     public void InstantiateAbilities (List<AbilitySetupInfo> abilitySetupInfos)
@@ -57,15 +48,7 @@ public class AbilitySetupComponent : MonoBehaviour {
             itemAbilitiesSetup(itemAbilities);
     }
 
-    internal void SubscribeDependenciesLoaded(SingleObjectInstanceLocator.DependenciesLoadedEvent callback)
-    {
-        if (dependenciesHasLoaded)
-            callback();
-        else
-            dependenciesLoaded += callback;
-    }
-
-public void GetAbilitiesWhenInstantiated(ItemAbilitiesSetupEvent callback)
+    public void GetAbilitiesWhenInstantiated(ItemAbilitiesSetupEvent callback)
     {
         if (itemAbilities == null)
             itemAbilitiesSetup += callback;

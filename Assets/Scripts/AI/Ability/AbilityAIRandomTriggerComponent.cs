@@ -19,20 +19,15 @@ public class AbilityAIRandomTriggerComponent : MonoBehaviour {
 
         if (abilitySetupComponent == null)
             abilitySetupComponent = GetComponent<AbilitySetupComponent>();
-        abilitySetupComponent.itemAbilitiesSetup += SetItemAbilities;
+         abilitySetupComponent.GetAbilitiesWhenInstantiated(SetupDependencies);
 
         if (shipConfigurationComponent == null)
             shipConfigurationComponent = GetComponent<AIShipConfigurationComponent>();
 
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(setupDependencies);
+        timeScalesComponent = ComponentLocator.instance.GetDependency<TimeScalesComponent>();
     }
 
-    private void setupDependencies(SingleObjectInstanceLocator locator)
-    {
-        timeScalesComponent = locator.componentReferences.GetDependency<TimeScalesComponent>();
-    }
-
-    private void SetItemAbilities(List<IItemAbilityComponent> itemAbilities)
+    private void SetupDependencies(List<IItemAbilityComponent> itemAbilities)
     {
         this.itemAbilities = itemAbilities;
     }

@@ -15,12 +15,7 @@ public class AbilityWindComponent : MonoBehaviour, IItemAbilityComponent, ISubst
 
     private void Awake()
     {
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(dependency);
-    }
-
-    private void dependency(SingleObjectInstanceLocator locator)
-    {
-        timeScalesComponent = locator.componentReferences.GetDependency<TimeScalesComponent>();
+        timeScalesComponent = ComponentLocator.instance.GetDependency<TimeScalesComponent>();
     }
 
     public ShopItemModel GetModel()

@@ -22,12 +22,7 @@ public class AbilitySpawnComponent : MonoBehaviour, IItemAbilityComponent
         audio = GetComponent<AudioSource>();
         if(ownerComponent == null)
             ownerComponent = GetComponent<OwnerComponent>();
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
-    }
-
-    private void DependencyCallback(SingleObjectInstanceLocator locator)
-    {
-        particlePoolComponent = locator.componentReferences.GetDependency<ParticlePoolComponent>();
+        particlePoolComponent = ComponentLocator.instance.GetDependency<ParticlePoolComponent>();
     }
 
     public void Trigger()

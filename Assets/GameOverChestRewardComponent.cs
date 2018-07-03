@@ -12,12 +12,7 @@ public class GameOverChestRewardComponent : MonoBehaviour {
 
     // Use this for initialization
     void Awake () {
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupDependencies);
-    }
-
-    private void SetupDependencies(SingleObjectInstanceLocator locator)
-    {
-        aISpawnComponent = locator.componentReferences.GetDependency<AISpawnComponent>();
+        aISpawnComponent = ComponentLocator.instance.GetDependency<AISpawnComponent>();
         gameOverComponent.gameOverEvent += GameOverReward;
     }
 

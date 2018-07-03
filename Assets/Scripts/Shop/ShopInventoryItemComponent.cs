@@ -30,6 +30,7 @@ public class ShopInventoryItemComponent : MonoBehaviour {
         else
             inventory.ActivateItem(item);
         SetIsPicked(!isPicked);
+        ComponentLocator.instance.singleObjectInstanceReferences.SavePlayerProfile();
     }
 
     internal void ShowNoItem()

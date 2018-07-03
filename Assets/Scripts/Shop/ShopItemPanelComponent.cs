@@ -20,18 +20,13 @@ public class ShopItemPanelComponent : MonoBehaviour {
 
     private void Awake()
     {
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupDependencies);
+        inventory = ComponentLocator.instance.singleObjectInstanceReferences.playerProfile.playerItemInventory;
+        playerCurrency = ComponentLocator.instance.singleObjectInstanceReferences.playerProfile.playerCurrency;
     }
 
     internal bool IsSetup()
     {
         return inventory != null && playerCurrency != null;
-    }
-
-    private void SetupDependencies(SingleObjectInstanceLocator locator)
-    {
-        inventory = locator.objectReferences.playerProfile.playerItemInventory;
-        playerCurrency = locator.objectReferences.playerProfile.playerCurrency;
     }
 
     public void PresentItem(IShopItemModel shopItemModel)

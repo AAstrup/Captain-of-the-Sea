@@ -20,7 +20,10 @@ public class BuyNewAbilityComponent : MonoBehaviour {
 
     private void Awake()
     {
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupDependency);
+        playerCurrency = ComponentLocator.instance.singleObjectInstanceReferences.playerProfile.playerCurrency;
+        inventory = ComponentLocator.instance.singleObjectInstanceReferences.playerProfile.playerItemInventory;
+        itemLibrary = ComponentLocator.instance.GetDependency<ShopItemLibraryComponent>();
+        iAPShopCanvas = ComponentLocator.instance.GetDependency<IAPPurchaseCanvasComponent>();
         if (button == null)
             button = GetComponent<Button>();
         button.onClick.AddListener(AttemptPurchase);
@@ -34,18 +37,12 @@ public class BuyNewAbilityComponent : MonoBehaviour {
             playerCurrency.Spend(cost);
             var itemToUnlock = itemLibrary.GetRandomItemModel();
             inventory.AddItem(itemToUnlock, 1);
+            ComponentLocator.instance.singleObjectInstanceReferences.SavePlayerProfile();
+            ComponentLocator.instance.GetDependency<ShopInventoryPanelComponent>().UpdateUI();
         }
         else
         {
             iAPShopCanvas.OpenShopAsPopUp();
         }
-    }
-
-    private void SetupDependency(SingleObjectInstanceLocator locator)
-    {
-        playerCurrency = locator.objectReferences.playerProfile.playerCurrency;
-        inventory = locator.objectReferences.playerProfile.playerItemInventory;
-        itemLibrary = locator.componentReferences.GetDependency<ShopItemLibraryComponent>();
-        iAPShopCanvas = locator.componentReferences.GetDependency<IAPPurchaseCanvasComponent>();
     }
 }

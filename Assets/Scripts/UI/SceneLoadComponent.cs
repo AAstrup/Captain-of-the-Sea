@@ -10,7 +10,7 @@ public class SceneLoadComponent : MonoBehaviour {
 
     public void ReloadScene()
     {
-        SingleObjectInstanceLocator.ReloadScene();
+        ComponentLocator.instance.ReloadScene();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

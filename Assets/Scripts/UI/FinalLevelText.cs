@@ -12,12 +12,7 @@ public class FinalLevelText : MonoBehaviour {
 
     void Awake () {
         animationPopComponent = GetComponent<AnimationPopComponent>();
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupDependencies);
-	}
-
-    private void SetupDependencies(SingleObjectInstanceLocator locator)
-    {
-        locator.componentReferences.GetDependency<AISpawnComponent>().newWaveEvent += WaveSpawned;
+        ComponentLocator.instance.GetDependency<AISpawnComponent>().newWaveEvent += WaveSpawned;
     }
 
     private void WaveSpawned(int difficulty, DifficultyIncrease difficultyIncrease)

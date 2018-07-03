@@ -17,12 +17,7 @@ public class RespawnAdComponent : MonoBehaviour
     private void Awake()
     {
         button = GetComponent<Button>();
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupDependencies);
-    }
-
-    private void SetupDependencies(SingleObjectInstanceLocator locator)
-    {
-        playerIdentifierComponent = locator.componentReferences.GetDependency<PlayerIdentifierComponent>();
+        playerIdentifierComponent = ComponentLocator.instance.GetDependency<PlayerIdentifierComponent>();
     }
 
     public void ShowRewardedAd()

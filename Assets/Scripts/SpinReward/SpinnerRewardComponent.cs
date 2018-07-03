@@ -22,13 +22,8 @@ public class SpinnerRewardComponent : MonoBehaviour {
         respinButton.onClick.AddListener(respin);
         spinnerComponent.spinEndedEvent += spinFinished;
         respinButton.interactable = false;
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(dependencies);
-    }
-
-    private void dependencies(SingleObjectInstanceLocator locator)
-    {
-        playerCurrency = locator.objectReferences.playerProfile.playerCurrency;
-        iapStore = locator.componentReferences.GetDependency<IAPPurchaseCanvasComponent>();
+        playerCurrency = ComponentLocator.instance.singleObjectInstanceReferences.playerProfile.playerCurrency;
+        iapStore = ComponentLocator.instance.GetDependency<IAPPurchaseCanvasComponent>();
     }
 
     public void InitialSpin()

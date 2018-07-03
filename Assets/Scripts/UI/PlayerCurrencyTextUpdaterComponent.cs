@@ -16,13 +16,8 @@ public class PlayerCurrencyTextUpdaterComponent : MonoBehaviour {
     void Awake () {
         animationPopComponent = GetComponent<AnimationPopComponent>();
         textComp = GetComponent<Text>();
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupDependencies);
-    }
-
-    private void SetupDependencies(SingleObjectInstanceLocator locator)
-    {
-        locator.objectReferences.playerProfile.playerCurrency.OnCurrencyChange(currencyType, UpdateUI);
-        UpdateUI(locator.objectReferences.playerProfile.playerCurrency.GetCurrencyAmount(currencyType));
+        ComponentLocator.instance.singleObjectInstanceReferences.playerProfile.playerCurrency.OnCurrencyChange(currencyType, UpdateUI);
+        UpdateUI(ComponentLocator.instance.singleObjectInstanceReferences.playerProfile.playerCurrency.GetCurrencyAmount(currencyType));
     }
 
     private void UpdateUI(int amount)

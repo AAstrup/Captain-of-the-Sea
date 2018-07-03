@@ -23,18 +23,13 @@ internal class BombComponent : MonoBehaviour, IAbilitySpawnComponent
     private void Awake()
     {
         timeLeft = timeTotal;
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupDependencies);
         if (myOwner == null)
             myOwner = GetComponent<OwnerComponent>();
         if (circleCollider2D == null)
             circleCollider2D = GetComponent<CircleCollider2D>();
         victims = new List<HealthComponent>();
-    }
-
-    private void SetupDependencies(SingleObjectInstanceLocator locator)
-    {
-        timeScalesComponent = locator.componentReferences.GetDependency<TimeScalesComponent>();
-        particlePoolComponent = locator.componentReferences.GetDependency<ParticlePoolComponent>();
+        timeScalesComponent = ComponentLocator.instance.GetDependency<TimeScalesComponent>();
+        particlePoolComponent = ComponentLocator.instance.GetDependency<ParticlePoolComponent>();
     }
 
     private void Update()

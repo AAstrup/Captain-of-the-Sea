@@ -27,7 +27,8 @@ public class HealthComponent : MonoBehaviour
         startHealth = health;
         ownerComponent = GetComponent<OwnerComponent>();
         customDeathComponent = GetComponent<ICustomDeathComponent>();
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback);
+        soundEffectPoolComponent = ComponentLocator.instance.GetDependency<SoundEffectPoolComponent>();
+        particlePoolComponent = ComponentLocator.instance.GetDependency<ParticlePoolComponent>();
     }
 
     public void Damage(float dmg)
@@ -45,12 +46,6 @@ public class HealthComponent : MonoBehaviour
         health = startHealth;
         if (healthChangedEvent != null)
             healthChangedEvent(this, -startHealth, health);
-    }
-
-    private void DependencyCallback(SingleObjectInstanceLocator locator)
-    {
-        soundEffectPoolComponent = locator.componentReferences.GetDependency<SoundEffectPoolComponent>();
-        particlePoolComponent = locator.componentReferences.GetDependency<ParticlePoolComponent>();
     }
 
     private void Death()

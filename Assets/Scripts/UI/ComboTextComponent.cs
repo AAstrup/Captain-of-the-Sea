@@ -20,13 +20,8 @@ public class ComboTextComponent : MonoBehaviour {
 
     void Awake () {
         textComp = GetComponent<Text>();
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupDependencies);
-	}
-
-    private void SetupDependencies(SingleObjectInstanceLocator locator)
-    {
-        locator.componentReferences.GetDependency<AISpawnComponent>().shipSpawnedEvent += shipSpawnSetup;
-        timeScalesComponent = locator.componentReferences.GetDependency<TimeScalesComponent>();
+        ComponentLocator.instance.GetDependency<AISpawnComponent>().shipSpawnedEvent += shipSpawnSetup;
+        timeScalesComponent = ComponentLocator.instance.GetDependency<TimeScalesComponent>();
     }
 
     private void shipSpawnSetup(HealthComponent healthComponent)

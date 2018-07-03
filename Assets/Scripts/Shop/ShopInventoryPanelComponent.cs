@@ -11,13 +11,13 @@ public class ShopInventoryPanelComponent : MonoBehaviour {
     public ShopInventoryItemComponent[] items;
 
     void Awake () {
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupDependencies);
-	}
+        UpdateUI();
+    }
 
-    private void SetupDependencies(SingleObjectInstanceLocator locator)
+    public void UpdateUI()
     {
-        var playerInventory = locator.objectReferences.playerProfile.playerItemInventory;
-        var itemnLibrary = locator.componentReferences.GetDependency<ShopItemLibraryComponent>();
+        var playerInventory = ComponentLocator.instance.singleObjectInstanceReferences.playerProfile.playerItemInventory;
+        var itemnLibrary = ComponentLocator.instance.GetDependency<ShopItemLibraryComponent>();
 
         int currentUIItemIndex = 0;
         foreach (var playerItem in playerInventory.items)

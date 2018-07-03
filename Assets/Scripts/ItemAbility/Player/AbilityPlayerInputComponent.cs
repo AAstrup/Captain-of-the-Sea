@@ -16,13 +16,8 @@ public class AbilityPlayerInputComponent : MonoBehaviour {
 
     void Start () {
         abilitySetupComponent = GetComponent<AbilitySetupComponent>();
-        abilitySetupComponent.itemAbilitiesSetup += SetupAbilities;
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupButton);
-    }
-
-    private void SetupButton(SingleObjectInstanceLocator locator)
-    {
-        var reference = locator.componentReferences.GetDependency<FireButtonSetupComponent>();
+        abilitySetupComponent.GetAbilitiesWhenInstantiated(SetupAbilities);
+        var reference = ComponentLocator.instance.GetDependency<FireButtonSetupComponent>();
         reference.AddDelegateToButton(FireAbility);
     }
 

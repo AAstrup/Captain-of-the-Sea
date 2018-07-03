@@ -20,13 +20,8 @@ public class SingleObjectInstanceReferences
 
     internal void SetupDependentObjects()
     {
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(setup);
+        ComponentLocator.instance.GetDependency<PlayerIdentifierComponent>().playerGameObject.GetComponent<HealthComponent>().dieEvent += delegate (HealthComponent comp) { SavePlayerProfile(); };
         playerProfile.SetupDependentObjects();
-    }
-
-    private void setup(SingleObjectInstanceLocator locator)
-    {
-        locator.componentReferences.GetDependency<PlayerIdentifierComponent>().playerGameObject.GetComponent<HealthComponent>().dieEvent += delegate (HealthComponent comp) { SavePlayerProfile(); };
     }
 
     public void SavePlayerProfile()

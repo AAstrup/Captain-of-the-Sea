@@ -15,14 +15,9 @@ public class TimeStopEffectComponent : MonoBehaviour {
 
     private void Start()
     {
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
-    }
-
-    private void DependencyCallback(SingleObjectInstanceLocator locator)
-    {
-        timeScalesComponent = locator.componentReferences.GetDependency<TimeScalesComponent>();
-        locator.componentReferences.GetDependency<PlayerIdentifierComponent>().playerGameObject.GetComponent<HealthComponent>().healthChangedEvent += delegate (HealthComponent victim, float damage, float healthLeft) { StopTime(); };
-        locator.componentReferences.GetDependency<AISpawnComponent>().shipSpawnedEvent += ShipSpawned;
+        timeScalesComponent = ComponentLocator.instance.GetDependency<TimeScalesComponent>();
+        ComponentLocator.instance.GetDependency<PlayerIdentifierComponent>().playerGameObject.GetComponent<HealthComponent>().healthChangedEvent += delegate (HealthComponent victim, float damage, float healthLeft) { StopTime(); };
+        ComponentLocator.instance.GetDependency<AISpawnComponent>().shipSpawnedEvent += ShipSpawned;
     }
 
     private void ShipSpawned(HealthComponent healthComponent)

@@ -14,12 +14,7 @@ public class FireButtonSetupComponent : MonoBehaviour {
 
     private void Start()
     {
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(dependencies);
-    }
-
-    private void dependencies(SingleObjectInstanceLocator locator)
-    {
-        locator.componentReferences.GetDependency<PlayerIdentifierComponent>().GetComponent<AbilityPlayerInputComponent>().abilityTriggerEvent += triggerEvent;
+        ComponentLocator.instance.GetDependency<PlayerIdentifierComponent>().GetComponent<AbilityPlayerInputComponent>().abilityTriggerEvent += triggerEvent;
     }
 
     private void triggerEvent(IItemAbilityComponent usedAbility, IItemAbilityComponent nextAbility)

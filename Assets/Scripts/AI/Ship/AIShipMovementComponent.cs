@@ -15,8 +15,9 @@ public class AIShipMovementComponent : MonoBehaviour {
     private float desiredWeaponAngle;
 
     void Awake () {
+        var abilitySetupComponent = GetComponent<AbilitySetupComponent>();
         if (abilitySetupComponent != null)
-            GetComponent<AbilitySetupComponent>().GetAbilitiesWhenInstantiated(SetupAbilities);
+            abilitySetupComponent.GetAbilitiesWhenInstantiated(SetupAbilities);
         else
             desiredWeaponAngle = 0f;
 
@@ -35,12 +36,7 @@ public class AIShipMovementComponent : MonoBehaviour {
 
     private void Start()
     {
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
-    }
-
-    private void DependencyCallback(SingleObjectInstanceLocator locator)
-    {
-        gameObjectTarget = locator.componentReferences.GetDependency<PlayerIdentifierComponent>().playerGameObject;
+        gameObjectTarget = ComponentLocator.instance.GetDependency<PlayerIdentifierComponent>().playerGameObject;
     }
 
     void Update()

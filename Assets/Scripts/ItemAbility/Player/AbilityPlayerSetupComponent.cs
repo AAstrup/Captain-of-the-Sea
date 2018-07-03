@@ -13,14 +13,9 @@ public class AbilityPlayerSetupComponent : MonoBehaviour {
     private PlayerItemInventory inventory;
 
     void Awake () {
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(setupDependencies);
         abilitySetupComponent = GetComponent<AbilitySetupComponent>();
-    }
-
-    private void setupDependencies(SingleObjectInstanceLocator locator)
-    {
-        inventory = locator.objectReferences.playerProfile.playerItemInventory;
-        locator.componentReferences.GetDependency<MenuStartComponent>().gameStartedEvent += start;
+        inventory = ComponentLocator.instance.singleObjectInstanceReferences.playerProfile.playerItemInventory;
+        ComponentLocator.instance.GetDependency<MenuStartComponent>().gameStartedEvent += start;
     }
 
     private void start()

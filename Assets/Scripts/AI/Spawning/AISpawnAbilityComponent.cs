@@ -37,6 +37,6 @@ public class AISpawnAbilityComponent : MonoBehaviour
             );
         }
 
-        abilitySetupComp.SubscribeDependenciesLoaded(delegate () { abilitySetupComp.InstantiateAbilities(abilities); });
+        abilitySetupComp.InstantiateAbilities(abilities);
     }
 }

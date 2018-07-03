@@ -29,14 +29,9 @@ public class AISpawnComponent : MonoBehaviour {
     private void Start()
     {
         shipsAlive = new List<Transform>();
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(DependencyCallback, this);
-    }
-
-    private void DependencyCallback(SingleObjectInstanceLocator locator)
-    {
-        locator.componentReferences.GetDependency<MenuStartComponent>().gameStartedEvent += SpawnWave;
-        playerIdentifierComponent = locator.componentReferences.GetDependency<PlayerIdentifierComponent>();
-        cameraDirectorComponent = locator.componentReferences.GetDependency<CameraDirectorComponent>();
+        ComponentLocator.instance.GetDependency<MenuStartComponent>().gameStartedEvent += SpawnWave;
+        playerIdentifierComponent = ComponentLocator.instance.GetDependency<PlayerIdentifierComponent>();
+        cameraDirectorComponent = ComponentLocator.instance.GetDependency<CameraDirectorComponent>();
     }
 
     void SpawnWave()
@@ -47,7 +42,7 @@ public class AISpawnComponent : MonoBehaviour {
         var difficultyIncrease = difficultyIncreases[waveNr % difficultyIncreases.Length];
         difficultyAccumilated += difficultyIncrease.increaseAmount;
         int difficultyThisWave = difficultyAccumilated + difficultyIncrease.currentWaveOnlyIncrease;
-        if (difficultyIncreases[waveNr].finalLevel)
+        if (difficultyIncreases[waveNr % difficultyIncreases.Length].finalLevel)
             difficultyNr++;
 
         if (newWaveEvent != null)

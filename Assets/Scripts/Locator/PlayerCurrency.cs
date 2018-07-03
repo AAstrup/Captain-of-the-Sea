@@ -47,7 +47,7 @@ public class PlayerCurrency
 
     public void SetupDependencies()
     {
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupDependencies);
+        ComponentLocator.instance.GetDependency<AISpawnComponent>().shipSpawnedEvent += SetupShipDependency;
     }
 
     internal int GetCurrencyAmount(CurrencyType currencyType)
@@ -58,11 +58,6 @@ public class PlayerCurrency
     internal void OnCurrencyChange(CurrencyType currencyType, CurrenyChangedEvent callback)
     {
         currencies[currencyType].Subscribe(callback);
-    }
-
-    private void SetupDependencies(SingleObjectInstanceLocator locator)
-    {
-        locator.componentReferences.GetDependency<AISpawnComponent>().shipSpawnedEvent += SetupShipDependency;
     }
 
     private void SetupShipDependency(HealthComponent healthComponent)

@@ -26,16 +26,11 @@ public class ShopIAPOfferComponent : MonoBehaviour {
     private void Awake()
     {
         payButton.onClick.AddListener(Buy);
-        SingleObjectInstanceLocator.SubscribeToDependenciesCallback(SetupDependencies);
         costAmountText.text = cost.ToString() + "$";
         rewardFlatAmountText.text = rewardFlat.ToString();
         if(rewardBonus != 0)
             rewardBonusAmountText.text = "+  " + rewardFlat.ToString() + " free";
-    }
-
-    private void SetupDependencies(SingleObjectInstanceLocator locator)
-    {
-        currencies = locator.objectReferences.playerProfile.playerCurrency;
+        currencies = ComponentLocator.instance.singleObjectInstanceReferences.playerProfile.playerCurrency;
     }
 
     public void Buy()

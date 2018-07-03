@@ -12,14 +12,22 @@ public class FireButtonSetupComponent : MonoBehaviour {
     public Image skillImage;
     public Button button;
 
-    private void Start()
+    private void Awake()
     {
+        ComponentLocator.instance.GetDependency<MenuStartComponent>().gameStartedEvent += delegate () {
+            SetImage(ComponentLocator.instance.GetDependency<AbilityPlayerInputComponent>().GetCurrectAbility().GetModel().sprite);
+        };
         ComponentLocator.instance.GetDependency<PlayerIdentifierComponent>().GetComponent<AbilityPlayerInputComponent>().abilityTriggerEvent += triggerEvent;
     }
 
     private void triggerEvent(IItemAbilityComponent usedAbility, IItemAbilityComponent nextAbility)
     {
-        skillImage.sprite = nextAbility.GetModel().sprite;
+        SetImage(nextAbility.GetModel().sprite);
+    }
+
+    private void SetImage(Sprite sprite)
+    {
+        skillImage.sprite = sprite;
     }
 
     internal void AddDelegateToButton(Action fireAbility)

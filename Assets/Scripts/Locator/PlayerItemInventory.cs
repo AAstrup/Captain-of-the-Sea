@@ -70,12 +70,22 @@ public class PlayerItemInventory
         item.isActiveItem = false;
     }
 
+    private void ReducesAbilitySlotForItem(PlayerItem value)
+    {
+        if (value.abilitySetupInfo.abilitySpotNumber.Count == 1)
+            DeactivateItem(value);
+        else
+        {
+            value.abilitySetupInfo.abilitySpotNumber.RemoveAt(0);
+        }
+    }
+
     internal void ActivateItem(PlayerItem item)
     {
         var activeItems = items.Where(x => x.Value.isActiveItem == true).ToArray();
         if((activeItems.Length + 1) >= maxActiveItems)
         {
-            DeactivateItem(activeItems[0].Value);
+            ReducesAbilitySlotForItem(activeItems[0].Value);
         }
         item.isActiveItem = true;
         var availableSpots = GetUnsignedSpotItems();

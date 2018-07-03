@@ -55,4 +55,9 @@ public class AbilityPlayerInputComponent : MonoBehaviour {
                 itemAbilitiesGrouped.Add(new List<IItemAbilityComponent>() { itemToAdd });
         }
     }
+
+    public IItemAbilityComponent GetCurrectAbility()
+    {
+        return itemAbilitiesGrouped[0][0];
+    }
 }

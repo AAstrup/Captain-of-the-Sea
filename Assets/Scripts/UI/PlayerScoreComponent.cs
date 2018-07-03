@@ -16,8 +16,12 @@ public class PlayerScoreComponent : MonoBehaviour {
     public int score;
     AnimationPopComponent animationPopComponent;
 
-    void Awake () {
+    void Awake() {
         animationPopComponent = GetComponent<AnimationPopComponent>();
+    }
+
+    private void Start()
+    {
         ComponentLocator.instance.GetDependency<AISpawnComponent>().shipSpawnedEvent += ShipSpawned;
         UpdateUI();
     }

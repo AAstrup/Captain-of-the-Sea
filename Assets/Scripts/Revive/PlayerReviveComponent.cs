@@ -9,7 +9,7 @@ internal class PlayerReviveComponent : MonoBehaviour
     public delegate void PlayerRevivedEvent();
     public PlayerRevivedEvent playerRevivedEvent;
 
-    private void Awake()
+    private void Start()
     {
         timeScalesComponent = ComponentLocator.instance.GetDependency<TimeScalesComponent>();
         playerIdentifierComponent = ComponentLocator.instance.GetDependency<PlayerIdentifierComponent>();

@@ -17,6 +17,10 @@ public class RespawnAdComponent : MonoBehaviour
     private void Awake()
     {
         button = GetComponent<Button>();
+    }
+
+    private void Start()
+    {
         playerIdentifierComponent = ComponentLocator.instance.GetDependency<PlayerIdentifierComponent>();
     }
 

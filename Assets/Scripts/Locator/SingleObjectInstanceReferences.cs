@@ -16,6 +16,7 @@ public class SingleObjectInstanceReferences
 
         playerProfile.playerCurrency.currencySpendEvent += SavePlayerProfile;
         playerProfile.playerItemInventory.itemChangedEvent += SavePlayerProfile;
+        SetupDependentObjects();
     }
 
     internal void SetupDependentObjects()

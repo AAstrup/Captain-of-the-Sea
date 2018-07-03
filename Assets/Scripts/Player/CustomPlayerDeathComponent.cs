@@ -11,7 +11,7 @@ public class CustomPlayerDeathComponent : MonoBehaviour, ICustomDeathComponent
 {
     private TimeScalesComponent timeScalesComponent;
 
-    private void Awake()
+    private void Start()
     {
         timeScalesComponent = ComponentLocator.instance.GetDependency<TimeScalesComponent>();
     }

@@ -20,14 +20,18 @@ public class BuyNewAbilityComponent : MonoBehaviour {
 
     private void Awake()
     {
-        playerCurrency = ComponentLocator.instance.singleObjectInstanceReferences.playerProfile.playerCurrency;
-        inventory = ComponentLocator.instance.singleObjectInstanceReferences.playerProfile.playerItemInventory;
-        itemLibrary = ComponentLocator.instance.GetDependency<ShopItemLibraryComponent>();
-        iAPShopCanvas = ComponentLocator.instance.GetDependency<IAPPurchaseCanvasComponent>();
         if (button == null)
             button = GetComponent<Button>();
         button.onClick.AddListener(AttemptPurchase);
         costText.text = cost.amount.ToString();
+    }
+
+    private void Start()
+    {
+        playerCurrency = ComponentLocator.instance.singleObjectInstanceReferences.playerProfile.playerCurrency;
+        inventory = ComponentLocator.instance.singleObjectInstanceReferences.playerProfile.playerItemInventory;
+        itemLibrary = ComponentLocator.instance.GetDependency<ShopItemLibraryComponent>();
+        iAPShopCanvas = ComponentLocator.instance.GetDependency<IAPPurchaseCanvasComponent>();
     }
 
     private void AttemptPurchase()

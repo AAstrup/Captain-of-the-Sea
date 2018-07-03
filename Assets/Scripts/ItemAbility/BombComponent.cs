@@ -28,6 +28,10 @@ internal class BombComponent : MonoBehaviour, IAbilitySpawnComponent
         if (circleCollider2D == null)
             circleCollider2D = GetComponent<CircleCollider2D>();
         victims = new List<HealthComponent>();
+    }
+
+    private void Start()
+    {
         timeScalesComponent = ComponentLocator.instance.GetDependency<TimeScalesComponent>();
         particlePoolComponent = ComponentLocator.instance.GetDependency<ParticlePoolComponent>();
     }

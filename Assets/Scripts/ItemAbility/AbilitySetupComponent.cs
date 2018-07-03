@@ -9,10 +9,8 @@ using UnityEngine;
 [RequireComponent(typeof(OwnerComponent))]
 public class AbilitySetupComponent : MonoBehaviour {
     public AbilitySetupPositionComponent[] abilitySpots;
-    private ShopItemLibraryComponent library;
     public delegate void ItemAbilitiesSetupEvent(List<IItemAbilityComponent> itemAbilities);
     public ItemAbilitiesSetupEvent itemAbilitiesSetup;
-    private bool dependenciesHasLoaded;
     private List<IItemAbilityComponent> itemAbilities;
     public OwnerComponent owner;
 
@@ -22,8 +20,6 @@ public class AbilitySetupComponent : MonoBehaviour {
             owner = GetComponent<OwnerComponent>();
         if (abilitySpots == null || abilitySpots.Length == 0)
             abilitySpots = GetComponentsInChildren<AbilitySetupPositionComponent>();
-        library = ComponentLocator.instance.GetDependency<ShopItemLibraryComponent>();
-        dependenciesHasLoaded = true;
     }
 
     public void InstantiateAbilities (List<AbilitySetupInfo> abilitySetupInfos)
@@ -34,7 +30,7 @@ public class AbilitySetupComponent : MonoBehaviour {
             if (i >= abilitySpots.Length)
                 throw new System.Exception("Not enough ability spots to support the amount of abilities, ability nr " + i);
 
-            var item = library.GetItem(abilitySetupInfos[i].uniqueNameID);
+            var item = ComponentLocator.instance.GetDependency<ShopItemLibraryComponent>().GetItem(abilitySetupInfos[i].uniqueNameID);
             for (int x = 0; x < abilitySetupInfos[i].abilitySpotNumber.Count; x++)
             {
                 int spotNumber = abilitySetupInfos[i].abilitySpotNumber[x];

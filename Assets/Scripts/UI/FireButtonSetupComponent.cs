@@ -12,7 +12,7 @@ public class FireButtonSetupComponent : MonoBehaviour {
     public Image skillImage;
     public Button button;
 
-    private void Awake()
+    private void Start()
     {
         ComponentLocator.instance.GetDependency<MenuStartComponent>().gameStartedEvent += delegate () {
             SetImage(ComponentLocator.instance.GetDependency<AbilityPlayerInputComponent>().GetCurrectAbility().GetModel().sprite);

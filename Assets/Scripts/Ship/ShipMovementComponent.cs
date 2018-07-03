@@ -13,8 +13,8 @@ public class ShipMovementComponent : MonoBehaviour
     Vector2 velocity = Vector2.zero;
     private ShipConfigurationComponent shipConfiguration;
     private TimeScalesComponent timeScalesComponent;
-
-    public void Awake()
+    
+    void Start()
     {
         shipConfiguration = GetComponent<ShipConfigurationComponent>();
         timeScalesComponent = ComponentLocator.instance.GetDependency<TimeScalesComponent>();

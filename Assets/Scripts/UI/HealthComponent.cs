@@ -27,6 +27,10 @@ public class HealthComponent : MonoBehaviour
         startHealth = health;
         ownerComponent = GetComponent<OwnerComponent>();
         customDeathComponent = GetComponent<ICustomDeathComponent>();
+    }
+
+    private void Start()
+    {
         soundEffectPoolComponent = ComponentLocator.instance.GetDependency<SoundEffectPoolComponent>();
         particlePoolComponent = ComponentLocator.instance.GetDependency<ParticlePoolComponent>();
     }

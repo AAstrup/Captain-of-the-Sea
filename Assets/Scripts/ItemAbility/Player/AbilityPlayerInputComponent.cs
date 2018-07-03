@@ -14,9 +14,13 @@ public class AbilityPlayerInputComponent : MonoBehaviour {
     public delegate void AbilityTriggerEvent(IItemAbilityComponent usedAbility, IItemAbilityComponent nextAbility);
     public AbilityTriggerEvent abilityTriggerEvent;
 
-    void Start () {
+    void Awake () {
         abilitySetupComponent = GetComponent<AbilitySetupComponent>();
         abilitySetupComponent.GetAbilitiesWhenInstantiated(SetupAbilities);
+    }
+
+    private void Start()
+    {
         var reference = ComponentLocator.instance.GetDependency<FireButtonSetupComponent>();
         reference.AddDelegateToButton(FireAbility);
     }

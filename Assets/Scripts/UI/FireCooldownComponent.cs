@@ -21,10 +21,14 @@ public class FireCooldownComponent : MonoBehaviour {
 
     Dictionary<IItemAbilityComponent, float> abilityFireTime;
 
-    void Awake () {
+    private void Awake() {
         StopCooldown();
         fireButton.onClick.AddListener(delegate () { StartCooldown(); });
         abilityFireTime = new Dictionary<IItemAbilityComponent, float>();
+    }
+
+    private void Start()
+    {
         timeScalesComponent = ComponentLocator.instance.GetDependency<TimeScalesComponent>();
         library = ComponentLocator.instance.GetDependency<ShopItemLibraryComponent>();
         ComponentLocator.instance.GetDependency<PlayerIdentifierComponent>().GetComponent<AbilityPlayerInputComponent>().abilityTriggerEvent += abilityFired;

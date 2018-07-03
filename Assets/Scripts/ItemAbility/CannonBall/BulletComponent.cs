@@ -28,6 +28,10 @@ internal class BulletComponent : MonoBehaviour, IAbilitySpawnComponent
         startScale = transform.localScale;
         lifeTimeElapsed = 0f;
         victimsHit = new List<HealthComponent>();
+    }
+
+    private void Start()
+    {
         timeScalesComponent = ComponentLocator.instance.GetDependency<TimeScalesComponent>();
         particlePoolComponent = ComponentLocator.instance.GetDependency<ParticlePoolComponent>();
     }

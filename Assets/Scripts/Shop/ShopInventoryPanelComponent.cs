@@ -10,7 +10,7 @@ public class ShopInventoryPanelComponent : MonoBehaviour {
 
     public ShopInventoryItemComponent[] items;
 
-    void Awake () {
+    void Start () {
         UpdateUI();
     }
 

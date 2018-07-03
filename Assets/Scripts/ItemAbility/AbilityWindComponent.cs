@@ -12,8 +12,8 @@ public class AbilityWindComponent : MonoBehaviour, IItemAbilityComponent, ISubst
     private TimeScalesComponent timeScalesComponent;
     private static readonly float windDuration = .6f;
     private static readonly float windEffect = 6f;
-
-    private void Awake()
+    
+    private void Start()
     {
         timeScalesComponent = ComponentLocator.instance.GetDependency<TimeScalesComponent>();
     }

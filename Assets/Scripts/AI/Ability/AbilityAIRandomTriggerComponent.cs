@@ -14,16 +14,20 @@ public class AbilityAIRandomTriggerComponent : MonoBehaviour {
     float timeLeftBeforeFire;
     private TimeScalesComponent timeScalesComponent;
 
-    void Awake () {
+    void Awake()
+    {
         timeLeftBeforeFire = shipConfigurationComponent.fireSpeed;
 
         if (abilitySetupComponent == null)
             abilitySetupComponent = GetComponent<AbilitySetupComponent>();
-         abilitySetupComponent.GetAbilitiesWhenInstantiated(SetupDependencies);
+        abilitySetupComponent.GetAbilitiesWhenInstantiated(SetupDependencies);
 
         if (shipConfigurationComponent == null)
             shipConfigurationComponent = GetComponent<AIShipConfigurationComponent>();
+    }
 
+    void Start()
+    {
         timeScalesComponent = ComponentLocator.instance.GetDependency<TimeScalesComponent>();
     }
 

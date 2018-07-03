@@ -13,7 +13,7 @@ public class ShopItemLibraryComponent : MonoBehaviour {
     private ShopItemPanelComponent shop;
     private bool triggered;
 
-    private void Awake()
+    private void Start()
     {
         shop = ComponentLocator.instance.GetDependency<ShopItemPanelComponent>();
     }

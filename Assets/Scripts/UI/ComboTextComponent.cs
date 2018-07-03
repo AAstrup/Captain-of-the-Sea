@@ -18,8 +18,12 @@ public class ComboTextComponent : MonoBehaviour {
     private TimeScalesComponent timeScalesComponent;
     public AnimationCurve textSizeWithCombo;
 
-    void Awake () {
+    void Awake() {
         textComp = GetComponent<Text>();
+    }
+
+    private void Start()
+    {
         ComponentLocator.instance.GetDependency<AISpawnComponent>().shipSpawnedEvent += shipSpawnSetup;
         timeScalesComponent = ComponentLocator.instance.GetDependency<TimeScalesComponent>();
     }

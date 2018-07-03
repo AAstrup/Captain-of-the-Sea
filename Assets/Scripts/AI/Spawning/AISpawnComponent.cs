@@ -26,9 +26,13 @@ public class AISpawnComponent : MonoBehaviour {
     private CameraDirectorComponent cameraDirectorComponent;
     private static readonly float heightOffset = 11f;
 
-    private void Start()
+    private void Awake()
     {
         shipsAlive = new List<Transform>();
+    }
+
+    private void Start()
+    {
         ComponentLocator.instance.GetDependency<MenuStartComponent>().gameStartedEvent += SpawnWave;
         playerIdentifierComponent = ComponentLocator.instance.GetDependency<PlayerIdentifierComponent>();
         cameraDirectorComponent = ComponentLocator.instance.GetDependency<CameraDirectorComponent>();

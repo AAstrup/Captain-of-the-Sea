@@ -10,7 +10,8 @@ using UnityEngine;
 public class FinalLevelText : MonoBehaviour {
     private AnimationPopComponent animationPopComponent;
 
-    void Awake () {
+    private void Start()
+    {
         animationPopComponent = GetComponent<AnimationPopComponent>();
         ComponentLocator.instance.GetDependency<AISpawnComponent>().newWaveEvent += WaveSpawned;
     }

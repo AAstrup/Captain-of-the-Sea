@@ -19,6 +19,11 @@ public class ComponentLocator : MonoBehaviour
         singleObjectInstanceReferences = new SingleObjectInstanceReferences();
     }
 
+    /// <summary>
+    /// MAY NOT BE CALLED IN AWAKE TO ENSURE EVERY OBJECT IS SETUP AND READY TO USE
+    /// </summary>
+    /// <typeparam name="T">Type of single instance component wanted</typeparam>
+    /// <returns></returns>
     public T GetDependency<T>()
     {
         if (!componentDendencies.ContainsKey(typeof(T)))

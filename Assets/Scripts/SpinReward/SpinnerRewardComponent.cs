@@ -18,10 +18,14 @@ public class SpinnerRewardComponent : MonoBehaviour {
     private IAPPurchaseCanvasComponent iapStore;
     private static readonly int maxCost = 1000;
 
-	void Awake () {
+    void Awake() {
         respinButton.onClick.AddListener(respin);
         spinnerComponent.spinEndedEvent += spinFinished;
         respinButton.interactable = false;
+    }
+
+    private void Start()
+    {
         playerCurrency = ComponentLocator.instance.singleObjectInstanceReferences.playerProfile.playerCurrency;
         iapStore = ComponentLocator.instance.GetDependency<IAPPurchaseCanvasComponent>();
     }

@@ -17,6 +17,10 @@ public class AnimationPopComponent : MonoBehaviour, IAnimationObject {
     {
         timeSinceTriggered = sizeIncrement.length;
         normalScale = transform.localScale;
+    }
+
+    private void Start()
+    {
         timeScalesComponent = ComponentLocator.instance.GetDependency<TimeScalesComponent>();
     }
 

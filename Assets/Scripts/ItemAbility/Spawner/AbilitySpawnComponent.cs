@@ -20,8 +20,12 @@ public class AbilitySpawnComponent : MonoBehaviour, IItemAbilityComponent
     private void Awake()
     {
         audio = GetComponent<AudioSource>();
-        if(ownerComponent == null)
+        if (ownerComponent == null)
             ownerComponent = GetComponent<OwnerComponent>();
+    }
+
+    private void Start()
+    {
         particlePoolComponent = ComponentLocator.instance.GetDependency<ParticlePoolComponent>();
     }
 

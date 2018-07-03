@@ -12,9 +12,13 @@ public class AbilityPlayerSetupComponent : MonoBehaviour {
     private List<AbilitySetupInfo> models;
     private PlayerItemInventory inventory;
 
-    void Awake () {
+    void Awake() {
         abilitySetupComponent = GetComponent<AbilitySetupComponent>();
         inventory = ComponentLocator.instance.singleObjectInstanceReferences.playerProfile.playerItemInventory;
+    }
+
+    private void Start()
+    {
         ComponentLocator.instance.GetDependency<MenuStartComponent>().gameStartedEvent += start;
     }
 

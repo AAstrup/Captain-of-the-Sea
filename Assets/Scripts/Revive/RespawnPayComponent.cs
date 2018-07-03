@@ -21,6 +21,10 @@ public class RespawnPayComponent : MonoBehaviour
     {
         button = GetComponent<Button>();
         costText.text = respawnCost.ToString();
+    }
+
+    private void Start()
+    {
         playerIdentifierComponent = ComponentLocator.instance.GetDependency<PlayerIdentifierComponent>();
         currency = ComponentLocator.instance.singleObjectInstanceReferences.playerProfile.playerCurrency;
         IAP = ComponentLocator.instance.GetDependency<IAPPurchaseCanvasComponent>();

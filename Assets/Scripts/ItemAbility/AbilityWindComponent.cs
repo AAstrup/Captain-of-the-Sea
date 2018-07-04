@@ -9,13 +9,20 @@ using UnityEngine;
 public class AbilityWindComponent : MonoBehaviour, IItemAbilityComponent, ISubstitudeValueCandidate {
     private ShopItemModel model;
     private float timeActivated;
-    private TimeScalesComponent timeScalesComponent;
+    private TimeScalesComponent _timeScalesComponent;
+    private TimeScalesComponent timeScalesComponent {
+        get {
+            if(_timeScalesComponent == null)
+                _timeScalesComponent = ComponentLocator.instance.GetDependency<TimeScalesComponent>();
+            return _timeScalesComponent;
+        }
+    }
+
     private static readonly float windDuration = .6f;
     private static readonly float windEffect = 6f;
     
     private void Start()
     {
-        timeScalesComponent = ComponentLocator.instance.GetDependency<TimeScalesComponent>();
     }
 
     public ShopItemModel GetModel()

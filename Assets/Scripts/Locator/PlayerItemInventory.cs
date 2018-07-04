@@ -83,10 +83,17 @@ public class PlayerItemInventory
     internal void ActivateItem(PlayerItem item)
     {
         var activeItems = items.Where(x => x.Value.isActiveItem == true).ToArray();
-        if((activeItems.Length + 1) >= maxActiveItems)
+        int activeSlotsCount = 0;
+        foreach (var activeItem in activeItems)
+        {
+            activeSlotsCount += activeItem.Value.abilitySetupInfo.abilitySpotNumber.Count;
+        }
+
+        if (activeSlotsCount >= maxActiveItems)
         {
             ReducesAbilitySlotForItem(activeItems[0].Value);
         }
+
         item.isActiveItem = true;
         var availableSpots = GetUnsignedSpotItems();
         item.abilitySetupInfo = new AbilitySetupInfo()
@@ -114,7 +121,7 @@ public class PlayerItemInventory
 
             for (int i = 0; i < item.Value.abilitySetupInfo.abilitySpotNumber.Count; i++)
             {
-                spots.Remove(i);
+                spots.Remove(item.Value.abilitySetupInfo.abilitySpotNumber[i]);
             }
         }
 

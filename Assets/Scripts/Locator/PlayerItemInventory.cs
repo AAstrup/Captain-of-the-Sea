@@ -66,8 +66,14 @@ public class PlayerItemInventory
 
     internal void DeactivateItem(PlayerItem item)
     {
+        var spots = item.abilitySetupInfo.abilitySpotNumber;
         item.abilitySetupInfo = null;
         item.isActiveItem = false;
+        var activeItem = items.First(x => x.Value.isActiveItem == true);
+        foreach (var spot in spots)
+        {
+            activeItem.Value.abilitySetupInfo.abilitySpotNumber.Add(spot);
+        }
     }
 
     private void ReducesAbilitySlotForItem(PlayerItem value)

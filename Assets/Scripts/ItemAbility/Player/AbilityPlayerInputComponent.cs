@@ -49,7 +49,7 @@ public class AbilityPlayerInputComponent : MonoBehaviour {
             bool groupFoundAndAdded = false;
             foreach (var group in itemAbilitiesGrouped)
             {
-                if(group[0].GetType() == itemToAdd.GetType())
+                if(group[0].GetModel() == itemToAdd.GetModel())
                 {
                     group.Add(itemToAdd);
                     groupFoundAndAdded = true;
